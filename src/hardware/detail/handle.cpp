@@ -24,7 +24,7 @@ handle::handle(handle&& other)
 
 handle::~handle()
 {
-	if (m_file > 0)
+	if (m_file >= 0)
 		close(m_file);
 }
 
@@ -44,7 +44,10 @@ void* handle::mmap(size_t size)
 
 int handle::munmap(void* address, size_t size) {
 	printf("Unmapping device memory. handle: %d, mapped addredd = %p\n", m_file, address);
-	return ::munmap(address, size);
+	if (address != MAP_FAILED)
+		return ::munmap(address, size);
+	else
+		return -1;
 }
 
 }}}
