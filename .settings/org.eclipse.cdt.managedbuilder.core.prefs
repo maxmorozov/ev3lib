@@ -7,3 +7,11 @@ environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.
 environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.debug.1303947312/C_INCLUDE_PATH/operation=remove
 environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.debug.1303947312/append=true
 environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.debug.1303947312/appendContributed=true
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/CPATH/delimiter=;
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/CPATH/operation=remove
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/CPLUS_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/CPLUS_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/C_INCLUDE_PATH/delimiter=;
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/C_INCLUDE_PATH/operation=remove
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/append=true
+environment/buildEnvironmentInclude/ilg.gnuarmeclipse.managedbuild.cross.config.lib.release.322621093/appendContributed=true

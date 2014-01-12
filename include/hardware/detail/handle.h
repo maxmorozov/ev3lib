@@ -10,6 +10,7 @@
 
 #include <stddef.h>
 #include <sys/types.h>
+#include <hardware/detail/utilities.h>
 
 namespace ev3lib {
 namespace hardware {
@@ -19,7 +20,7 @@ namespace detail {
 	 *	Releases it in destructor.
 	 *	Implements I/O operations.
 	 */
-	class handle final {
+	class handle final: noncopyable {
 	private:
 		int m_file;
 
@@ -33,8 +34,11 @@ namespace detail {
 			return m_file;
 		}
 
-		//Write command to device
+		//Write bytes to the device
 		ssize_t write(const void* data, size_t size);
+
+		//Send a control code to the device
+		ssize_t ioctl(unsigned long command, const void* data);
 
 		//Maps sensors data into user-mode memory.
 		//Returns 0 if successful, -1 for errors (and sets errno).
@@ -42,10 +46,6 @@ namespace detail {
 		// Deallocate any mapping for the region starting at ADDR and extending LEN bytes.
 		//Returns 0 if successful, -1 for errors (and sets errno).
 		int munmap(void* address, size_t size);
-
-		//Don't allow creating copies
-		handle(const handle& other) = delete;
-		handle& operator=(const handle& other) = delete;
 	};
 }}}
 

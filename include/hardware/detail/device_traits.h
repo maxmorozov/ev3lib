@@ -17,6 +17,7 @@ namespace detail {
 
 	//EV3 hardware type
 	enum class device_type {
+		dcm,
 		pwm_motor,
 		motor_encoder,
 		uart_sensor,
@@ -26,6 +27,12 @@ namespace detail {
 
 	template<device_type type>
 	struct device_traits {
+	};
+
+	template<>
+	struct device_traits<device_type::dcm> {
+		static constexpr const char* device_name = DCM_DEVICE_NAME;
+		static const int device_flags = O_RDWR | O_SYNC;
 	};
 
 	template<>
