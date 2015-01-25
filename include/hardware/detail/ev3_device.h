@@ -10,10 +10,25 @@
 
 #include <hardware/detail/handle.h>
 #include <hardware/detail/device_traits.h>
+#include <iostream>
 
 namespace ev3lib {
 namespace hardware {
 namespace detail {
+
+	/**
+	 * Base class for buffers for commands
+	 */
+	template<typename T, size_t buffer_size>
+	struct BufferCommand {
+		T cmd[buffer_size];
+		static const size_t size = sizeof(cmd);
+
+		const void* buffer() const { return cmd; }
+
+		T& operator[] (size_t pos) { return cmd[pos]; }
+		const T& operator[] (size_t pos) const { return cmd[pos]; }
+	};
 
 	/**
 	 * Device that can be controlled using commands
@@ -59,6 +74,7 @@ namespace detail {
 	public:
 		EV3InputDevice()
 		{
+			//std::cout<<"Mapping for device: "<<device_traits<type>::device_name<<"\n";
 			m_map = (device_map_type*)EV3Device<type>::m_device.mmap(device_traits<type>::sensor_data_size);
 		}
 		~EV3InputDevice()

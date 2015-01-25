@@ -65,12 +65,32 @@ namespace detail {
 		  Error                 = 127   //!< Port not empty and type is invalid
 	};
 
+	enum class AnalogMode : unsigned char {
+		None = '-',
+		Float = 'f',
+		Set = '0',
+		Automatic = 'a',
+		Connected = 'c',
+		Disconnected = 'd',
+		ColorFull = 0x0D,
+		ColorRed = 0x0E,
+		ColorGreen = 0x0F,
+		ColorBlue = 0x10,
+		ColorNone = 0x11,
+		ColorExit = 0x12,
+		Pin1 = 0x01,
+		Pin5 = 0x02
+	};
+
 
 	/**
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
 	struct SensorsManager: public destructible {
-		virtual SensorType getSensorType(size_t port) = 0;
+		virtual SensorType getSensorType(size_t port) const = 0;
+		virtual ConnectionType getConnectionType(size_t port) const = 0;
+
+		virtual void setPortMode(size_t port, AnalogMode mode) = 0;
 	};
 
 }}}
