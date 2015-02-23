@@ -49,14 +49,18 @@ void EV3DeviceManager::setDeviceType(DeviceInfo& deviceInfo, SensorType type, in
 
 }
 
-void EV3DeviceManager::setPortMode(size_t port, AnalogMode mode)
+void EV3DeviceManager::setPortMode(size_t port, PortType type, AnalogMode mode)
 {
 	DCMCommand command;
-	command[0] = (unsigned char)(port + EV3SensorConstants::PORTS);
+	int offset = type == PortType::Motor ? EV3SensorConstants::PORTS : 0;
+	command[0] = (unsigned char)(port + offset);
 	command[1] = (unsigned char)mode;
 	m_dcmDevice.sendCommand(command);
 }
 
+AnalogPort* EV3DeviceManager::getAnalogPort(size_t port) const {
+
+}
 
 /**
  * Returns internal motor port structure. The clients should not delete it

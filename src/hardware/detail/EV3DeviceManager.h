@@ -24,8 +24,14 @@ struct DeviceInfo {
 	ConnectionType connectionType = ConnectionType::None;
 };
 
+enum class PortType {
+	Motor = 0,
+	Sensor = 1
+};
+
 class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager {
 	friend class EV3MotorPort;
+	friend class EV3AnalogPort;
 private:
 	EV3Device<device_type::dcm> m_dcmDevice;
 
@@ -51,7 +57,9 @@ public:
 	virtual SensorType getSensorType(size_t port) const override;
 	virtual ConnectionType getConnectionType(size_t port) const override;
 
-	void setPortMode(size_t port, AnalogMode mode);
+	void setPortMode(size_t port, PortType type, AnalogMode mode);
+
+	virtual AnalogPort* getAnalogPort(size_t port) const override;
 
 	/**
 	 * Returns internal motor port structure. The clients should not delete it

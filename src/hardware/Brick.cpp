@@ -23,6 +23,11 @@ UnregulatedMotor Brick::getMotor(Motors id) {
 	return UnregulatedMotor(m_brick.getMotorManager()->getMotorPort((int)id));
 }
 
+HiTechnicGyro Brick::getGyro(Sensors id) {
+	return HiTechnicGyro(m_brick.getSensorsManager()()->getS((int)id)
+
+}
+
 
 } /* namespace hardware */
 } /* namespace ev3lib */

@@ -83,6 +83,20 @@ namespace detail {
 	};
 
 
+	struct AnalogPort: public destructible {
+	    /**
+	     * return the voltage present on pin 6 of the sensor port
+	     * @return voltage reading
+	     */
+		virtual float getPin6() const = 0;
+
+	    /**
+	     * return the voltage present on pin 1 of the sensor port
+	     * @return voltage reading
+	     */
+		virtual float getPin1() const = 0;
+	};
+
 	/**
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
@@ -91,6 +105,8 @@ namespace detail {
 		virtual ConnectionType getConnectionType(size_t port) const = 0;
 
 		virtual void setPortMode(size_t port, AnalogMode mode) = 0;
+
+		virtual AnalogPort* getAnalogPort(size_t port) const = 0;
 	};
 
 }}}
