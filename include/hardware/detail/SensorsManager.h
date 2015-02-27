@@ -10,6 +10,7 @@
 
 #include <hardware/detail/utilities.h>
 #include <stddef.h>
+#include <memory>
 
 namespace ev3lib {
 namespace hardware {
@@ -82,6 +83,10 @@ namespace detail {
 		Pin5 = 0x02
 	};
 
+	enum class PortType {
+		Motor = 0,
+		Sensor = 1
+	};
 
 	struct AnalogPort: public destructible {
 	    /**
@@ -104,9 +109,9 @@ namespace detail {
 		virtual SensorType getSensorType(size_t port) const = 0;
 		virtual ConnectionType getConnectionType(size_t port) const = 0;
 
-		virtual void setPortMode(size_t port, AnalogMode mode) = 0;
+		virtual void setPortMode(size_t port, PortType type, AnalogMode mode) = 0;
 
-		virtual AnalogPort* getAnalogPort(size_t port) const = 0;
+		virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) = 0;
 	};
 
 }}}

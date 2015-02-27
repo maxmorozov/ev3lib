@@ -24,7 +24,7 @@ UnregulatedMotor Brick::getMotor(Motors id) {
 }
 
 HiTechnicGyro Brick::getGyro(Sensors id) {
-	return HiTechnicGyro(m_brick.getSensorsManager()()->getS((int)id)
+	return std::move(HiTechnicGyro(std::move(m_brick.getSensorsManager()->getAnalogPort((int)id))));
 
 }
 

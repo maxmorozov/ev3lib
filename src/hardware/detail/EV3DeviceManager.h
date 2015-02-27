@@ -9,6 +9,7 @@
 #define EV3DEVICEMANAGER_H_
 
 #include <memory>
+#include <boost/noncopyable.hpp>
 #include <hardware/detail/device_traits.h>
 #include <hardware/detail/ev3_device.h>
 #include <hardware/detail/SensorsManager.h>
@@ -24,12 +25,7 @@ struct DeviceInfo {
 	ConnectionType connectionType = ConnectionType::None;
 };
 
-enum class PortType {
-	Motor = 0,
-	Sensor = 1
-};
-
-class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager {
+class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager, boost::noncopyable {
 	friend class EV3MotorPort;
 	friend class EV3AnalogPort;
 private:
@@ -57,9 +53,9 @@ public:
 	virtual SensorType getSensorType(size_t port) const override;
 	virtual ConnectionType getConnectionType(size_t port) const override;
 
-	void setPortMode(size_t port, PortType type, AnalogMode mode);
+	virtual void setPortMode(size_t port, PortType type, AnalogMode mode) override;
 
-	virtual AnalogPort* getAnalogPort(size_t port) const override;
+	virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) override;
 
 	/**
 	 * Returns internal motor port structure. The clients should not delete it

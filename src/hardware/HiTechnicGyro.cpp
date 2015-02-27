@@ -11,8 +11,14 @@
 namespace ev3lib {
 namespace hardware {
 
-HiTechnicGyro::HiTechnicGyro(detail::AnalogPort* port)
-	: m_port(port), m_zero(614.0f)
+HiTechnicGyro::HiTechnicGyro(std::unique_ptr<detail::AnalogPort>&& port)
+	: m_port(std::move(port)), m_zero(614.0f)
+{
+
+}
+
+HiTechnicGyro::HiTechnicGyro(HiTechnicGyro&& other)
+	: m_port(std::move(other.m_port)), m_zero(614.0f)
 {
 
 }
@@ -20,6 +26,7 @@ HiTechnicGyro::HiTechnicGyro(detail::AnalogPort* port)
 HiTechnicGyro::~HiTechnicGyro()
 {
 }
+
 
 float HiTechnicGyro::getData() const
 {

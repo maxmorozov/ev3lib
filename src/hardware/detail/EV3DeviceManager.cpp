@@ -12,6 +12,7 @@
 
 #include "EV3MotorPort.h"
 #include "EV3DeviceManager.h"
+#include "EV3AnalogPort.h"
 
 
 namespace ev3lib {
@@ -58,8 +59,8 @@ void EV3DeviceManager::setPortMode(size_t port, PortType type, AnalogMode mode)
 	m_dcmDevice.sendCommand(command);
 }
 
-AnalogPort* EV3DeviceManager::getAnalogPort(size_t port) const {
-
+std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
+	return std::unique_ptr<AnalogPort>(new EV3AnalogPort(this, port));
 }
 
 /**
