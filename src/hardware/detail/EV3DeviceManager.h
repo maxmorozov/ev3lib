@@ -15,6 +15,7 @@
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/detail/MotorManager.h>
 #include <hardware/detail/UIManager.h>
+#include <hardware/detail/BatteryManager.h>
 #include "EV3SensorConstants.h"
 
 namespace ev3lib {
@@ -25,7 +26,7 @@ struct DeviceInfo {
 	ConnectionType connectionType = ConnectionType::None;
 };
 
-class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager, boost::noncopyable {
+class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager, public BatteryManager, boost::noncopyable {
 	friend class EV3MotorPort;
 	friend class EV3AnalogPort;
 private:
@@ -41,9 +42,6 @@ private:
 	EV3InputDevice<device_type::ui> m_buttonsDevice;
 
 	std::unique_ptr<MotorPort> m_ports[EV3SensorConstants::MOTORS];
-
-	DeviceInfo inputs[INPUTS];
-	DeviceInfo outputs[OUTPUTS];
 
 	void setDeviceType(DeviceInfo& deviceInfo, SensorType type, int mode);
 
@@ -66,6 +64,21 @@ public:
 	 * Checks if the button is down
 	 */
 	virtual bool checkButton(size_t buttonNo) const override;
+
+	/**
+	 * Battery voltage
+	 */
+	virtual short getBatteryVoltage() const override;
+
+	/**
+	 * Current flowing from the battery
+	 */
+	virtual short getMotorCurrent() const override;
+
+	/**
+	 * Current flowing from the battery
+	 */
+	virtual short getBatteryCurrent() const override;
 
 };
 

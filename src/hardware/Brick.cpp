@@ -28,6 +28,10 @@ HiTechnicGyro Brick::getGyro(Sensors id) {
 
 }
 
+Battery Brick::getBattery() {
+	return Battery(m_brick.getBattery());
+}
+
 
 } /* namespace hardware */
 } /* namespace ev3lib */

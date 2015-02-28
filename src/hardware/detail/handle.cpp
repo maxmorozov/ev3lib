@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include <hardware/detail/handle.h>
-#include <hardware/detail/lms2012/lms2012.h>
+#include <hardware/detail/lms2012/ev3_constants.h>
 #include<exceptions/EV3HardwareExceptions.h>
 
 namespace ev3lib {
@@ -33,7 +33,7 @@ handle::handle(handle&& other)
 
 handle::~handle()
 {
-	if (m_file >= MIN_HANDLE)
+	if (m_file >= lms2012::MIN_HANDLE)
 		close(m_file);
 }
 

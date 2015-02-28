@@ -4,8 +4,6 @@
 #include <stdlib.h>
 
 namespace ev3lib {
-namespace hardware {
-namespace detail {
 
 	struct destructible
 	{
@@ -26,6 +24,6 @@ namespace detail {
 
 	template<typename T,size_t size>
 	size_t count_of(T (&)[size]) { return size; }
-}}}
+}
 
 #endif // !defined(__EV3LIB_UTILITIES_H__)

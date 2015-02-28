@@ -11,7 +11,8 @@
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/detail/MotorManager.h>
 #include <hardware/detail/UIManager.h>
-#include <hardware/detail/utilities.h>
+#include <hardware/detail/Power.h>
+#include <utilities.h>
 #include <memory>
 
 namespace ev3lib {
@@ -34,6 +35,9 @@ namespace detail {
 
 		UIManager* getUIManager();
 		const UIManager* getUIManager() const;
+
+		Power* getBattery();
+		const Power* getBattery() const;
 	};
 
 }}}

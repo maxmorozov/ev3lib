@@ -36,7 +36,7 @@ EV3AnalogPort::~EV3AnalogPort()
  */
 float EV3AnalogPort::getPin6() const
 {
-    return m_manager->m_analogDevice.getSensorData()->InPin6[m_port] * EV3SensorConstants::ADC_REF_F / ADC_RES;
+    return m_manager->m_analogDevice.getSensorData()->InPin6[m_port] * EV3SensorConstants::ADC_REF / EV3SensorConstants::ADC_RES;
 }
 
 /**
@@ -45,7 +45,7 @@ float EV3AnalogPort::getPin6() const
  */
 float EV3AnalogPort::getPin1() const
 {
-    return m_manager->m_analogDevice.getSensorData()->InPin1[m_port] * EV3SensorConstants::ADC_REF_F / ADC_RES;
+    return m_manager->m_analogDevice.getSensorData()->InPin1[m_port] * EV3SensorConstants::ADC_REF / EV3SensorConstants::ADC_RES;
 }
 
 

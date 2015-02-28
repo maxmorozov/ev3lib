@@ -8,12 +8,12 @@
 #ifndef EV3LIB_TACHOMETER_H_
 #define EV3LIB_TACHOMETER_H_
 
-#include <hardware/detail/utilities.h>
+#include <utilities.h>
 
 namespace ev3lib {
 namespace hardware {
 
-	struct Tachometer : public detail::destructible {
+	struct Tachometer : public destructible {
 		/**
 		 * returns tachometer count
 		 */

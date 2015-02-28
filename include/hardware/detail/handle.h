@@ -10,7 +10,7 @@
 
 #include <stddef.h>
 #include <sys/types.h>
-#include <hardware/detail/utilities.h>
+#include <utilities.h>
 
 namespace ev3lib {
 namespace hardware {

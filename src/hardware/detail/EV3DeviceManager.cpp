@@ -8,7 +8,7 @@
 #include <boost/exception/all.hpp>
 #include <stdexcept>
 
-#include <hardware/detail/lms2012/lms2012.h>
+#include <hardware/detail/lms2012/ev3_constants.h>
 
 #include "EV3MotorPort.h"
 #include "EV3DeviceManager.h"
@@ -84,13 +84,34 @@ MotorPort* EV3DeviceManager::getMotorPort(size_t port) {
  * Checks if the button is down
  */
 bool EV3DeviceManager::checkButton(size_t buttonNo) const {
-	if (buttonNo < BUTTONS) {
+	if (buttonNo < lms2012::BUTTONS) {
 		return m_buttonsDevice.getSensorData()->Pressed[buttonNo] != 0;
 	}
 	throw boost::enable_error_info(std::range_error("Button index is out of range")) <<
 		std_range_min(0) <<
-		std_range_max(BUTTONS - 1) <<
+		std_range_max(lms2012::BUTTONS - 1) <<
 		std_range_index(buttonNo);
+}
+
+/**
+ * Battery voltage
+ */
+short EV3DeviceManager::getBatteryVoltage() const {
+	return m_analogDevice.getSensorData()->Cell123456;
+}
+
+/**
+ * Current flowing from the battery
+ */
+short EV3DeviceManager::getMotorCurrent() const {
+	return m_analogDevice.getSensorData()->MotorCurrent;
+}
+
+/**
+ * Current flowing from the battery
+ */
+short EV3DeviceManager::getBatteryCurrent() const {
+	return m_analogDevice.getSensorData()->BatteryCurrent;
 }
 
 } /* namespace detail */

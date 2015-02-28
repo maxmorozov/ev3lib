@@ -8,7 +8,7 @@
 #ifndef EV3LIB_DEVICE_MANAGER_H_
 #define EV3LIB_DEVICE_MANAGER_H_
 
-#include <hardware/detail/utilities.h>
+#include <utilities.h>
 #include <stddef.h>
 #include <memory>
 
@@ -112,6 +112,16 @@ namespace detail {
 		virtual void setPortMode(size_t port, PortType type, AnalogMode mode) = 0;
 
 		virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) = 0;
+
+		/**
+		 * Current flowing from the battery
+		 */
+		virtual short getMotorCurrent() const = 0;
+
+		/**
+		 * Current flowing from the battery
+		 */
+		virtual short getBatteryCurrent() const = 0;
 	};
 
 }}}

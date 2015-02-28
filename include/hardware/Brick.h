@@ -12,6 +12,7 @@
 #include <hardware/Button.h>
 #include <hardware/UnregulatedMotor.h>
 #include <hardware/HiTechnicGyro.h>
+#include <hardware/Battery.h>
 
 namespace ev3lib {
 namespace hardware {
@@ -43,8 +44,6 @@ class Brick {
 private:
 	detail::EV3Brick m_brick;
 
-
-
 public:
 	Brick();
 
@@ -53,6 +52,8 @@ public:
 	UnregulatedMotor getMotor(Motors id);
 
 	HiTechnicGyro getGyro(Sensors id);
+
+	Battery getBattery();
 
 };
 

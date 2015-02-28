@@ -20,7 +20,7 @@ namespace detail {
  */
 float AnalogSensorHelpers::normalize(float val)
 {
-	return val/EV3SensorConstants::ADC_REF_F;
+	return val/EV3SensorConstants::ADC_REF;
 }
 
 /**
@@ -30,7 +30,7 @@ float AnalogSensorHelpers::normalize(float val)
  */
 float AnalogSensorHelpers::NXTRawValue(float val)
 {
-    return val * EV3SensorConstants::NXT_ADC_RES / EV3SensorConstants::ADC_REF_F;
+    return val * EV3SensorConstants::NXT_ADC_RES / EV3SensorConstants::ADC_REF;
 }
 
 /**
