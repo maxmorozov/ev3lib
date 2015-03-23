@@ -9,7 +9,6 @@
 #define EV3LIB_HITECHNICGYRO_H_
 
 #include <memory>
-#include <boost/noncopyable.hpp>
 #include <hardware/detail/SensorsManager.h>
 
 namespace ev3lib {

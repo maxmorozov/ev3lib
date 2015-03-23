@@ -28,6 +28,11 @@ HiTechnicGyro Brick::getGyro(Sensors id) {
 
 }
 
+AnalogSensor Brick::getAnalog(Sensors id) {
+	return std::move(AnalogSensor(std::move(m_brick.getSensorsManager()->getAnalogPort((int)id))));
+
+}
+
 Battery Brick::getBattery() {
 	return Battery(m_brick.getBattery());
 }

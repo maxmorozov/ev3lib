@@ -36,6 +36,13 @@ public:
 
     /**
      * Return the equivalent NXT RAW sensor reading to the given voltage
+     * @param raw ADC voltage
+     * @return The reading that would be returned on the NXT
+     */
+    static int NXTRawValue(int val);
+
+    /**
+     * Return the equivalent NXT RAW sensor reading to the given voltage
      * @param val ADC voltage
      * @return The reading that would be returned on the NXT
      */

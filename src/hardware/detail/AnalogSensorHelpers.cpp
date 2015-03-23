@@ -35,6 +35,16 @@ float AnalogSensorHelpers::NXTRawValue(float val)
 
 /**
  * Return the equivalent NXT RAW sensor reading to the given voltage
+ * @param raw ADC voltage
+ * @return The reading that would be returned on the NXT
+ */
+int AnalogSensorHelpers::NXTRawValue(int val)
+{
+    return val * EV3SensorConstants::NXT_ADC_RES / EV3SensorConstants::ADC_RES;
+}
+
+/**
+ * Return the equivalent NXT RAW sensor reading to the given voltage
  * @param val ADC voltage
  * @return The reading that would be returned on the NXT
  */

@@ -26,15 +26,15 @@ namespace detail {
 
 	    /**
 	     * return the voltage present on pin 6 of the sensor port
-	     * @return voltage reading
+	     * @return raw ADC voltage reading
 	     */
-		virtual float getPin6() const override;
+		virtual int getPin6() const override;
 
 	    /**
 	     * return the voltage present on pin 1 of the sensor port
-	     * @return voltage reading
+	     * @return raw ADC voltage reading
 	     */
-		virtual float getPin1() const override;
+		virtual int getPin1() const override;
 
 	};
 

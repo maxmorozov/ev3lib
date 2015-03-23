@@ -31,7 +31,6 @@ HiTechnicGyro::~HiTechnicGyro()
 float HiTechnicGyro::getData() const
 {
 	return detail::AnalogSensorHelpers::NXTRawValue(m_port->getPin1()) - m_zero;
-
 }
 
 } /* namespace hardware */

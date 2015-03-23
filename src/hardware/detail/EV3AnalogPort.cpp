@@ -32,20 +32,20 @@ EV3AnalogPort::~EV3AnalogPort()
 
 /**
  * return the voltage present on pin 6 of the sensor port
- * @return voltage reading
+ * @return raw ADC voltage reading
  */
-float EV3AnalogPort::getPin6() const
+int EV3AnalogPort::getPin6() const
 {
-    return m_manager->m_analogDevice.getSensorData()->InPin6[m_port] * EV3SensorConstants::ADC_REF / EV3SensorConstants::ADC_RES;
+    return m_manager->m_analogDevice.getSensorData()->InPin6[m_port];
 }
 
 /**
  * return the voltage present on pin 1 of the sensor port
- * @return voltage reading
+ * @return raw ADC voltage reading
  */
-float EV3AnalogPort::getPin1() const
+int EV3AnalogPort::getPin1() const
 {
-    return m_manager->m_analogDevice.getSensorData()->InPin1[m_port] * EV3SensorConstants::ADC_REF / EV3SensorConstants::ADC_RES;
+    return m_manager->m_analogDevice.getSensorData()->InPin1[m_port];
 }
 
 

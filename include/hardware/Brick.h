@@ -12,6 +12,7 @@
 #include <hardware/Button.h>
 #include <hardware/UnregulatedMotor.h>
 #include <hardware/HiTechnicGyro.h>
+#include <hardware/AnalogSensor.h>
 #include <hardware/Battery.h>
 
 namespace ev3lib {
@@ -52,6 +53,8 @@ public:
 	UnregulatedMotor getMotor(Motors id);
 
 	HiTechnicGyro getGyro(Sensors id);
+
+	AnalogSensor getAnalog(Sensors id);
 
 	Battery getBattery();
 
