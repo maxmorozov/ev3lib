@@ -27,6 +27,7 @@ public:
 	float getData() const;
 };
 
+
 } /* namespace hardware */
 } /* namespace ev3lib */
 

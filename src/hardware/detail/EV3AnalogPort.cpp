@@ -7,6 +7,7 @@
 
 #include "EV3AnalogPort.h"
 #include "EV3SensorConstants.h"
+#include "EV3SensorType.h"
 
 namespace ev3lib {
 namespace hardware {
@@ -46,6 +47,58 @@ int EV3AnalogPort::getPin6() const
 int EV3AnalogPort::getPin1() const
 {
     return m_manager->m_analogDevice.getSensorData()->InPin1[m_port];
+}
+
+/**
+ * sets the sensor type.
+ * @return success status
+ */
+bool EV3AnalogPort::setType(int type)
+{
+    bool ret = true;
+    switch(EV3SensorType(type))
+    {
+    case EV3SensorType::NO_SENSOR:
+    case EV3SensorType::SWITCH:
+    case EV3SensorType::TEMPERATURE:
+    case EV3SensorType::CUSTOM:
+    case EV3SensorType::ANGLE:
+        setPinMode(AnalogMode::Float);
+        break;
+    case EV3SensorType::LIGHT_ACTIVE:
+    case EV3SensorType::SOUND_DBA:
+    case EV3SensorType::REFLECTION:
+        setPinMode(AnalogMode::Set|AnalogMode::Pin5);
+        break;
+    case EV3SensorType::LIGHT_INACTIVE:
+    case EV3SensorType::SOUND_DB:
+        setPinMode(AnalogMode::Set);
+        break;
+    case EV3SensorType::LOWSPEED:
+        setPinMode(AnalogMode::Set);
+        break;
+    case EV3SensorType::LOWSPEED_9V:
+        setPinMode(AnalogMode::Set|AnalogMode::Pin1);
+        break;
+    case EV3SensorType::COLORFULL:
+    case EV3SensorType::COLORRED:
+    case EV3SensorType::COLORGREEN:
+    case EV3SensorType::COLORBLUE:
+    case EV3SensorType::COLORNONE:
+        // Sensor type and pin modes are aligned
+        setPinMode(AnalogMode(type));
+        break;
+
+    default:
+        ret = false;
+    }
+    return ret;
+}
+
+bool EV3AnalogPort::setPinMode(AnalogMode mode)
+{
+	m_manager->setPortMode(m_port, PortType::Sensor, mode);
+	return true;
 }
 
 

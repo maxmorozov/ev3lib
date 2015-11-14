@@ -5,8 +5,8 @@
  *      Author: Max
  */
 
-#include <hardware/HiTechnicGyro.h>
-#include "detail/AnalogSensorHelpers.h"
+#include <hardware/sensor/HiTechnicGyro.h>
+#include "../detail/AnalogSensorHelpers.h"
 
 namespace ev3lib {
 namespace hardware {

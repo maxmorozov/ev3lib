@@ -18,8 +18,13 @@ namespace hardware {
  * Returns raw ADC output value
  */
 class AnalogSensor {
-private:
+protected:
 	std::unique_ptr<detail::AnalogPort> m_port;
+    int currentType = -1;
+
+protected:
+	void switchType(int newType);
+
 public:
 	AnalogSensor(std::unique_ptr<detail::AnalogPort>&& port);
 	AnalogSensor(AnalogSensor&& other);

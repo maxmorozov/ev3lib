@@ -100,6 +100,12 @@ namespace detail {
 	     * @return raw ADC voltage reading
 	     */
 		virtual int getPin1() const = 0;
+
+	    /**
+	     * sets the sensor type.
+	     * @return success status
+	     */
+		virtual bool setType(int mode) = 0;
 	};
 
 	/**
@@ -123,6 +129,10 @@ namespace detail {
 		 */
 		virtual short getBatteryCurrent() const = 0;
 	};
+
+	inline AnalogMode operator | (AnalogMode left, AnalogMode right) {
+		return AnalogMode(int(left) | int(right));
+	}
 
 }}}
 

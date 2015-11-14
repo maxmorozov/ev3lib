@@ -11,8 +11,9 @@
 #include <hardware/detail/ev3_brick.h>
 #include <hardware/Button.h>
 #include <hardware/UnregulatedMotor.h>
-#include <hardware/HiTechnicGyro.h>
-#include <hardware/AnalogSensor.h>
+#include <hardware/sensor/HiTechnicGyro.h>
+#include <hardware/sensor/AnalogSensor.h>
+#include <hardware/sensor/NXTLightSensor.h>
 #include <hardware/Battery.h>
 
 namespace ev3lib {
@@ -55,6 +56,8 @@ public:
 	HiTechnicGyro getGyro(Sensors id);
 
 	AnalogSensor getAnalog(Sensors id);
+
+	NXTLightSensor getNxtLight(Sensors id);
 
 	Battery getBattery();
 

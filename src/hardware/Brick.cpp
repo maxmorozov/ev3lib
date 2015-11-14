@@ -33,6 +33,10 @@ AnalogSensor Brick::getAnalog(Sensors id) {
 
 }
 
+NXTLightSensor Brick::getNxtLight(Sensors id) {
+	return std::move(NXTLightSensor(std::move(m_brick.getSensorsManager()->getAnalogPort((int)id))));
+}
+
 Battery Brick::getBattery() {
 	return Battery(m_brick.getBattery());
 }

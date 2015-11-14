@@ -4,7 +4,7 @@
  *  Created on: 08 џэт. 2014 у.
  *      Author: Max
  */
-#include <hardware/EV3UartSensor.h>
+#include <hardware/sensor/EV3UartSensor.h>
 
 namespace ev3lib {
 namespace hardware {
