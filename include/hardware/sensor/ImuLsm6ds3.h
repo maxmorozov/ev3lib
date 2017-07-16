@@ -19,7 +19,7 @@ namespace hardware {
 		friend class AccelerometerMode;
 		friend class GyroMode;
 	public:
-		static const long SCALE_SWITCH_DELAY = 10;
+		static const int SCALE_SWITCH_DELAY = 10;
 
 		//Return device to the state right after power on
 	    static const uint8_t DEVICE_RESET  = 0x11;
