@@ -49,6 +49,17 @@ namespace detail {
 			//TODO add error checking using exceptions
 			return m_device.write(command.buffer(), CommandType::size);
 		}
+
+		ssize_t sendCommand(const uint8_t* command, size_t size) {
+			//TODO add error checking using exceptions
+			return m_device.write(command, size);
+		}
+
+		//Writes the command into the file.
+		//Returns the number of written bytes or -1
+		ssize_t ioctl(unsigned long command, const void* data) {
+			return m_device.ioctl(command, data);
+		}
 	};
 
 	//Initialization

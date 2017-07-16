@@ -7,12 +7,15 @@
 
 #include <boost/exception/all.hpp>
 #include <stdexcept>
+#include <algorithm>
 
 #include <hardware/detail/lms2012/ev3_constants.h>
+#include "exceptions/EV3HardwareExceptions.h"
 
 #include "EV3MotorPort.h"
 #include "EV3DeviceManager.h"
 #include "EV3AnalogPort.h"
+#include "EV3UartPort.h"
 
 
 namespace ev3lib {
@@ -20,14 +23,15 @@ namespace hardware {
 namespace detail {
 
 namespace {
-	typedef boost::error_info<struct tag_std_range_min,size_t> std_range_min;
-	typedef boost::error_info<struct tag_std_range_max,size_t> std_range_max;
-	typedef boost::error_info<struct tag_std_range_index,size_t> std_range_index;
-
 	typedef BufferCommand<unsigned char, 2> DCMCommand;
 }
 
 EV3DeviceManager::EV3DeviceManager() {
+	std::fill_n(m_openPorts, count_of(m_openPorts), nullptr);
+}
+
+EV3DeviceManager::~EV3DeviceManager() {
+	std::for_each(m_openPorts, m_openPorts + count_of(m_openPorts), [](DetachSubscriber* item) {if (item != nullptr) item->detach();});
 }
 
 SensorType EV3DeviceManager::getSensorType(size_t port) const
@@ -59,8 +63,40 @@ void EV3DeviceManager::setPortMode(size_t port, PortType type, AnalogMode mode)
 	m_dcmDevice.sendCommand(command);
 }
 
+void EV3DeviceManager::disconnect(size_t port, PortType type)
+{
+    if (type == PortType::Sensor) {
+		m_openPorts[port] = nullptr;
+	}
+	setPortMode(port, type, AnalogMode::Disconnected);
+}
+
+void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
+    if (port >= count_of(m_openPorts)) {
+		throw boost::enable_error_info(std::range_error("Sensor port index is out of range")) <<
+			std_range_min(0) <<
+			std_range_max(EV3SensorConstants::PORTS - 1) <<
+			std_range_index(port);
+	}
+
+    if (m_openPorts[port] == nullptr) {
+    	setPortMode(port, PortType::Sensor, AnalogMode::Connected);
+    	m_openPorts[port] = sensor;
+		setPortMode(port, PortType::Sensor, AnalogMode::Float);
+    }
+    throw already_open_error("Port is already opened");
+}
+
 std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
-	return std::unique_ptr<AnalogPort>(new EV3AnalogPort(this, port));
+   	std::unique_ptr<EV3AnalogPort> sensor(new EV3AnalogPort(this, port));
+   	connectSensor(port, sensor.get());
+	return sensor;
+}
+
+std::unique_ptr<UartPort> EV3DeviceManager::getUartPort(size_t port) {
+	std::unique_ptr<EV3UartPort> sensor(new EV3UartPort(this, port));
+   	connectSensor(port, sensor.get());
+	return sensor;
 }
 
 /**
@@ -69,6 +105,7 @@ std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
 MotorPort* EV3DeviceManager::getMotorPort(size_t port) {
 	if (port < EV3SensorConstants::MOTORS) {
 		if (!m_ports[port]) {
+	    	setPortMode(port, PortType::Motor, AnalogMode::Connected);
 			m_ports[port].reset(new EV3MotorPort(this, port));
 		}
 		return m_ports[port].get();

@@ -10,12 +10,13 @@
 
 #include <hardware/detail/ev3_device.h>
 #include "EV3DeviceManager.h"
+#include "DetachSubscriber.h"
 
 namespace ev3lib {
 namespace hardware {
 namespace detail {
 
-	class EV3AnalogPort: public AnalogPort {
+	class EV3AnalogPort: public AnalogPort, public DetachSubscriber {
 	private:
 		EV3DeviceManager* m_manager;
 		size_t m_port;
@@ -43,6 +44,8 @@ namespace detail {
 	     * @return success status
 	     */
 		virtual bool setType(int mode) override;
+
+		virtual void detach() override;
 	};
 
 } /* namespace detail */

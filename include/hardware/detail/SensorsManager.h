@@ -1,16 +1,18 @@
 /*
- * device_manager.h
+ * SensorManager.h
  *
  *  Created on: 11 џэт. 2014 у.
  *      Author: Max
  */
 
-#ifndef EV3LIB_DEVICE_MANAGER_H_
-#define EV3LIB_DEVICE_MANAGER_H_
+#ifndef EV3LIB_SENSOR_MANAGER_H_
+#define EV3LIB_SENSOR_MANAGER_H_
 
 #include <utilities.h>
 #include <stddef.h>
 #include <memory>
+#include <hardware/detail/ports/AnalogPort.h>
+#include <hardware/detail/ports/UartPort.h>
 
 namespace ev3lib {
 namespace hardware {
@@ -88,26 +90,6 @@ namespace detail {
 		Sensor = 1
 	};
 
-	struct AnalogPort: public destructible {
-	    /**
-	     * return the voltage present on pin 6 of the sensor port
-	     * @return raw ADC voltage reading
-	     */
-		virtual int getPin6() const = 0;
-
-	    /**
-	     * return the voltage present on pin 1 of the sensor port
-	     * @return raw ADC voltage reading
-	     */
-		virtual int getPin1() const = 0;
-
-	    /**
-	     * sets the sensor type.
-	     * @return success status
-	     */
-		virtual bool setType(int mode) = 0;
-	};
-
 	/**
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
@@ -117,7 +99,11 @@ namespace detail {
 
 		virtual void setPortMode(size_t port, PortType type, AnalogMode mode) = 0;
 
+		virtual void disconnect(size_t port, PortType type) = 0;
+
 		virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) = 0;
+
+		virtual std::unique_ptr<UartPort> getUartPort(size_t port) = 0;
 
 		/**
 		 * Current flowing from the battery
@@ -139,4 +125,4 @@ namespace detail {
 
 
 
-#endif /* EV3LIB_DEVICE_MANAGER_H_ */
+#endif /* EV3LIB_SENSOR_MANAGER_H_ */

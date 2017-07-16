@@ -22,13 +22,12 @@ namespace {
 EV3AnalogPort::EV3AnalogPort(EV3DeviceManager* manager, size_t port)
 	: m_manager(manager), m_port(port)
 {
-	m_manager->setPortMode(m_port, PortType::Sensor, AnalogMode::Connected);
-	m_manager->setPortMode(m_port, PortType::Sensor, AnalogMode::Float);
 }
 
 EV3AnalogPort::~EV3AnalogPort()
 {
-	m_manager->setPortMode(m_port, PortType::Sensor, AnalogMode::Disconnected);
+    if (m_manager)
+    	m_manager->disconnect(m_port, PortType::Sensor);
 }
 
 /**
@@ -37,7 +36,10 @@ EV3AnalogPort::~EV3AnalogPort()
  */
 int EV3AnalogPort::getPin6() const
 {
-    return m_manager->m_analogDevice.getSensorData()->InPin6[m_port];
+    if (m_manager)
+    	return m_manager->m_analogDevice.getSensorData()->InPin6[m_port];
+    else
+		return 0;
 }
 
 /**
@@ -46,7 +48,10 @@ int EV3AnalogPort::getPin6() const
  */
 int EV3AnalogPort::getPin1() const
 {
-    return m_manager->m_analogDevice.getSensorData()->InPin1[m_port];
+    if (m_manager)
+	    return m_manager->m_analogDevice.getSensorData()->InPin1[m_port];
+	else
+		return 0;
 }
 
 /**
@@ -97,8 +102,17 @@ bool EV3AnalogPort::setType(int type)
 
 bool EV3AnalogPort::setPinMode(AnalogMode mode)
 {
-	m_manager->setPortMode(m_port, PortType::Sensor, mode);
-	return true;
+    if (m_manager) {
+		m_manager->setPortMode(m_port, PortType::Sensor, mode);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void EV3AnalogPort::detach() 
+{
+	m_manager = nullptr;
 }
 
 

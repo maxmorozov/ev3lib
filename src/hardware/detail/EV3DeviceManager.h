@@ -17,6 +17,7 @@
 #include <hardware/detail/UIManager.h>
 #include <hardware/detail/BatteryManager.h>
 #include "EV3SensorConstants.h"
+#include "DetachSubscriber.h"
 
 namespace ev3lib {
 namespace hardware {
@@ -29,6 +30,7 @@ struct DeviceInfo {
 class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager, public BatteryManager, boost::noncopyable {
 	friend class EV3MotorPort;
 	friend class EV3AnalogPort;
+	friend class EV3UartPort;
 private:
 	EV3Device<device_type::dcm> m_dcmDevice;
 
@@ -43,17 +45,25 @@ private:
 
 	std::unique_ptr<MotorPort> m_ports[EV3SensorConstants::MOTORS];
 
+	DetachSubscriber* m_openPorts[EV3SensorConstants::PORTS];
+
 	void setDeviceType(DeviceInfo& deviceInfo, SensorType type, int mode);
 
+	void connectSensor(size_t port, DetachSubscriber* sensor);
 public:
 	EV3DeviceManager();
+	~EV3DeviceManager();
 
 	virtual SensorType getSensorType(size_t port) const override;
 	virtual ConnectionType getConnectionType(size_t port) const override;
 
 	virtual void setPortMode(size_t port, PortType type, AnalogMode mode) override;
 
+	virtual void disconnect(size_t port, PortType type) override;
+
 	virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) override;
+
+	virtual std::unique_ptr<UartPort> getUartPort(size_t port) override;
 
 	/**
 	 * Returns internal motor port structure. The clients should not delete it

@@ -8,6 +8,7 @@
 #ifndef EV3_TYPES_H_
 #define EV3_TYPES_H_
 
+#include <sys/ioctl.h>
 #include <hardware/detail/lms2012/ev3_constants.h>
 
 //#define   DISABLE_OLD_COLOR             //!< Don't support NXT color sensor
@@ -192,6 +193,30 @@ UART;
  *
  *  \n
  */
+
+
+typedef   struct
+{
+  DATA8     Connection[INPUTS];
+  DATA8     Type[INPUTS];
+  DATA8     Mode[INPUTS];
+}
+DEVCON;
+
+
+typedef   struct
+{
+  TYPES   TypeData;
+  DATA8   Port;
+  DATA8   Mode;
+}
+UARTCTL;
+
+static const int UART_SET_CONN        = _IOWR('u',0,DEVCON);
+static const int UART_READ_MODE_INFO  = _IOWR('u',1,UARTCTL);
+static const int UART_NACK_MODE_INFO  = _IOWR('u',2,UARTCTL);
+static const int UART_CLEAR_CHANGED   = _IOWR('u',3,UARTCTL);
+
 
 /*! \page UiModuleMemory
  *

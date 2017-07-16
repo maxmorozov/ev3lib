@@ -41,6 +41,11 @@ Battery Brick::getBattery() {
 	return Battery(m_brick.getBattery());
 }
 
+ImuLsm6ds3 Brick::getImu(Sensors id) {
+	return std::move(ImuLsm6ds3(std::move(m_brick.getSensorsManager()->getUartPort((int)id))));
+
+}
+
 
 } /* namespace hardware */
 } /* namespace ev3lib */

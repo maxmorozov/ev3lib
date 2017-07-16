@@ -24,26 +24,30 @@ namespace ev3lib {
 		}
 	};
 
-/*
-	class io_error: public std::runtime_error {
-	private:
-		int m_errno;
+	class already_open_error: public std::runtime_error, public boost::exception
+	{
 	public:
-		io_error(const std::string& message, int errno)
-			: std::runtime_error(message), m_errno(errno)
+		already_open_error(const std::string& message)
+			: std::runtime_error(message)
 		{
 		}
-
-		int code() const { return m_errno; }
 	};
 
-	inline int check(int result, const char* message) {
-		if (result < 0) {
-			throw io_error(message, errno);
+	class device_error: public std::runtime_error, public boost::exception
+	{
+	public:
+		device_error(const std::string& message)
+			: std::runtime_error(message)
+		{
 		}
-		return result;
+	};
+
+
+	namespace {
+		typedef boost::error_info<struct tag_std_range_min,size_t> std_range_min;
+		typedef boost::error_info<struct tag_std_range_max,size_t> std_range_max;
+		typedef boost::error_info<struct tag_std_range_index,size_t> std_range_index;
 	}
-*/
 
 }
 

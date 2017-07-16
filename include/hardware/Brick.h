@@ -14,6 +14,7 @@
 #include <hardware/sensor/HiTechnicGyro.h>
 #include <hardware/sensor/AnalogSensor.h>
 #include <hardware/sensor/NXTLightSensor.h>
+#include <hardware/sensor/ImuLsm6ds3.h>
 #include <hardware/Battery.h>
 
 namespace ev3lib {
@@ -58,6 +59,8 @@ public:
 	AnalogSensor getAnalog(Sensors id);
 
 	NXTLightSensor getNxtLight(Sensors id);
+
+	ImuLsm6ds3 getImu(Sensors id);
 
 	Battery getBattery();
 

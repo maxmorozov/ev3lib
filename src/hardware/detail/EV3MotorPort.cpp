@@ -31,6 +31,7 @@ namespace detail {
 
 	EV3MotorPort::~EV3MotorPort() {
 		close();
+		m_manager->disconnect(m_port, PortType::Motor);
 	}
 
 
@@ -86,8 +87,6 @@ namespace detail {
 	}
 
 	bool EV3MotorPort::open() {
-		m_manager->setPortMode(m_port, PortType::Motor, AnalogMode::Connected);
-
 		try {
 			Command2 command;
 			command[0] = (unsigned char)OutputCommand::Connect;
@@ -108,8 +107,6 @@ namespace detail {
 		} catch (const io_error& e) {
 			//Bug in the driver. Always throws the exception
 		}
-
-		m_manager->setPortMode(m_port, PortType::Motor, AnalogMode::Disconnected);
 	}
 
 

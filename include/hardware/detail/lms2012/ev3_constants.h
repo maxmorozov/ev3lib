@@ -107,6 +107,11 @@ namespace lms2012 {
 	static const int DEVICE_LOGBUF_SIZE = 300;                                  //!< Device log buffer size (black layer buffer)
 	static const int MIN_LIVE_UPDATE_TIME = 10;                                 //!< [mS] Min sample time when live update
 
+	//UART
+	static const int UART_PORT_CHANGED  = 0x01;        //!< Input port changed
+	static const int UART_DATA_READY    = 0x08;        //!< Data is ready
+	static const int UART_WRITE_REQUEST = 0x10;        //!< Write request
+
 }
 } /* namespace detail */
 } /* namespace hardware */
