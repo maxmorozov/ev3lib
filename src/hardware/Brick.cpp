@@ -24,17 +24,17 @@ UnregulatedMotor Brick::getMotor(Motors id) {
 }
 
 HiTechnicGyro Brick::getGyro(Sensors id) {
-	return std::move(HiTechnicGyro(std::move(m_brick.getSensorsManager()->getAnalogPort((int)id))));
+	return HiTechnicGyro(m_brick.getSensorsManager()->getAnalogPort((int)id));
 
 }
 
 AnalogSensor Brick::getAnalog(Sensors id) {
-	return std::move(AnalogSensor(std::move(m_brick.getSensorsManager()->getAnalogPort((int)id))));
+	return AnalogSensor(m_brick.getSensorsManager()->getAnalogPort((int)id));
 
 }
 
 NXTLightSensor Brick::getNxtLight(Sensors id) {
-	return std::move(NXTLightSensor(std::move(m_brick.getSensorsManager()->getAnalogPort((int)id))));
+	return NXTLightSensor(m_brick.getSensorsManager()->getAnalogPort((int)id));
 }
 
 Battery Brick::getBattery() {
@@ -42,7 +42,7 @@ Battery Brick::getBattery() {
 }
 
 ImuLsm6ds3 Brick::getImu(Sensors id) {
-	return std::move(ImuLsm6ds3(std::move(m_brick.getSensorsManager()->getUartPort((int)id))));
+	return ImuLsm6ds3(m_brick.getSensorsManager()->getUartPort((int)id));
 
 }
 
