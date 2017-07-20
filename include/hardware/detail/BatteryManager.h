@@ -1,8 +1,5 @@
 /*
  * BatteryManager.h
- *
- *  Created on: 28 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef BATTERYMANAGER_H_

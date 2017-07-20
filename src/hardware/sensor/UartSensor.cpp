@@ -1,8 +1,5 @@
 /*
  * EV3UartSensor.cpp
- *
- *  Created on: 08 џэт. 2014 у.
- *      Author: Max
  */
 #include <exceptions/EV3HardwareExceptions.h>
 #include <hardware/sensor/UartSensor.h>

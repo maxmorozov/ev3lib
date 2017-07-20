@@ -1,8 +1,5 @@
 /*
  * ev3_device.h
- *
- *  Created on: 07 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_EV3_DEVICE_H_

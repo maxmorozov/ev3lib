@@ -1,14 +1,12 @@
 /*
  * Battery.h
- *
- *  Created on: 28 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef BATTERY_H_
 #define BATTERY_H_
 
 #include <hardware/detail/Power.h>
+#include "detail/Power.h"
 
 namespace ev3lib {
 namespace hardware {

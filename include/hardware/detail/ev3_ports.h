@@ -1,8 +1,5 @@
 /*
  * ev3_ports.h
- *
- *  Created on: 07 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_EV3_PORTS_H_

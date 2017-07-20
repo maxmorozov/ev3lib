@@ -1,8 +1,5 @@
 /*
  * MotorManager.h
- *
- *  Created on: 18 џэт. 2015 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_MOTORMANAGER_H_

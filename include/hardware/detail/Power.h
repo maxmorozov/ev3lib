@@ -1,8 +1,5 @@
 /*
  * Power.h
- *
- *  Created on: 28 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef POWER_H_

@@ -1,8 +1,5 @@
 /*
  * AnalogSensor.cpp
- *
- *  Created on: 23 марта 2015 г.
- *      Author: Max
  */
 
 #include <stdexcept>

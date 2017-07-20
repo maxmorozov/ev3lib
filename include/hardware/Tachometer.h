@@ -1,8 +1,5 @@
 /*
  * Tachometer.h
- *
- *  Created on: 24 џэт. 2015 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_TACHOMETER_H_

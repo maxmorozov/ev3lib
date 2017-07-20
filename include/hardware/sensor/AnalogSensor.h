@@ -1,8 +1,5 @@
 /*
  * AnalogSensor.h
- *
- *  Created on: 23 марта 2015 г.
- *      Author: Max
  */
 
 #ifndef EV3LIB_ANALOGSENSOR_H_

@@ -1,8 +1,5 @@
 /*
  * ev3constants.h
- *
- *  Created on: 28 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef EV3CONSTANTS_H_

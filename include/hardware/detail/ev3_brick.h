@@ -1,8 +1,5 @@
 /*
  * ev3_brick.h
- *
- *  Created on: 11 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_EV3_BRICK_H_

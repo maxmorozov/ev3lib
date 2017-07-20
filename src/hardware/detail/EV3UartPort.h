@@ -1,6 +1,7 @@
 #ifndef EV3UARTPORT_H_
 #define EV3UARTPORT_H_
 
+#include <vector>
 #include <hardware/detail/ev3_device.h>
 #include <hardware/detail/lejos/uart_data.h>
 #include "EV3DeviceManager.h"

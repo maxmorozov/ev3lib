@@ -1,8 +1,5 @@
 /*
  * EV3UartPort.h
- *
- *  Created on: 08 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_EV3UARTPORT_H_

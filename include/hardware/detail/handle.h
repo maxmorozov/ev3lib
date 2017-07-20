@@ -1,8 +1,5 @@
 /*
  * handle.h
- *
- *  Created on: 07 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_HANDLE_H_

@@ -1,8 +1,5 @@
 /*
  * SensorManager.h
- *
- *  Created on: 11 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_SENSOR_MANAGER_H_

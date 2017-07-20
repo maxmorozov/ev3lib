@@ -1,8 +1,5 @@
 /*
  * Ev3MotorPort.cpp
- *
- *  Created on: 18 џэт. 2015 у.
- *      Author: Max
  */
 
 #include <stdexcept>

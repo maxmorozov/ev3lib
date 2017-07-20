@@ -1,8 +1,5 @@
 /*
  * EV3DeviceManager.cpp
- *
- *  Created on: 24 џэт. 2015 у.
- *      Author: Max
  */
 
 #include <boost/exception/all.hpp>
@@ -88,13 +85,13 @@ void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
 }
 
 std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
-   	std::unique_ptr<EV3AnalogPort> sensor(new EV3AnalogPort(this, port));
+   	auto sensor = std::make_unique<EV3AnalogPort>(this, port);
    	connectSensor(port, sensor.get());
 	return sensor;
 }
 
 std::unique_ptr<UartPort> EV3DeviceManager::getUartPort(size_t port) {
-	std::unique_ptr<EV3UartPort> sensor(new EV3UartPort(this, port));
+	auto sensor = std::make_unique<EV3UartPort>(this, port);
    	connectSensor(port, sensor.get());
 	return sensor;
 }

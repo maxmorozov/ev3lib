@@ -1,8 +1,5 @@
 /*
  * motor_data.h
- *
- *  Created on: 18 џэт. 2015 у.
- *      Author: Max
  */
 
 #ifndef MOTOR_DATA_H_

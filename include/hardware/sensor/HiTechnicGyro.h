@@ -1,8 +1,5 @@
 /*
  * HiTechnicGyro.h
- *
- *  Created on: 23 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef EV3LIB_HITECHNICGYRO_H_

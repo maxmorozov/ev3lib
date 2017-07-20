@@ -1,8 +1,5 @@
 /*
  * device_traits.h
- *
- *  Created on: 07 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3_DEVICE_TRAITS_H_

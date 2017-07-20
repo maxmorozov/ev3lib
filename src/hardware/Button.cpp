@@ -1,8 +1,5 @@
 /*
  * Button.cpp
- *
- *  Created on: 24 џэт. 2015 у.
- *      Author: Max
  */
 
 #include <hardware/Button.h>

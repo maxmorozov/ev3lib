@@ -1,8 +1,5 @@
 /*
  * ev3_brick.cpp
- *
- *  Created on: 11 џэт. 2014 у.
- *      Author: Max
  */
 
 #include <hardware/detail/ev3_brick.h>

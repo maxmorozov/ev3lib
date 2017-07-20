@@ -1,8 +1,5 @@
 /*
  * IoException.h
- *
- *  Created on: 11 џэт. 2014 у.
- *      Author: Max
  */
 
 #ifndef EV3LIB_HARDWARE_EXCEPTIONS_H_

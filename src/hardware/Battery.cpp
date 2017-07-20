@@ -1,8 +1,5 @@
 /*
  * Battery.cpp
- *
- *  Created on: 28 февр. 2015 г.
- *      Author: Max
  */
 
 #include <hardware/Battery.h>

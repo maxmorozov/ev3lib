@@ -1,8 +1,5 @@
 /*
  * HiTechnicGyro.cpp
- *
- *  Created on: 23 февр. 2015 г.
- *      Author: Max
  */
 
 #include <hardware/sensor/HiTechnicGyro.h>

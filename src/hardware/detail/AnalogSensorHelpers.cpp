@@ -1,10 +1,8 @@
 /*
  * AnalogSensorHelpers.cpp
- *
- *  Created on: 23 февр. 2015 г.
- *      Author: Max
  */
 
+#include <cmath>
 #include "EV3SensorConstants.h"
 #include "AnalogSensorHelpers.h"
 
@@ -50,7 +48,7 @@ int AnalogSensorHelpers::NXTRawValue(int val)
  */
 int AnalogSensorHelpers::NXTRawIntValue(float val)
 {
-	return (int)(NXTRawValue(val) + 0.5f);
+    return static_cast<int>(std::lround(NXTRawValue(val)));
 }
 
 } /* namespace detail */

@@ -1,6 +1,5 @@
 /*
  * NXTLightSensor.h
- *
  */
 
 #ifndef EV3LIB_NXT_LIGHT_SENSOR_H_
