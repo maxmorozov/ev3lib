@@ -18,7 +18,7 @@ namespace ev3lib {
 			void updateState();
 
 		public:
-			UnregulatedMotor(detail::MotorPort* port);
+			explicit UnregulatedMotor(detail::MotorPort* port);
 
 			/**
 			 * Sets the output power in percents

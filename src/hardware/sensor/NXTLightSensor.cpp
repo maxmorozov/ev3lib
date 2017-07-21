@@ -15,30 +15,12 @@ NXTLightSensor::NXTLightSensor(std::unique_ptr<detail::AnalogPort>&& port)
 
 }
 
-NXTLightSensor::NXTLightSensor(NXTLightSensor&& other)
+NXTLightSensor::NXTLightSensor(NXTLightSensor&& other) noexcept
 	: AnalogSensor(std::move(other)), floodlight(other.floodlight)
 {
 
 }
 
-
-/**
- * Switch to the selected type (if not already in that type) and delay for the
- * specified period to allow the sensor to settle in the new state. <br>
- * NOTE: This method is intended for use with NXT sensor drivers that use a
- * sensor type to specify the operating mode.
- * @param newType The type to switch to.
- * @param switchDelay Time in mS to delay after the switch.
- */
-void NXTLightSensor::switchType(int newType)
-{
-    if (currentType != newType)
-    {
-        if (!m_port->setType(newType))
-            throw std::logic_error("Invalid sensor mode");
-        currentType = newType;
-    }
-}
 
 void NXTLightSensor::setFloodlight(bool floodlight)
 {

@@ -14,13 +14,13 @@ HiTechnicGyro::HiTechnicGyro(std::unique_ptr<detail::AnalogPort>&& port)
 
 }
 
-HiTechnicGyro::HiTechnicGyro(HiTechnicGyro&& other)
+HiTechnicGyro::HiTechnicGyro(HiTechnicGyro&& other) noexcept
 	: m_port(std::move(other.m_port)), m_zero(614.0f)
 {
 
 }
 
-HiTechnicGyro::~HiTechnicGyro()
+HiTechnicGyro::~HiTechnicGyro() noexcept
 {
 }
 

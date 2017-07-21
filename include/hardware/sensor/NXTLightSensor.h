@@ -17,11 +17,9 @@ class NXTLightSensor : public AnalogSensor {
 private:
 	bool floodlight = false;
 
-	void switchType(int newType);
-
 public:
-	NXTLightSensor(std::unique_ptr<detail::AnalogPort>&& port);
-	NXTLightSensor(NXTLightSensor&& other);
+	explicit NXTLightSensor(std::unique_ptr<detail::AnalogPort>&& port);
+	NXTLightSensor(NXTLightSensor&& other) noexcept;
 
 	/**
 	 * Turns onboard light source of the sensor on or off

@@ -17,9 +17,9 @@ private:
     float m_zero;
 
 public:
-	HiTechnicGyro(std::unique_ptr<detail::AnalogPort>&& port);
-	HiTechnicGyro(HiTechnicGyro&& other);
-	virtual ~HiTechnicGyro();
+	explicit HiTechnicGyro(std::unique_ptr<detail::AnalogPort>&& port);
+	HiTechnicGyro(HiTechnicGyro&& other) noexcept;
+	virtual ~HiTechnicGyro() noexcept;
 
 	float getData() const;
 };

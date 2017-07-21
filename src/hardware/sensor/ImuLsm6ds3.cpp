@@ -15,7 +15,7 @@ ImuLsm6ds3::ImuLsm6ds3(std::unique_ptr<detail::UartPort>&& port, bool rawMode)
 }
 
 //Recreate modes because they have pointer to the sensor object
-ImuLsm6ds3::ImuLsm6ds3(ImuLsm6ds3&& other)
+ImuLsm6ds3::ImuLsm6ds3(ImuLsm6ds3&& other) noexcept
 	: UartSensor(std::move(other.m_port), std::move(createModes(this))),
 	  m_accelScale(other.m_accelScale), m_gyroScale(other.m_gyroScale), m_rawMode(other.m_rawMode)
 {
@@ -49,7 +49,7 @@ void ImuLsm6ds3::reset()
  */
 bool ImuLsm6ds3::setAccelerometerScale(size_t scaleNo)
 {
-    if (scaleNo >=0 && scaleNo < count_of(accelScale)) {
+    if (scaleNo < count_of(accelScale)) {
     	m_accelScale = scaleNo;
         return setScale(ACC_SCALE_2G + scaleNo);
     }
@@ -64,7 +64,7 @@ bool ImuLsm6ds3::setAccelerometerScale(size_t scaleNo)
  */
 bool ImuLsm6ds3::setGyroscopeScale(size_t scaleNo)
 {
-    if (scaleNo >= 0 && scaleNo < count_of(gyroScale)) {
+    if (scaleNo < count_of(gyroScale)) {
     	m_gyroScale = scaleNo;
         return setScale(GYRO_SCALE_245DPS + scaleNo);
     }
@@ -116,7 +116,7 @@ bool ImuLsm6ds3::writeEeprom(int writeCommand, const int16_t* data, size_t size)
 
 bool ImuLsm6ds3::setScale(int scaleCommand)
 {
-    uint8_t command = scaleCommand;
+	auto command = (uint8_t)scaleCommand;
     bool success = m_port->write(&command, 0, sizeof(command)) == sizeof(command);
     if (success) {
     	std::this_thread::sleep_for(std::chrono::milliseconds(SCALE_SWITCH_DELAY));

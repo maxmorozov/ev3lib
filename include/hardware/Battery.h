@@ -15,7 +15,7 @@ class Battery {
 private:
 	detail::Power* m_power;
 public:
-	Battery(detail::Power* power);
+	explicit Battery(detail::Power* power);
 
 	/**
 	 * The NXT uses 6 batteries of 1500 mV each.

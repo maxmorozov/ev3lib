@@ -64,12 +64,12 @@ namespace hardware {
 	    	//Apply the current scale to the sample
 	    	virtual void scale(int16_t* buffer, float* sample, size_t offset) = 0;
 	    public:
-	    	BaseSensorMode(ImuLsm6ds3* sensor) : m_sensor(sensor) {}
+	    	explicit BaseSensorMode(ImuLsm6ds3* sensor) : m_sensor(sensor) {}
 
-			virtual size_t sampleSize() const override {
+			size_t sampleSize() const override {
 				return SAMPLE_SIZE;
 			}
-			virtual void fetchSample(float* sample, size_t offset) override {
+			void fetchSample(float* sample, size_t offset) override {
 				short buffer[SAMPLE_SIZE];
 
 				m_sensor->readSample(modeNo, buffer, SAMPLE_SIZE);
@@ -84,7 +84,7 @@ namespace hardware {
 	    class CombinedMode : public BaseSensorMode<6, 0> {
 	    protected:
 	    	//Apply the current scale to the sample
-	    	virtual void scale(int16_t* buffer, float* sample, size_t offset) {
+	    	void scale(int16_t* buffer, float* sample, size_t offset) override {
 	    		//Accelerometer
 	    		for (size_t i = 0; i < 3; ++i) {
 	    			sample[offset + i] = buffer[i] * m_sensor->getAccelScale();
@@ -95,7 +95,7 @@ namespace hardware {
 	    	}
 
 	    public:
-	    	CombinedMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
+	    	explicit CombinedMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
 
 	    	virtual std::string getName() const override {
 				return "ALL";
@@ -109,7 +109,7 @@ namespace hardware {
 	    class AccelerometerMode : public BaseSensorMode<3, 1> {
 	    protected:
 	    	//Apply the current scale to the sample
-	    	virtual void scale(int16_t* buffer, float* sample, size_t offset) {
+	    	void scale(int16_t* buffer, float* sample, size_t offset) override {
 	    		//Accelerometer
 	    		for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
 	    			sample[offset + i] = buffer[i] * m_sensor->getAccelScale();
@@ -117,7 +117,7 @@ namespace hardware {
 	    	}
 
 	    public:
-	    	AccelerometerMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
+	    	explicit AccelerometerMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
 
 	    	virtual std::string getName() const override {
 				return "Acceleration";
@@ -127,7 +127,7 @@ namespace hardware {
 	    class GyroMode : public BaseSensorMode<3, 2> {
 	    protected:
 	    	//Apply the current scale to the sample
-	    	virtual void scale(int16_t* buffer, float* sample, size_t offset) {
+	    	void scale(int16_t* buffer, float* sample, size_t offset) override {
 	    		//Accelerometer
 	    		for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
 	    			sample[offset + i] = buffer[i] * m_sensor->getGyroScale();
@@ -135,7 +135,7 @@ namespace hardware {
 	    	}
 
 	    public:
-	    	GyroMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
+	    	explicit GyroMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
 
 	    	virtual std::string getName() const override {
 				return "Rate";
@@ -163,8 +163,8 @@ namespace hardware {
 	    void readSample(size_t mode, int16_t* buffer, size_t sampleSize);
 
 	public:
-	    ImuLsm6ds3(std::unique_ptr<detail::UartPort>&& port, bool rawMode = false);
-	    ImuLsm6ds3(ImuLsm6ds3&& other);
+	    explicit ImuLsm6ds3(std::unique_ptr<detail::UartPort>&& port, bool rawMode = false);
+	    ImuLsm6ds3(ImuLsm6ds3&& other) noexcept;
 
 	    void reset();
 

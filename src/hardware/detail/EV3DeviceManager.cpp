@@ -87,13 +87,13 @@ void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
 std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
    	auto sensor = std::make_unique<EV3AnalogPort>(this, port);
    	connectSensor(port, sensor.get());
-	return sensor;
+	return std::move(sensor);
 }
 
 std::unique_ptr<UartPort> EV3DeviceManager::getUartPort(size_t port) {
 	auto sensor = std::make_unique<EV3UartPort>(this, port);
    	connectSensor(port, sensor.get());
-	return sensor;
+	return std::move(sensor);
 }
 
 /**
