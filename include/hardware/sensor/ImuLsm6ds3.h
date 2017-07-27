@@ -19,7 +19,8 @@ namespace hardware {
 		friend class AccelerometerMode;
 		friend class GyroMode;
 	public:
-		static const int SCALE_SWITCH_DELAY = 10;
+		//static const int SCALE_SWITCH_DELAY = 10;
+		enum {SCALE_SWITCH_DELAY = 10};
 
 		//Return device to the state right after power on
 	    static const uint8_t DEVICE_RESET  = 0x11;
@@ -49,7 +50,7 @@ namespace hardware {
 	    static const uint8_t CALIBRATE_GYRO_2000DPS = 0x53;
 	    static const uint8_t CALIBRATE_GYRO_125DPS  = 0x54;
 
-	    static const int ACCEL_SCALE = std::numeric_limits<short>::max() + 1;
+	    static constexpr int ACCEL_SCALE = std::numeric_limits<short>::max() + 1;
 
 	private:
 	    template<size_t sample_size, size_t modeNo>
@@ -176,7 +177,7 @@ namespace hardware {
 		 * @param scaleNo scale range index
 		 * @return true if the current scale range has been successfully changed
 		 */
-		virtual bool setAccelerometerScale(size_t scaleNo) override;
+        bool setAccelerometerScale(size_t scaleNo) override;
 
 		/**
 		 * Changes the gyroscope full-scale range
@@ -184,7 +185,7 @@ namespace hardware {
 		 * @param scaleNo scale range index
 		 * @return true if the current scale range has been successfully changed
 		 */
-		virtual bool setGyroscopeScale(size_t scaleNo) override;
+        bool setGyroscopeScale(size_t scaleNo) override;
 
 		//EEPROM
 
@@ -196,7 +197,7 @@ namespace hardware {
 		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
-		virtual bool writeAccelerometerEeprom(size_t scaleNo, const int16_t* data, size_t size) override;
+        bool writeAccelerometerEeprom(size_t scaleNo, const int16_t* data, size_t size) override;
 
 		/**
 		 * Update gyroscope EEPROM
@@ -206,7 +207,7 @@ namespace hardware {
 		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
-		virtual bool writeGyroscopeEeprom(size_t scaleNo, const int16_t* data, size_t size) override;
+        bool writeGyroscopeEeprom(size_t scaleNo, const int16_t* data, size_t size) override;
 	};
 
 

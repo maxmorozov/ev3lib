@@ -16,9 +16,10 @@ ImuLsm6ds3::ImuLsm6ds3(std::unique_ptr<detail::UartPort>&& port, bool rawMode)
 
 //Recreate modes because they have pointer to the sensor object
 ImuLsm6ds3::ImuLsm6ds3(ImuLsm6ds3&& other) noexcept
-	: UartSensor(std::move(other.m_port), std::move(createModes(this))),
+	: UartSensor(std::move(other.m_port), std::move(other.m_modes)),
 	  m_accelScale(other.m_accelScale), m_gyroScale(other.m_gyroScale), m_rawMode(other.m_rawMode)
 {
+
 
 }
 

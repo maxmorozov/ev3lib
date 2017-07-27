@@ -25,7 +25,7 @@ namespace hardware {
 	public:
 		UartSensor(std::unique_ptr<detail::UartPort>&& port, std::vector<std::unique_ptr<SensorMode>>&& modes);
 		UartSensor(std::unique_ptr<detail::UartPort>&& port, std::vector<std::unique_ptr<SensorMode>>&& modes, size_t mode);
-		UartSensor(UartSensor&& other);
+		UartSensor(UartSensor&& other) noexcept ;
 
 		/**
 		 * Reset the sensor

@@ -25,7 +25,7 @@ handle::handle(const char* deviceName, int flags)
 	//printf("Device opened: %d\n", m_file);
 }
 
-handle::handle(handle&& other)
+handle::handle(handle&& other) noexcept
 	: m_file(other.m_file)
 {
 	other.m_file = 0;

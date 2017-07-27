@@ -1,8 +1,5 @@
 /*
  * AnalogSensorHelpers.h
- *
- *  Created on: 23 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef ANALOGSENSORHELPERS_H_
@@ -13,11 +10,9 @@ namespace hardware {
 namespace detail {
 
 class AnalogSensorHelpers {
-private:
-	AnalogSensorHelpers();
-	~AnalogSensorHelpers();
-
 public:
+    AnalogSensorHelpers() = delete;
+    ~AnalogSensorHelpers() = delete;
 
     /**
      * Helper method. Take a voltage and return it as a normalized value in the

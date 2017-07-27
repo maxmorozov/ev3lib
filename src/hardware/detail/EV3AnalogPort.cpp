@@ -99,7 +99,7 @@ bool EV3AnalogPort::setType(int type)
 
 bool EV3AnalogPort::setPinMode(AnalogMode mode)
 {
-    if (m_manager) {
+    if (m_manager != nullptr) {
 		m_manager->setPortMode(m_port, PortType::Sensor, mode);
 		return true;
 	} else {

@@ -24,10 +24,10 @@ namespace detail {
 	public:
 		explicit handle(int handle) : m_file(handle) {}
 		handle(const char* deviceName, int flags);
-		handle(handle&& other);
+		handle(handle&& other) noexcept;
 		~handle();
 
-		operator int() const {
+		explicit operator int() const {
 			return m_file;
 		}
 

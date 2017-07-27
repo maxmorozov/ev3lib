@@ -1,8 +1,5 @@
 /*
  * EV3AnalogPort.h
- *
- *  Created on: 23 февр. 2015 г.
- *      Author: Max
  */
 
 #ifndef EV3ANALOGPORT_H_
@@ -25,27 +22,28 @@ namespace detail {
 
 	public:
 		EV3AnalogPort(EV3DeviceManager* manager, size_t port);
-		virtual ~EV3AnalogPort() override;
+
+		~EV3AnalogPort() override;
 
 	    /**
 	     * return the voltage present on pin 6 of the sensor port
 	     * @return raw ADC voltage reading
 	     */
-		virtual int getPin6() const override;
+		int getPin6() const override;
 
 	    /**
 	     * return the voltage present on pin 1 of the sensor port
 	     * @return raw ADC voltage reading
 	     */
-		virtual int getPin1() const override;
+		int getPin1() const override;
 
 	    /**
 	     * sets the sensor type.
 	     * @return success status
 	     */
-		virtual bool setType(int mode) override;
+		bool setType(int mode) override;
 
-		virtual void detach() override;
+		void detach() override;
 	};
 
 } /* namespace detail */

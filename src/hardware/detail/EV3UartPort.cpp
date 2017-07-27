@@ -22,7 +22,7 @@ namespace {
 EV3UartPort::EV3UartPort(EV3DeviceManager* manager, size_t port)
 	: m_manager(manager), m_port(port)
 {
-	initialiseSensor(m_currentMode);
+    initializeSensor(m_currentMode);
 }
 
 EV3UartPort::~EV3UartPort()
@@ -55,7 +55,7 @@ bool EV3UartPort::setMode(size_t mode)
 {
     // are we initialized ?
     if (m_modeInfo.empty())
-        return initialiseSensor(mode);
+        return initializeSensor(mode);
     if (mode >= m_modeInfo.size())
         return false;
     setOperatingMode(mode);
@@ -65,7 +65,7 @@ bool EV3UartPort::setMode(size_t mode)
         return true;
     } else {
         // Sensor may have reset try and initialise it in the new mode.
-        return initialiseSensor(mode);
+        return initializeSensor(mode);
     }
 }
 
@@ -196,7 +196,7 @@ int EV3UartPort::initSensor(size_t mode)
  * @param mode target mode
  * @return true if ok false if error
  */
-bool EV3UartPort::initialiseSensor(size_t mode)
+bool EV3UartPort::initializeSensor(size_t mode)
 {
     connect();
     for(int i = 0; i < OPEN_RETRY; i++)
@@ -272,7 +272,7 @@ int EV3UartPort::waitNonZeroStatus(int timeout)
     std::chrono::milliseconds delay(TIMEOUT_DELTA);
 
     int cnt = timeout / TIMEOUT_DELTA;
-    uint8_t status = getStatus();
+    int8_t status = getStatus();
     while (status == 0 && cnt-- > 0)
     {
     	std::this_thread::sleep_for(delay);
@@ -291,7 +291,7 @@ int EV3UartPort::waitZeroStatus(int timeout)
 	std::chrono::milliseconds delay(TIMEOUT_DELTA);
 
     int cnt = timeout / TIMEOUT_DELTA;
-    int status = getStatus();
+    int8_t status = getStatus();
     while (status != 0 && cnt-- > 0)
     {
     	std::this_thread::sleep_for(delay);
@@ -305,7 +305,7 @@ int EV3UartPort::waitZeroStatus(int timeout)
  * return the current status of the port
  * @return status
  */
-int EV3UartPort::getStatus() const
+int8_t EV3UartPort::getStatus() const
 {
     return m_manager->m_uartDevice.getSensorData()->Status[m_port];
 }
@@ -372,7 +372,7 @@ void EV3UartPort::checkSensor()
     if ((getStatus() & lms2012::UART_PORT_CHANGED) != 0)
     {
         // try and reinitialize it
-        if (!initialiseSensor(getMode()))
+        if (!initializeSensor(getMode()))
             throw device_error("Sensor changed. Unable to reset");
             
     }

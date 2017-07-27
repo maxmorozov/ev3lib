@@ -20,7 +20,7 @@ UartSensor::UartSensor(std::unique_ptr<detail::UartPort>&& port, std::vector<std
         throw device_error("Unable to initialize device");
 }
 
-UartSensor::UartSensor(UartSensor&& other)
+UartSensor::UartSensor(UartSensor&& other) noexcept
 	: MultiModeSensor(std::move(other)), m_port(std::move(other.m_port))
 {
 }

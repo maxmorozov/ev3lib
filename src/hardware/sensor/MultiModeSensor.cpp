@@ -14,7 +14,7 @@ MultiModeSensor::MultiModeSensor(std::vector<std::unique_ptr<SensorMode>>&& mode
 
 }
 
-MultiModeSensor::MultiModeSensor(MultiModeSensor&& other)
+MultiModeSensor::MultiModeSensor(MultiModeSensor&& other) noexcept
 	: m_modes(std::move(other.m_modes)), m_currentMode(other.m_currentMode)
 {
 

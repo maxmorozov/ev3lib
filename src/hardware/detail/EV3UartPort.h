@@ -28,7 +28,7 @@ namespace detail {
 		 * return the current status of the port
 		 * @return status
 		 */
-		int getStatus() const;
+		int8_t getStatus() const;
 		                
 		/**
 		 * Wait for the port status to become non zero, or for the operation to timeout
@@ -52,7 +52,7 @@ namespace detail {
 		 * @param mode target mode
 		 * @return true if ok false if error
 		 */
-		bool initialiseSensor(size_t mode);
+		bool initializeSensor(size_t mode);
 
 		/**
 		 * Attempt to initialise the sensor ready for use.
@@ -118,33 +118,33 @@ namespace detail {
 		EV3UartPort(EV3DeviceManager* manager, size_t port);
 		virtual ~EV3UartPort() override;
 
-		virtual void detach() override;
+		void detach() override;
 
 		/**
 		 * Reset the attached sensor. Following this the sensor must be initialized
 		 * before it can be used.
 		 */
-		virtual void resetSensor() override;
+		void resetSensor() override;
 
 	    /**
 	     * Get the current operating mode of the sensor
 	     * @return the current mode
 	     */
-	    virtual size_t getMode() const override;
+		size_t getMode() const override;
 
 	    /**
 	     * Set the current operating mode for the sensor attached to the port.
 	     * @param mode the new mode
 	     * @return true if the mode has been accepted
 	     */
-	    virtual bool setMode(size_t mode) override;
+		bool setMode(size_t mode) override;
 
 	    /**
 	     * Returns numner of supported modes
 	     *
 	     * @return number of available modes
 	     */
-	    virtual size_t getModeCount() const override;
+		size_t getModeCount() const override;
 
 	    /**
 	     * read a number of bytes from the device
@@ -152,7 +152,7 @@ namespace detail {
 	     * @param offset offset (in bytes) at which to store the data
 	     * @param len number of bytes to read
 	     */
-	    virtual void read(uint8_t* buffer, size_t offset, size_t len) override;
+		void read(uint8_t* buffer, size_t offset, size_t len) override;
 
 	    /**
 	     * Write bytes to the sensor
@@ -161,14 +161,14 @@ namespace detail {
 	     * @param len length of the write
 	     * @return number of bytes written
 	     */
-	    virtual int write(const uint8_t* buffer, size_t offset, size_t len) override;
+		int write(const uint8_t* buffer, size_t offset, size_t len) override;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>
 	     * @param mode mode to lookup
 	     * @return String version of the mode name
 	     */
-	    virtual std::string getModeName(size_t mode) const override;
+		std::string getModeName(size_t mode) const override;
 	};
 
 } /* namespace detail */

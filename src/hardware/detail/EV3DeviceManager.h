@@ -1,8 +1,5 @@
 /*
  * EV3DeviceManager.h
- *
- *  Created on: 24 џэт. 2015 у.
- *      Author: Max
  */
 
 #ifndef EV3DEVICEMANAGER_H_
@@ -52,43 +49,44 @@ private:
 	void connectSensor(size_t port, DetachSubscriber* sensor);
 public:
 	EV3DeviceManager();
-	~EV3DeviceManager();
+	~EV3DeviceManager() override;
 
-	virtual SensorType getSensorType(size_t port) const override;
-	virtual ConnectionType getConnectionType(size_t port) const override;
+	SensorType getSensorType(size_t port) const override;
 
-	virtual void setPortMode(size_t port, PortType type, AnalogMode mode) override;
+	ConnectionType getConnectionType(size_t port) const override;
 
-	virtual void disconnect(size_t port, PortType type) override;
+	void setPortMode(size_t port, PortType type, AnalogMode mode) override;
 
-	virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) override;
+	void disconnect(size_t port, PortType type) override;
 
-	virtual std::unique_ptr<UartPort> getUartPort(size_t port) override;
+	std::unique_ptr<AnalogPort> getAnalogPort(size_t port) override;
+
+	std::unique_ptr<UartPort> getUartPort(size_t port) override;
 
 	/**
 	 * Returns internal motor port structure. The clients should not delete it
 	 */
-	virtual MotorPort* getMotorPort(size_t port) override;
+	MotorPort* getMotorPort(size_t port) override;
 
 	/**
 	 * Checks if the button is down
 	 */
-	virtual bool checkButton(size_t buttonNo) const override;
+	bool checkButton(size_t buttonNo) const override;
 
 	/**
 	 * Battery voltage
 	 */
-	virtual short getBatteryVoltage() const override;
+	short getBatteryVoltage() const override;
 
 	/**
 	 * Current flowing from the battery
 	 */
-	virtual short getMotorCurrent() const override;
+	short getMotorCurrent() const override;
 
 	/**
 	 * Current flowing from the battery
 	 */
-	virtual short getBatteryCurrent() const override;
+	short getBatteryCurrent() const override;
 
 };
 

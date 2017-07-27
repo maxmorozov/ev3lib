@@ -18,8 +18,8 @@ namespace hardware {
 
 
 	public:
-		MultiModeSensor(std::vector<std::unique_ptr<SensorMode>>&& modes, size_t mode);
-		MultiModeSensor(MultiModeSensor&& other);
+		explicit MultiModeSensor(std::vector<std::unique_ptr<SensorMode>>&& modes, size_t mode);
+		MultiModeSensor(MultiModeSensor&& other) noexcept;
 
 	    /**
 	     * Return a list of string descriptions for the sensors available modes.
@@ -31,36 +31,36 @@ namespace hardware {
 	     * Sets the current mode for fetching samples
 	     * @param mode the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
 	     */
-		virtual void setCurrentMode(size_t mode) override;
+		void setCurrentMode(size_t mode) override;
 
 	    /**
 	     * Sets the current mode for fetching samples
 	     * @param modeName the name of the mode. name corresponds with the item value of the list from getAvailableModes().
 	     */
-		virtual void setCurrentMode(const std::string& modeName) override;
+		void setCurrentMode(const std::string& modeName) override;
 
 	    /** Gets the index number of the current mode.
 	     * @return the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
 	     */
-		virtual size_t getCurrentMode() const override;
+		size_t getCurrentMode() const override;
 
 	    /** Gets the number of supported modes
 	     * @return the number of supported modes
 	     */
-		virtual size_t getModeCount() const override;
+		size_t getModeCount() const override;
 
 		/**
 		 * return a string description of this sensor mode
 		 * @return The description/name of this mode
 		 */
-		virtual std::string getName() const override;
+		std::string getName() const override;
 
 		/** Returns the number of elements in a sample.<br>
 		 * The number of elements does not change during runtime.
 		 * @return
 		 * the number of elements in a sample
 		 */
-		virtual size_t sampleSize() const override;
+		size_t sampleSize() const override;
 
 		/** Fetches a sample from a sensor or filter.
 		 * @param sample
@@ -68,7 +68,7 @@ namespace hardware {
 		 * @param offset
 		 * The elements of the sample are stored in the array starting at the offset position.
 		 */
-		virtual void fetchSample(float* sample, size_t offset) override;
+		void fetchSample(float* sample, size_t offset) override;
 
 
 	};

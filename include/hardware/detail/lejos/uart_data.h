@@ -29,12 +29,12 @@ namespace lejos {
 	}
 	UARTCONFIG;
 
-	static const int UART_SET_CONFIG  =  _IOWR('u',4,UARTCONFIG);
-	static const int UART_RAW_READ    =  _IOWR('u',5,void *);
-	static const int UART_RAW_WRITE   =  _IOWR('u',6,void *);
-	static const int UART_CONNECT     =  _IOWR('u',7,DEVCTL);
-	static const int UART_DISCONNECT  =  _IOWR('u',8,DEVCTL);
-	static const int UART_SETMODE     =  _IOWR('u',9,DEVCTL);
+	static const uint32_t UART_SET_CONFIG  =  _IOWR('u',4,UARTCONFIG);
+	static const uint32_t UART_RAW_READ    =  _IOWR('u',5,void *);
+	static const uint32_t UART_RAW_WRITE   =  _IOWR('u',6,void *);
+	static const uint32_t UART_CONNECT     =  _IOWR('u',7,DEVCTL);
+	static const uint32_t UART_DISCONNECT  =  _IOWR('u',8,DEVCTL);
+	static const uint32_t UART_SETMODE     =  _IOWR('u',9,DEVCTL);
 
 
 	static const int UART_MODE_RAW    =  ((lms2012::DATA8) -1);
