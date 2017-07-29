@@ -116,7 +116,7 @@ namespace detail {
 
 	public:
 		EV3UartPort(EV3DeviceManager* manager, size_t port);
-		virtual ~EV3UartPort() override;
+		~EV3UartPort() override;
 
 		void detach() override;
 
@@ -161,7 +161,7 @@ namespace detail {
 	     * @param len length of the write
 	     * @return number of bytes written
 	     */
-		int write(const uint8_t* buffer, size_t offset, size_t len) override;
+		ssize_t write(const uint8_t* buffer, size_t offset, size_t len) override;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>

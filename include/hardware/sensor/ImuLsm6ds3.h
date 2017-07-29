@@ -6,6 +6,7 @@
 #include <hardware/sensor/scale/GyroScaleSelector.h>
 #include <hardware/sensor/eeprom/AccelEepromWriter.h>
 #include <hardware/sensor/eeprom/GyroEepromWriter.h>
+#include <utils/str_const.h>
 
 #include "UartSensor.h"
 
@@ -18,6 +19,33 @@ namespace hardware {
 		friend class CombinedMode;
 		friend class AccelerometerMode;
 		friend class GyroMode;
+
+        struct Mode {
+            str_const name;
+            std::size_t sampleSize;
+            std::size_t modeId;
+        };
+
+        static const constexpr Mode modes[3] = {
+                {str_const("ALL"), 6, 0},
+                {str_const("Acceleration"), 3, 1},
+                {str_const("Rate"), 3, 2}
+        };
+
+        static constexpr size_t maxSampleSize() {
+            size_t result = 0;
+            for (Mode mode: modes) {
+                result = std::max(result, mode.sampleSize);
+            }
+            return result;
+        }
+
+        static constexpr size_t getModeId(size_t index) {
+            if (index >= count_of(modes))
+                throw std::out_of_range("");
+            return modes[index].modeId;
+        }
+
 	public:
 		//static const int SCALE_SWITCH_DELAY = 10;
 		enum {SCALE_SWITCH_DELAY = 10};
@@ -53,95 +81,10 @@ namespace hardware {
 	    static constexpr int ACCEL_SCALE = std::numeric_limits<short>::max() + 1;
 
 	private:
-	    template<size_t sample_size, size_t modeNo>
-	    class BaseSensorMode : public SensorMode {
-	    public:
-	    	static const size_t SAMPLE_SIZE = sample_size;
-	    	static const size_t MODE_NO = modeNo;
+        void scaleCombined(const int16_t* buffer, float* sample, size_t offset);
+        void scaleAccel(const int16_t* buffer, float* sample, size_t offset);
+        void scaleGyro(const int16_t* buffer, float* sample, size_t offset);
 
-	    protected:
-	    	ImuLsm6ds3* m_sensor;
-
-	    	//Apply the current scale to the sample
-	    	virtual void scale(int16_t* buffer, float* sample, size_t offset) = 0;
-	    public:
-	    	explicit BaseSensorMode(ImuLsm6ds3* sensor) : m_sensor(sensor) {}
-
-			size_t sampleSize() const override {
-				return SAMPLE_SIZE;
-			}
-			void fetchSample(float* sample, size_t offset) override {
-				short buffer[SAMPLE_SIZE];
-
-				m_sensor->readSample(modeNo, buffer, SAMPLE_SIZE);
-				scale(buffer, sample, offset);
-			}
-	    };
-
-
-	    /**
-	     * 3d accelerometer and 3d gyroscope sample
-	     */
-	    class CombinedMode : public BaseSensorMode<6, 0> {
-	    protected:
-	    	//Apply the current scale to the sample
-	    	void scale(int16_t* buffer, float* sample, size_t offset) override {
-	    		//Accelerometer
-	    		for (size_t i = 0; i < 3; ++i) {
-	    			sample[offset + i] = buffer[i] * m_sensor->getAccelScale();
-	    		}
-	    		for (size_t i = 3; i < SAMPLE_SIZE; ++i) {
-	    			sample[offset + i] = buffer[i] * m_sensor->getGyroScale();
-	    		}
-	    	}
-
-	    public:
-	    	explicit CombinedMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
-
-	    	virtual std::string getName() const override {
-				return "ALL";
-			}
-
-	    };
-
-	    /**
-	     * Acceleration measurement mode
-	     */
-	    class AccelerometerMode : public BaseSensorMode<3, 1> {
-	    protected:
-	    	//Apply the current scale to the sample
-	    	void scale(int16_t* buffer, float* sample, size_t offset) override {
-	    		//Accelerometer
-	    		for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
-	    			sample[offset + i] = buffer[i] * m_sensor->getAccelScale();
-	    		}
-	    	}
-
-	    public:
-	    	explicit AccelerometerMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
-
-	    	virtual std::string getName() const override {
-				return "Acceleration";
-			}
-	    };
-
-	    class GyroMode : public BaseSensorMode<3, 2> {
-	    protected:
-	    	//Apply the current scale to the sample
-	    	void scale(int16_t* buffer, float* sample, size_t offset) override {
-	    		//Accelerometer
-	    		for (size_t i = 0; i < SAMPLE_SIZE; ++i) {
-	    			sample[offset + i] = buffer[i] * m_sensor->getGyroScale();
-	    		}
-	    	}
-
-	    public:
-	    	explicit GyroMode(ImuLsm6ds3* sensor): BaseSensorMode(sensor) {}
-
-	    	virtual std::string getName() const override {
-				return "Rate";
-			}
-	    };
 
 	private:
 		static const float gyroScale[5];    //in degree per second / digit
@@ -151,7 +94,7 @@ namespace hardware {
 	    size_t m_gyroScale = 0;
 	    bool m_rawMode;
 
-	    static std::vector<std::unique_ptr<SensorMode>> createModes(ImuLsm6ds3* sensor);
+	    static std::vector<ModeInfo> createModes();
 
 	    bool writeEeprom(int writeCommand, const int16_t* data, size_t size);
 
@@ -169,7 +112,16 @@ namespace hardware {
 
 	    void reset();
 
-	    //Change scale support
+
+		/** Fetches a sample from a sensor or filter.
+		 * @param sample
+		 * The array to store the sample in.
+		 * @param offset
+		 * The elements of the sample are stored in the array starting at the offset position.
+		 */
+		void fetchSample(float* sample, size_t offset) override;
+
+		//Change scale support
 
 	    /**
 		 * Changes the accelerometer full-scale range

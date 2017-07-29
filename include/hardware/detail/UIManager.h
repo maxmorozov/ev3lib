@@ -5,7 +5,7 @@
 #ifndef EV3LIB_UIMANAGER_H_
 #define EV3LIB_UIMANAGER_H_
 
-#include <utilities.h>
+#include <utils/utilities.h>
 
 namespace ev3lib {
 namespace hardware {

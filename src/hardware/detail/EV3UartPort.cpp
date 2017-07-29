@@ -5,8 +5,6 @@
 #include <exceptions/EV3HardwareExceptions.h>
 
 #include "EV3UartPort.h"
-#include "EV3SensorConstants.h"
-#include "EV3SensorType.h"
 
 namespace ev3lib {
 namespace hardware {
@@ -18,17 +16,20 @@ namespace {
 	typedef BufferCommand<unsigned char, 3> Command3;
 }
 
+const int EV3UartPort::INIT_DELAY;
 
 EV3UartPort::EV3UartPort(EV3DeviceManager* manager, size_t port)
 	: m_manager(manager), m_port(port)
 {
-    initializeSensor(m_currentMode);
+    //Double init. After the Device Manager calls connectSensor we need to reconnect sensor.
+    //So, we need postpone sensor initialization after it is connected by Device Manager
+    //initializeSensor(m_currentMode);
 }
 
 EV3UartPort::~EV3UartPort()
 {
 	disconnect();
-    if (m_manager)
+    if (m_manager != nullptr)
     	m_manager->disconnect(m_port, PortType::Sensor);
 }
 
@@ -109,7 +110,7 @@ void EV3UartPort::read(uint8_t* buffer, size_t offset, size_t len)
  * @param len length of the write
  * @return number of bytes written
  */
-int EV3UartPort::write(const uint8_t* buffer, size_t offset, size_t len)
+ssize_t EV3UartPort::write(const uint8_t* buffer, size_t offset, size_t len)
 {
     std::vector<uint8_t> command(len + 1);
     command[0] = (uint8_t) m_port;
@@ -173,6 +174,10 @@ int EV3UartPort::initSensor(size_t mode)
     {
         // something change wait for it to become ready
         clearPortChanged(&uc);
+
+        //Without this delay initialization fails frequently
+        std::this_thread::sleep_for(std::chrono::milliseconds(INIT_DELAY));
+
         status = waitNonZeroStatus(TIMEOUT);
         if ((status & lms2012::UART_DATA_READY) != 0 && (status & lms2012::UART_PORT_CHANGED) == 0)
         {
@@ -183,8 +188,8 @@ int EV3UartPort::initSensor(size_t mode)
     }
     if ((status & lms2012::UART_DATA_READY) != 0 && (status & lms2012::UART_PORT_CHANGED) == 0)
         return 1;
-    else
-        return 0;
+
+    return 0;
 }
 
 
@@ -278,7 +283,7 @@ int EV3UartPort::waitNonZeroStatus(int timeout)
     	std::this_thread::sleep_for(delay);
         status = getStatus();
     }
-    return status;       
+    return status;
 }
 
 /**
@@ -356,11 +361,8 @@ void EV3UartPort::clearModeCache(size_t mode, lms2012::UARTCTL* uc)
  */
 void EV3UartPort::clearPortChanged(lms2012::UARTCTL* uc)
 {
-    //Is it necessary? It seems the last line is enough
     uc->Port = (int8_t)m_port;
 	m_manager->m_uartDevice.ioctl(lms2012::UART_CLEAR_CHANGED, uc);
-
-    m_manager->m_uartDevice.getSensorData()->Status[m_port] &= ~lms2012::UART_PORT_CHANGED;
 }
 
 /**

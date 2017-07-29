@@ -5,7 +5,7 @@
 #ifndef EV3LIB_MOTORMANAGER_H_
 #define EV3LIB_MOTORMANAGER_H_
 
-#include <utilities.h>
+#include <utils/utilities.h>
 #include <hardware/Tachometer.h>
 
 namespace ev3lib {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include <utilities.h>
+#include <utils/utilities.h>
 
 namespace ev3lib {
 namespace robotics {

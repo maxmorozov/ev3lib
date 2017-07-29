@@ -5,7 +5,7 @@
 #ifndef EV3LIB_SENSOR_MANAGER_H_
 #define EV3LIB_SENSOR_MANAGER_H_
 
-#include <utilities.h>
+#include <utils/utilities.h>
 #include <stddef.h>
 #include <memory>
 #include <hardware/detail/ports/AnalogPort.h>

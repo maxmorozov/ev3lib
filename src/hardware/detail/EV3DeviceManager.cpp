@@ -80,8 +80,9 @@ void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
     	setPortMode(port, PortType::Sensor, AnalogMode::Connected);
     	m_openPorts[port] = sensor;
 		setPortMode(port, PortType::Sensor, AnalogMode::Float);
-    }
-    throw already_open_error("Port is already opened");
+    } else {
+		throw already_open_error("Port is already opened");
+	}
 }
 
 std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {

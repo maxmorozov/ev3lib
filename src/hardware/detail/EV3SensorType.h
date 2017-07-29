@@ -1,8 +1,5 @@
 /*
  * SensorType.h
- *
- *  Created on: 14 но€б. 2015 г.
- *      Author: Max
  */
 
 #ifndef EV3LIB_EV3_SENSOR_TYPE_H_

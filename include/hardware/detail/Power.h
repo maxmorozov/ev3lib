@@ -5,7 +5,7 @@
 #ifndef POWER_H_
 #define POWER_H_
 
-#include <utilities.h>
+#include <utils/utilities.h>
 
 namespace ev3lib {
 namespace hardware {

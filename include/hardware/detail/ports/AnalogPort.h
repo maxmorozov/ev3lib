@@ -1,7 +1,7 @@
 #ifndef EV3LIB_PORTS_ANALOG_PORT_H_
 #define EV3LIB_PORTS_ANALOG_PORT_H_
 
-#include <utilities.h>
+#include <utils/utilities.h>
 #include <stddef.h>
 #include <memory>
 

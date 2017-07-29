@@ -1,7 +1,7 @@
 #ifndef EV3LIB_PORTS_UART_PORT_H_
 #define EV3LIB_PORTS_UART_PORT_H_
 
-#include <utilities.h>
+#include <utils/utilities.h>
 #include <stddef.h>
 #include <memory>
 #include "MultiModePort.h"
@@ -26,7 +26,7 @@ namespace detail {
 	     * @param len length of the write
 	     * @return number of bytes written
 	     */
-	    virtual int write(const uint8_t* buffer, size_t offset, size_t len) = 0;
+	    virtual ssize_t write(const uint8_t* buffer, size_t offset, size_t len) = 0;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>

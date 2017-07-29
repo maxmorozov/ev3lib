@@ -1,8 +1,5 @@
 /*
  * Ev3MotorPort.h
- *
- *  Created on: 18 џэт. 2015 у.
- *      Author: Max
  */
 
 #ifndef EV3MOTORPORT_H_

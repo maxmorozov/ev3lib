@@ -10,22 +10,28 @@ namespace ev3lib {
 namespace hardware {
 
 	class MultiModeSensor : public SensorModes {
+    protected:
+        //Mode description
+        struct ModeInfo {
+            std::string name;
+            size_t sampleSize;
+        };
 	protected:
-		std::vector<std::unique_ptr<SensorMode>> m_modes;
+		std::vector<ModeInfo> m_modes;
 		size_t m_currentMode = 0;
 
 		bool isValid(size_t mode) const;
 
 
 	public:
-		explicit MultiModeSensor(std::vector<std::unique_ptr<SensorMode>>&& modes, size_t mode);
+		explicit MultiModeSensor(std::vector<ModeInfo>&& modes, size_t mode);
 		MultiModeSensor(MultiModeSensor&& other) noexcept;
 
 	    /**
 	     * Return a list of string descriptions for the sensors available modes.
 	     * @return list of string descriptions
 	     */
-		virtual std::vector<std::string> getAvailableModes() const override;
+		std::vector<std::string> getAvailableModes() const override;
 
 	    /**
 	     * Sets the current mode for fetching samples
@@ -61,16 +67,6 @@ namespace hardware {
 		 * the number of elements in a sample
 		 */
 		size_t sampleSize() const override;
-
-		/** Fetches a sample from a sensor or filter.
-		 * @param sample
-		 * The array to store the sample in.
-		 * @param offset
-		 * The elements of the sample are stored in the array starting at the offset position.
-		 */
-		void fetchSample(float* sample, size_t offset) override;
-
-
 	};
 
 

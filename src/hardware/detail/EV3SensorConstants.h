@@ -1,8 +1,5 @@
 /*
  * EV3SensorConstants.h
- *
- *  Created on: 17 џэт. 2015 у.
- *      Author: Max
  */
 
 #ifndef EV3SENSORCONSTANTS_H_
