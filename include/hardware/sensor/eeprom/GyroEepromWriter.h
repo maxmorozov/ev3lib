@@ -11,10 +11,9 @@ namespace hardware {
 		 *
 		 * @param scaleNo scale index
 		 * @param data EEPROM data (4x3 matrix of 16-bit integers)
-		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
-		virtual bool writeGyroscopeEeprom(size_t scaleNo, const int16_t* data, size_t size) = 0;
+		virtual bool writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data) = 0;
 	};
 
 

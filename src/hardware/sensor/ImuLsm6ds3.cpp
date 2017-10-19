@@ -10,21 +10,11 @@ const float ImuLsm6ds3::gyroScale[5] = {8.75e-3f, 17.5e-3f, 35e-3f, 70e-3f, 4.37
 const float ImuLsm6ds3::accelScale[4] = {2.0f / ACCEL_SCALE, 4.0f / ACCEL_SCALE, 8.0f / ACCEL_SCALE , 16.0f / ACCEL_SCALE}; //in g / digit
 const constexpr ImuLsm6ds3::Mode ImuLsm6ds3::modes[3];
 
-ImuLsm6ds3::ImuLsm6ds3(std::unique_ptr<detail::UartPort>&& port, bool rawMode)
-	: UartSensor(std::move(port), std::move(createModes())), m_rawMode(rawMode)
+ImuLsm6ds3::ImuLsm6ds3(std::unique_ptr<detail::UartPort> port, bool rawMode)
+	: UartSensor(std::move(port), createModes()), m_rawMode(rawMode)
 {
 
 }
-
-//Recreate modes because they have pointer to the sensor object
-ImuLsm6ds3::ImuLsm6ds3(ImuLsm6ds3&& other) noexcept
-	: UartSensor(std::move(other)),
-	  m_accelScale(other.m_accelScale), m_gyroScale(other.m_gyroScale), m_rawMode(other.m_rawMode)
-{
-
-
-}
-
 
 std::vector<MultiModeSensor::ModeInfo> ImuLsm6ds3::createModes()
 {
@@ -38,30 +28,34 @@ std::vector<MultiModeSensor::ModeInfo> ImuLsm6ds3::createModes()
 void ImuLsm6ds3::reset()
 {
     uint8_t buffer = DEVICE_RESET;
-    m_port->write(&buffer, 0, 1);
+    m_port->write(gsl::make_span(&buffer, 1));
 }
 
 /** Fetches a sample from a sensor or filter.
  *
  * @param sample The array to store the sample in.
- * @param offset The elements of the sample are stored in the array starting at the offset position.
 */
-void ImuLsm6ds3::fetchSample(float* sample, size_t offset)
+void ImuLsm6ds3::fetchSample(gsl::span<float> sample)
 {
     short buffer[maxSampleSize()];
 
-    readSample(getModeId(m_currentMode), buffer, sampleSize());
+    readSample(getModeId(m_currentMode), gsl::make_span(buffer, sampleSize()));
 
+    scaleData(gsl::make_span(const_cast<const short*>(buffer), sampleSize()), gsl::make_span(sample.data(), sampleSize()));
+}
+
+void ImuLsm6ds3::scaleData(gsl::span<const int16_t> buffer,gsl::span<float> sample)
+{
     //Use switch instead of calling the mode's object method to simplify move constructor and move operator
     switch(m_currentMode) {
         case 0:
-            scaleCombined(buffer, sample, offset);
+            scaleCombined(buffer, sample);
             break;
         case 1:
-            scaleAccel(buffer, sample, offset);
+            scale(buffer, sample, getAccelScale());
             break;
         case 2:
-            scaleGyro(buffer, sample, offset);
+            scale(buffer, sample, getGyroScale());
             break;
 
         default:
@@ -72,37 +66,20 @@ void ImuLsm6ds3::fetchSample(float* sample, size_t offset)
     }
 }
 
-
 //Apply the current scale to the sample
-void ImuLsm6ds3::scaleCombined(const int16_t* buffer, float* sample, size_t offset)
+void ImuLsm6ds3::scaleCombined(gsl::span<const int16_t> source, gsl::span<float> target)
 {
-    float accelScale = getAccelScale();
-    float gyroScale = getGyroScale();
-    //Accelerometer
-    for (size_t i = 0; i < 3; ++i) {
-        sample[offset + i] = buffer[i] * accelScale;
-    }
-    for (size_t i = 3; i < sampleSize(); ++i) {
-        sample[offset + i] = buffer[i] * gyroScale;
-    }
+    scale(gsl::make_span(source.data(), 3), target, getAccelScale());
+    scale(gsl::make_span(source.data() + 3, 3), gsl::make_span(target.data() + 3, 3), getGyroScale());
 }
 
-void ImuLsm6ds3::scaleAccel(const int16_t* buffer, float* sample, size_t offset)
+void ImuLsm6ds3::scale(gsl::span<const int16_t> source, gsl::span<float> target, float scale)
 {
-    float accelScale = getAccelScale();
-    for (size_t i = 0; i < sampleSize(); ++i) {
-        sample[offset + i] = buffer[i] * accelScale;
+    auto out = target.begin();
+    for (int16_t value: source) {
+        *out++ = value * scale;
     }
 }
-
-void ImuLsm6ds3::scaleGyro(const int16_t* buffer, float* sample, size_t offset)
-{
-    float gyroScale = getGyroScale();
-    for (size_t i = 0; i < sampleSize(); ++i) {
-        sample[offset + i] = buffer[i] * gyroScale;
-    }
-}
-
 
 //Change scale support
 
@@ -116,9 +93,19 @@ bool ImuLsm6ds3::setAccelerometerScale(size_t scaleNo)
 {
     if (scaleNo < count_of(accelScale)) {
     	m_accelScale = scaleNo;
-        return setScale(ACC_SCALE_2G + scaleNo);
+        return updateScale(ACC_SCALE_2G + scaleNo);
     }
     return false;
+}
+
+/**
+ * Returns number of supported scales
+ *
+ * @return number of scales supported by the sensor
+ */
+size_t ImuLsm6ds3::getAccelerometerScales() const
+{
+    return count_of(accelScale);
 }
 
 /**
@@ -131,9 +118,19 @@ bool ImuLsm6ds3::setGyroscopeScale(size_t scaleNo)
 {
     if (scaleNo < count_of(gyroScale)) {
     	m_gyroScale = scaleNo;
-        return setScale(GYRO_SCALE_245DPS + scaleNo);
+        return updateScale(GYRO_SCALE_245DPS + scaleNo);
     }
     return false;
+}
+
+/**
+ * Returns number of supported scales
+ *
+ * @return number of scales supported by the sensor
+ */
+size_t ImuLsm6ds3::getGyroscopeScales() const
+{
+    return count_of(gyroScale);
 }
 
 //EEPROM
@@ -143,12 +140,11 @@ bool ImuLsm6ds3::setGyroscopeScale(size_t scaleNo)
  *
  * @param scaleNo scale index
  * @param data EEPROM data (4x3 matrix of 16-bit integers)
- * @param size size of EEPROM data in words
  * @return true if the EEPROM data has been successfully written
  */
-bool ImuLsm6ds3::writeAccelerometerEeprom(size_t scaleNo, const int16_t* data, size_t size)
+bool ImuLsm6ds3::writeAccelerometerEeprom(size_t scaleNo, gsl::span<const int16_t> data)
 {
-    return writeEeprom(CALIBRATE_ACC_2G + scaleNo, data, size);
+    return writeEeprom(CALIBRATE_ACC_2G + scaleNo, data);
 }
 
 /**
@@ -156,22 +152,21 @@ bool ImuLsm6ds3::writeAccelerometerEeprom(size_t scaleNo, const int16_t* data, s
  *
  * @param scaleNo scale index
  * @param data EEPROM data (4x3 matrix of 16-bit integers)
- * @param size size of EEPROM data in words
  * @return true if the EEPROM data has been successfully written
  */
-bool ImuLsm6ds3::writeGyroscopeEeprom(size_t scaleNo, const int16_t* data, size_t size)
+bool ImuLsm6ds3::writeGyroscopeEeprom(size_t scaleNo,gsl::span<const int16_t> data)
 {
-    return writeEeprom(CALIBRATE_GYRO_245DPS + scaleNo, data, size);
+    return writeEeprom(CALIBRATE_GYRO_245DPS + scaleNo, data);
 }
 
 
-bool ImuLsm6ds3::writeEeprom(int writeCommand, const int16_t* data, size_t size)
+bool ImuLsm6ds3::writeEeprom(int writeCommand, gsl::span<const int16_t> data)
 {
-    std::vector<uint8_t> command(size * sizeof(int16_t) + 1);
+    std::vector<uint8_t> command(static_cast<size_t>(data.size_bytes() + 1));
     command[0] = (uint8_t) writeCommand;
-    std::copy(data, data + size, (int16_t*)&command[1]);
+    std::copy(data.begin(), data.end(), (int16_t*)&command[1]);
 
-    bool success = (size_t)m_port->write(&command.front(), 0, command.size()) == command.size();
+    bool success = (size_t)m_port->write(command) == command.size();
     if (success) {
         //Wait for writing the data to EEPROM
     	std::this_thread::sleep_for(std::chrono::milliseconds(command.size() * 3));
@@ -179,10 +174,10 @@ bool ImuLsm6ds3::writeEeprom(int writeCommand, const int16_t* data, size_t size)
     return success;
 }
 
-bool ImuLsm6ds3::setScale(int scaleCommand)
+bool ImuLsm6ds3::updateScale(int scaleCommand)
 {
-	auto command = (uint8_t)scaleCommand;
-    bool success = m_port->write(&command, 0, sizeof(command)) == sizeof(command);
+	uint8_t command[1] = {(uint8_t)scaleCommand};
+    bool success = m_port->write(command) == sizeof(command);
     if (success) {
     	std::this_thread::sleep_for(std::chrono::milliseconds(SCALE_SWITCH_DELAY));
     }
@@ -190,13 +185,13 @@ bool ImuLsm6ds3::setScale(int scaleCommand)
 
 }
 
-void ImuLsm6ds3::readSample(size_t mode, int16_t* buffer, size_t sampleSize) {
+void ImuLsm6ds3::readSample(size_t mode, gsl::span<int16_t> buffer) {
 	if (mode != getCurrentMode()) {
 		switchMode(mode);
 		setAccelerometerScale(0);
 		setGyroscopeScale(0);
 	}
-	m_port->read((uint8_t*)buffer, 0, sampleSize * sizeof(int16_t));
+	m_port->read(gsl::make_span((uint8_t*)(buffer.data()), buffer.size_bytes()));
 }
 
 float ImuLsm6ds3::getAccelScale() const

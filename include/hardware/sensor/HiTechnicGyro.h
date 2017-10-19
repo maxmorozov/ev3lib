@@ -11,15 +11,13 @@
 namespace ev3lib {
 namespace hardware {
 
-class HiTechnicGyro {
+class HiTechnicGyro: public destructible {
 private:
 	std::unique_ptr<detail::AnalogPort> m_port;
     float m_zero;
 
 public:
-	explicit HiTechnicGyro(std::unique_ptr<detail::AnalogPort>&& port);
-	HiTechnicGyro(HiTechnicGyro&& other) noexcept;
-	virtual ~HiTechnicGyro() noexcept;
+	explicit HiTechnicGyro(std::unique_ptr<detail::AnalogPort> port);
 
 	float getData() const;
 };

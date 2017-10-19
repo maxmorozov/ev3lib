@@ -22,7 +22,7 @@ namespace detail {
 		std::unique_ptr<EV3BrickImpl> m_pimpl;
 	public:
 		EV3Brick();
-		~EV3Brick();
+		~EV3Brick() override;
 
 		SensorsManager* getSensorsManager();
 		const SensorsManager* getSensorsManager() const;

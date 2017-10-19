@@ -5,7 +5,6 @@
 #include <stdexcept>
 
 #include "EV3MotorPort.h"
-#include "EV3SensorConstants.h"
 #include <exceptions/EV3HardwareExceptions.h>
 
 using namespace std;
@@ -13,12 +12,6 @@ using namespace std;
 namespace ev3lib {
 namespace hardware {
 namespace detail {
-
-	namespace {
-		typedef BufferCommand<unsigned char, 3> Command3;
-		typedef BufferCommand<unsigned char, 2> Command2;
-	}
-
 
 	EV3MotorPort::EV3MotorPort(EV3DeviceManager* manager, size_t port)
 		: m_manager(manager), m_port(port)
@@ -33,7 +26,7 @@ namespace detail {
 
 
 	void EV3MotorPort::setPower(int power) {
-		Command3 command;
+		uint8_t command[3];
 		command[0] = (unsigned char)OutputCommand::Power;
 		command[1] = m_port;
 		command[2] = power;
@@ -41,7 +34,7 @@ namespace detail {
 	}
 
 	void EV3MotorPort::stop(bool flt) {
-		Command3 command;
+		uint8_t command[3];
 		command[0] = (unsigned char)OutputCommand::Stop;
 		command[1] = m_port;
 		command[2] = flt ? 0 : 1;
@@ -59,7 +52,7 @@ namespace detail {
 	 * resets the tachometer count to 0;
 	 */
 	void EV3MotorPort::resetTachoCount() {
-		Command2 command;
+		uint8_t command[2];
 		command[0] = (unsigned char)OutputCommand::ClearCount;
 		command[1] = m_port;
 		m_manager->m_pwmDevice.sendCommand(command);
@@ -72,7 +65,6 @@ namespace detail {
 		// Convert lejos power and mode to EV3 power and mode
 		if (command >= MotorCommand::Stop)
 		{
-			power = 0;
 			stop(command == MotorCommand::Float);
 		}
 		else
@@ -85,7 +77,7 @@ namespace detail {
 
 	bool EV3MotorPort::open() {
 		try {
-			Command2 command;
+			uint8_t command[2];
 			command[0] = (unsigned char)OutputCommand::Connect;
 			command[1] = m_port;
 			m_manager->m_pwmDevice.sendCommand(command);
@@ -97,7 +89,7 @@ namespace detail {
 
 	void EV3MotorPort::close() {
 		try {
-			Command2 command;
+			uint8_t command[2];
 			command[0] = (unsigned char)OutputCommand::Disconnect;
 			command[1] = m_port;
 			m_manager->m_pwmDevice.sendCommand(command);

@@ -2,13 +2,12 @@
 #include <boost/exception/all.hpp>
 #include <exceptions/EV3HardwareExceptions.h>
 
-#include <algorithm>
 #include <hardware/sensor/MultiModeSensor.h>
 
 namespace ev3lib {
 namespace hardware {
 
-MultiModeSensor::MultiModeSensor(std::vector<ModeInfo>&& modes, size_t mode)
+MultiModeSensor::MultiModeSensor(std::vector<ModeInfo> modes, size_t mode)
 	: m_modes(std::move(modes)), m_currentMode(mode)
 {
 

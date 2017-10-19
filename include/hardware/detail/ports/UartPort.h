@@ -4,6 +4,7 @@
 #include <utils/utilities.h>
 #include <stddef.h>
 #include <memory>
+#include <gsl/span>
 #include "MultiModePort.h"
 
 namespace ev3lib {
@@ -17,7 +18,7 @@ namespace detail {
 	     * @param offset offset (in bytes) at which to store the data
 	     * @param len number of bytes to read
 	     */
-	    virtual void read(uint8_t* buffer, size_t offset, size_t len) = 0;
+	    virtual void read(gsl::span<uint8_t> buffer) = 0;
 
 	    /**
 	     * Write bytes to the sensor
@@ -26,7 +27,7 @@ namespace detail {
 	     * @param len length of the write
 	     * @return number of bytes written
 	     */
-	    virtual ssize_t write(const uint8_t* buffer, size_t offset, size_t len) = 0;
+	    virtual ssize_t write(gsl::span<const uint8_t> buffer) = 0;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>

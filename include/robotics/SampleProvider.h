@@ -1,5 +1,6 @@
 #pragma once
 
+#include <gsl/span>
 #include <utils/utilities.h>
 
 namespace ev3lib {
@@ -51,12 +52,9 @@ namespace robotics {
 		virtual size_t sampleSize() const = 0;
 
 		/** Fetches a sample from a sensor or filter.
-		 * @param sample
-		 * The array to store the sample in.
-		 * @param offset
-		 * The elements of the sample are stored in the array starting at the offset position.
+		 * @param sample The buffer to store the sample in.
 		 */
-		virtual void fetchSample(float* sample, size_t offset) = 0;
+		virtual void fetchSample(gsl::span<float> sample) = 0;
 
 	};
 

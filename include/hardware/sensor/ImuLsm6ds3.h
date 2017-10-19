@@ -14,6 +14,20 @@ namespace ev3lib {
 namespace hardware {
 
 	class ImuLsm6ds3 : public UartSensor, public AccelScaleSelector, public GyroScaleSelector, public AccelEepromWriter, public GyroEepromWriter {
+	public:
+		enum class GyroScale : size_t {
+			SCALE_245DPS  = 0,
+			SCALE_500DPS  = 1,
+			SCALE_1000DPS = 2,
+			SCALE_2000DPS = 3,
+			SCALE_125DPS  = 4
+		};
+		enum class AccelScale : size_t {
+			SCALE_2G  = 0,
+			SCALE_4G  = 1,
+			SCALE_8G  = 2,
+			SCALE_16G = 3
+		};
 	private:
 		template<size_t sampleSize> friend class BaseSensorMode;
 		friend class CombinedMode;
@@ -46,7 +60,7 @@ namespace hardware {
             return modes[index].modeId;
         }
 
-	public:
+	private:
 		//static const int SCALE_SWITCH_DELAY = 10;
 		enum {SCALE_SWITCH_DELAY = 10};
 
@@ -81,10 +95,9 @@ namespace hardware {
 	    static constexpr int ACCEL_SCALE = std::numeric_limits<short>::max() + 1;
 
 	private:
-        void scaleCombined(const int16_t* buffer, float* sample, size_t offset);
-        void scaleAccel(const int16_t* buffer, float* sample, size_t offset);
-        void scaleGyro(const int16_t* buffer, float* sample, size_t offset);
-
+		void scaleData(gsl::span<const int16_t> buffer, gsl::span<float> sample);
+        void scaleCombined(gsl::span<const int16_t> source, gsl::span<float> target);
+		void scale(gsl::span<const int16_t> source, gsl::span<float> target, float scale);
 
 	private:
 		static const float gyroScale[5];    //in degree per second / digit
@@ -96,32 +109,50 @@ namespace hardware {
 
 	    static std::vector<ModeInfo> createModes();
 
-	    bool writeEeprom(int writeCommand, const int16_t* data, size_t size);
+	    bool writeEeprom(int writeCommand, gsl::span<const int16_t> data);
 
-	    bool setScale(int scaleCommand);
+	    bool updateScale(int scaleCommand);
 
 	    float getAccelScale() const;
 	    float getGyroScale() const;
 
 	    //Set the required mode and fetch sample
-	    void readSample(size_t mode, int16_t* buffer, size_t sampleSize);
+	    void readSample(size_t mode, gsl::span<int16_t> buffer);
 
 	public:
-	    explicit ImuLsm6ds3(std::unique_ptr<detail::UartPort>&& port, bool rawMode = false);
-	    ImuLsm6ds3(ImuLsm6ds3&& other) noexcept;
+	    explicit ImuLsm6ds3(std::unique_ptr<detail::UartPort> port, bool rawMode = false);
 
 	    void reset();
 
 
 		/** Fetches a sample from a sensor or filter.
-		 * @param sample
-		 * The array to store the sample in.
-		 * @param offset
-		 * The elements of the sample are stored in the array starting at the offset position.
+		 * @param sample The buffer to store the sample in.
 		 */
-		void fetchSample(float* sample, size_t offset) override;
+		void fetchSample(gsl::span<float> sample) override;
 
 		//Change scale support
+
+		/**
+		 * Changes the accelerometer full-scale range
+		 *
+		 * @param scale scale enum constant
+		 * @return true if the current scale range has been successfully changed
+		 */
+		bool setScale(AccelScale scale)
+		{
+			return setAccelerometerScale(static_cast<size_t>(scale));
+		}
+
+		/**
+		 * Changes the gyroscope full-scale range
+		 *
+		 * @param scale scale enum constant
+		 * @return true if the current scale range has been successfully changed
+		 */
+		bool setScale(GyroScale scale)
+		{
+			return setGyroscopeScale(static_cast<size_t>(scale));
+		}
 
 	    /**
 		 * Changes the accelerometer full-scale range
@@ -132,12 +163,26 @@ namespace hardware {
         bool setAccelerometerScale(size_t scaleNo) override;
 
 		/**
+		 * Returns number of supported scales
+		 *
+		 * @return number of scales supported by the sensor
+		 */
+		size_t getAccelerometerScales() const override;
+
+		/**
 		 * Changes the gyroscope full-scale range
 		 *
 		 * @param scaleNo scale range index
 		 * @return true if the current scale range has been successfully changed
 		 */
         bool setGyroscopeScale(size_t scaleNo) override;
+
+		/**
+		 * Returns number of supported scales
+		 *
+		 * @return number of scales supported by the sensor
+		 */
+		size_t getGyroscopeScales() const override;
 
 		//EEPROM
 
@@ -146,10 +191,9 @@ namespace hardware {
 		 *
 		 * @param scaleNo scale index
 		 * @param data EEPROM data (4x3 matrix of 16-bit integers)
-		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
-        bool writeAccelerometerEeprom(size_t scaleNo, const int16_t* data, size_t size) override;
+        bool writeAccelerometerEeprom(size_t scaleNo, gsl::span<const int16_t> data) override;
 
 		/**
 		 * Update gyroscope EEPROM
@@ -159,7 +203,7 @@ namespace hardware {
 		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
-        bool writeGyroscopeEeprom(size_t scaleNo, const int16_t* data, size_t size) override;
+        bool writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data) override;
 	};
 
 

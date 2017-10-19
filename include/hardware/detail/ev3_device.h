@@ -7,25 +7,11 @@
 
 #include <hardware/detail/handle.h>
 #include <hardware/detail/device_traits.h>
-#include <iostream>
+#include <gsl/span>
 
 namespace ev3lib {
 namespace hardware {
 namespace detail {
-
-	/**
-	 * Base class for buffers for commands
-	 */
-	template<typename T, size_t buffer_size>
-	struct BufferCommand {
-		T cmd[buffer_size];
-		static const size_t size = sizeof(cmd);
-
-		const void* buffer() const { return cmd; }
-
-		T& operator[] (size_t pos) { return cmd[pos]; }
-		const T& operator[] (size_t pos) const { return cmd[pos]; }
-	};
 
 	/**
 	 * Device that can be controlled using commands
@@ -41,15 +27,9 @@ namespace detail {
 
 		//Writes the command into the file.
 		//Returns the number of written bytes or -1
-		template <typename CommandType>
-		ssize_t sendCommand(const CommandType& command) {
+		ssize_t sendCommand(const gsl::span<uint8_t> command) {
 			//TODO add error checking using exceptions
-			return m_device.write(command.buffer(), CommandType::size);
-		}
-
-		ssize_t sendCommand(const uint8_t* command, size_t size) {
-			//TODO add error checking using exceptions
-			return m_device.write(command, size);
+			return m_device.write(command);
 		}
 
 		//Writes the command into the file.
@@ -80,13 +60,10 @@ namespace detail {
 	private:
 		device_map_type* m_map;
 	public:
-		EV3InputDevice()
-		{
-			//std::cout<<"Mapping for device: "<<device_traits<type>::device_name<<"\n";
+		EV3InputDevice() {
 			m_map = (device_map_type*)EV3Device<type>::m_device.mmap(device_traits<type>::sensor_data_size);
 		}
-		~EV3InputDevice()
-		{
+		~EV3InputDevice() {
 			EV3Device<type>::m_device.munmap(m_map, device_traits<type>::sensor_data_size);
 		}
 

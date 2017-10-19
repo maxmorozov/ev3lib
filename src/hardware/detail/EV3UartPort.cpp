@@ -1,6 +1,7 @@
 #include <chrono>
 #include <thread>
 #include <vector>
+#include <gsl/gsl_algorithm>
 
 #include <exceptions/EV3HardwareExceptions.h>
 
@@ -10,12 +11,6 @@ namespace ev3lib {
 namespace hardware {
 namespace detail {
 
-namespace {
-	typedef BufferCommand<unsigned char, 1> Command1;
-	typedef BufferCommand<unsigned char, 2> Command2;
-	typedef BufferCommand<unsigned char, 3> Command3;
-}
-
 const int EV3UartPort::INIT_DELAY;
 
 EV3UartPort::EV3UartPort(EV3DeviceManager* manager, size_t port)
@@ -23,6 +18,7 @@ EV3UartPort::EV3UartPort(EV3DeviceManager* manager, size_t port)
 {
     //Double init. After the Device Manager calls connectSensor we need to reconnect sensor.
     //So, we need postpone sensor initialization after it is connected by Device Manager
+    //TODO redesign the Device Manager to init sensors in constructor
     //initializeSensor(m_currentMode);
 }
 
@@ -93,29 +89,27 @@ const uint8_t* EV3UartPort::getData() const {
  * read a number of bytes from the device
  * @param buffer byte array to accept the data
  * @param offset offset (in bytes) at which to store the data
- * @param len number of bytes to read
  */
-void EV3UartPort::read(uint8_t* buffer, size_t offset, size_t len)
+void EV3UartPort::read(gsl::span<uint8_t> buffer)
 {
     checkSensor();
 
-    const uint8_t* data = getData() + offset;
-    std::copy(data, data + len, buffer);
+    const uint8_t* data = getData();
+    gsl::copy(gsl::make_span(data, buffer.size()), buffer);
 }
 
 /**
  * Write bytes to the sensor
  * @param buffer bytes to be written
  * @param offset offset to the start of the write
- * @param len length of the write
  * @return number of bytes written
  */
-ssize_t EV3UartPort::write(const uint8_t* buffer, size_t offset, size_t len)
+ssize_t EV3UartPort::write(gsl::span<const uint8_t> buffer)
 {
-    std::vector<uint8_t> command(len + 1);
+    std::vector<uint8_t> command(size(buffer) + 1);
     command[0] = (uint8_t) m_port;
-    std::copy(buffer + offset, buffer + offset + len, command.begin() + 1);
-	ssize_t ret = m_manager->m_uartDevice.sendCommand(&command[0], command.size());
+    std::copy_n(buffer.data(), size(buffer), command.begin() + 1);
+	ssize_t ret = m_manager->m_uartDevice.sendCommand(command);
     if (ret > 0) 
     	--ret;
     return ret;
@@ -131,8 +125,8 @@ std::string EV3UartPort::getModeName(size_t mode) const
     if (mode < m_modeInfo.size()) {
         return (const char*)m_modeInfo[mode].Name;
     }
-    else 
-        return "Unknown";
+
+    return "Unknown";
 }
 
 /**
@@ -140,9 +134,9 @@ std::string EV3UartPort::getModeName(size_t mode) const
  */
 void EV3UartPort::connect()
 {
-	Command1 command;
+	uint8_t command[1];
 	command[0] = m_port;
-	m_manager->m_uartDevice.ioctl(lejos::UART_CONNECT, command.buffer());
+	m_manager->m_uartDevice.ioctl(lejos::UART_CONNECT, command);
 }
 
 /**
@@ -150,9 +144,9 @@ void EV3UartPort::connect()
  */
 void EV3UartPort::disconnect()
 {
-	Command1 command;
+    uint8_t command[1];
 	command[0] = m_port;
-	m_manager->m_uartDevice.ioctl(lejos::UART_DISCONNECT, command.buffer());
+	m_manager->m_uartDevice.ioctl(lejos::UART_DISCONNECT, command);
 }
 
 /**
@@ -321,10 +315,10 @@ int8_t EV3UartPort::getStatus() const
  */
 void EV3UartPort::setOperatingMode(size_t mode)
 {
-	Command2 command;
+    uint8_t command[2];
 	command[0] = m_port;
 	command[1] = mode;
-	m_manager->m_uartDevice.ioctl(lejos::UART_SETMODE, command.buffer());
+	m_manager->m_uartDevice.ioctl(lejos::UART_SETMODE, command);
 }
 
 /**

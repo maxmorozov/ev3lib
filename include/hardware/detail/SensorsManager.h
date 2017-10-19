@@ -6,7 +6,7 @@
 #define EV3LIB_SENSOR_MANAGER_H_
 
 #include <utils/utilities.h>
-#include <stddef.h>
+#include <cstddef>
 #include <memory>
 #include <hardware/detail/ports/AnalogPort.h>
 #include <hardware/detail/ports/UartPort.h>

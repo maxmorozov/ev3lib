@@ -209,10 +209,10 @@ typedef   struct
 }
 UARTCTL;
 
-static const int UART_SET_CONN        = _IOWR('u',0,DEVCON);
-static const int UART_READ_MODE_INFO  = _IOWR('u',1,UARTCTL);
-static const int UART_NACK_MODE_INFO  = _IOWR('u',2,UARTCTL);
-static const int UART_CLEAR_CHANGED   = _IOWR('u',3,UARTCTL);
+static const uint32_t UART_SET_CONN        = _IOWR('u',0,DEVCON);
+static const uint32_t UART_READ_MODE_INFO  = _IOWR('u',1,UARTCTL);
+static const uint32_t UART_NACK_MODE_INFO  = _IOWR('u',2,UARTCTL);
+static const uint32_t UART_CLEAR_CHANGED   = _IOWR('u',3,UARTCTL);
 
 
 /*! \page UiModuleMemory

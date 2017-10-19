@@ -21,6 +21,15 @@ namespace ev3lib {
 			explicit UnregulatedMotor(detail::MotorPort* port);
 
 			/**
+			 * Sets power and direction using one command.
+			 * Positive power values means rotating forward,
+			 * negative values means rotating backward
+			 *
+			 * @param power PWM value from -100 to 100
+			 */
+			void controlMotor(int power);
+
+			/**
 			 * Sets the output power in percents
 			 */
 			void setPower(unsigned int power);
@@ -48,12 +57,12 @@ namespace ev3lib {
 			/**
 			 * returns tachometer count
 			 */
-			virtual int getTachoCount() const override;
+			int getTachoCount() const override;
 
 			/**
 			 * resets the tachometer count to 0;
 			 */
-			virtual void resetTachoCount() override;
+			void resetTachoCount() override;
 
 		};
 	}

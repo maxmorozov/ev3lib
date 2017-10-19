@@ -18,8 +18,7 @@ private:
 	bool floodlight = false;
 
 public:
-	explicit NXTLightSensor(std::unique_ptr<detail::AnalogPort>&& port);
-	NXTLightSensor(NXTLightSensor&& other) noexcept;
+	explicit NXTLightSensor(std::unique_ptr<detail::AnalogPort> port);
 
 	/**
 	 * Turns onboard light source of the sensor on or off

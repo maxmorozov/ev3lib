@@ -7,16 +7,11 @@
 namespace ev3lib {
 namespace hardware {
 
-UartSensor::UartSensor(std::unique_ptr<detail::UartPort>&& port, std::vector<ModeInfo>&& modes, size_t mode)
+UartSensor::UartSensor(std::unique_ptr<detail::UartPort> port, std::vector<ModeInfo> modes, size_t mode)
 	: MultiModeSensor(std::move(modes), mode), m_port(std::move(port))
 {
     if (!m_port->setMode(mode))
         throw device_error("Unable to initialize device");
-}
-
-UartSensor::UartSensor(UartSensor&& other) noexcept
-	: MultiModeSensor(std::move(other)), m_port(std::move(other.m_port))
-{
 }
 
 void UartSensor::switchMode(size_t newMode)

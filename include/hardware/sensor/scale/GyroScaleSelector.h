@@ -13,6 +13,13 @@ namespace hardware {
 		 * @return true if the current scale range has been successfully changed
 		 */
 		virtual bool setGyroscopeScale(size_t scaleNo) = 0;
+
+		/**
+		 * Returns number of supported scales
+		 *
+		 * @return number of scales supported by the sensor
+		 */
+		virtual size_t getGyroscopeScales() const = 0;
 	};
 
 

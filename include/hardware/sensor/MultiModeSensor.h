@@ -24,7 +24,7 @@ namespace hardware {
 
 
 	public:
-		explicit MultiModeSensor(std::vector<ModeInfo>&& modes, size_t mode);
+		explicit MultiModeSensor(std::vector<ModeInfo> modes, size_t mode);
 		MultiModeSensor(MultiModeSensor&& other) noexcept;
 
 	    /**

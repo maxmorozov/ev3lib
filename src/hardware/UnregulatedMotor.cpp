@@ -82,6 +82,19 @@ void UnregulatedMotor::resetTachoCount()
 	m_port->resetTachoCount();
 }
 
+void UnregulatedMotor::controlMotor(int power)
+{
+	m_power = static_cast<unsigned int>(abs(power));
+	if (power > 0)
+		m_currentState = MotorCommand::Forward;
+	else if (power < 0 )
+		m_currentState = MotorCommand::Backward;
+	else
+		m_currentState = MotorCommand::Stop;
+
+	updateState();
+}
+
 
 }}
 

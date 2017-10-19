@@ -8,22 +8,11 @@
 namespace ev3lib {
 namespace hardware {
 
-AnalogSensor::AnalogSensor(std::unique_ptr<detail::AnalogPort>&& port)
+AnalogSensor::AnalogSensor(std::unique_ptr<detail::AnalogPort> port)
 	: m_port(std::move(port))
 {
 
 }
-
-AnalogSensor::AnalogSensor(AnalogSensor&& other)
-	: m_port(std::move(other.m_port))
-{
-
-}
-
-AnalogSensor::~AnalogSensor()
-{
-}
-
 
 int AnalogSensor::getData() const
 {
@@ -40,11 +29,11 @@ int AnalogSensor::getData() const
  */
 void AnalogSensor::switchType(int newType)
 {
-    if (currentType != newType)
+    if (m_currentType != newType)
     {
         if (!m_port->setType(newType))
             throw std::logic_error("Invalid sensor mode");
-        currentType = newType;
+        m_currentType = newType;
     }
 }
 

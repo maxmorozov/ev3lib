@@ -10,12 +10,6 @@ namespace ev3lib {
 namespace hardware {
 namespace detail {
 
-namespace {
-	typedef BufferCommand<unsigned char, 3> Command3;
-	typedef BufferCommand<unsigned char, 2> Command2;
-}
-
-
 EV3AnalogPort::EV3AnalogPort(EV3DeviceManager* manager, size_t port)
 	: m_manager(manager), m_port(port)
 {

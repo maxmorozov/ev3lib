@@ -3,14 +3,11 @@
  */
 
 #include <boost/exception/all.hpp>
-#include <stdexcept>
-#include <algorithm>
 
 #include <hardware/detail/lms2012/ev3_constants.h>
 #include "exceptions/EV3HardwareExceptions.h"
 
 #include "EV3MotorPort.h"
-#include "EV3DeviceManager.h"
 #include "EV3AnalogPort.h"
 #include "EV3UartPort.h"
 
@@ -18,10 +15,6 @@
 namespace ev3lib {
 namespace hardware {
 namespace detail {
-
-namespace {
-	typedef BufferCommand<unsigned char, 2> DCMCommand;
-}
 
 EV3DeviceManager::EV3DeviceManager() {
 	std::fill_n(m_openPorts, count_of(m_openPorts), nullptr);
@@ -53,7 +46,7 @@ void EV3DeviceManager::setDeviceType(DeviceInfo& deviceInfo, SensorType type, in
 
 void EV3DeviceManager::setPortMode(size_t port, PortType type, AnalogMode mode)
 {
-	DCMCommand command;
+	uint8_t command[2];
 	int offset = type == PortType::Motor ? EV3SensorConstants::PORTS : 0;
 	command[0] = (unsigned char)(port + offset);
 	command[1] = (unsigned char)mode;

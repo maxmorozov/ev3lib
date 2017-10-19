@@ -150,18 +150,16 @@ namespace detail {
 	     * read a number of bytes from the device
 	     * @param buffer byte array to accept the data
 	     * @param offset offset (in bytes) at which to store the data
-	     * @param len number of bytes to read
 	     */
-		void read(uint8_t* buffer, size_t offset, size_t len) override;
+		void read(gsl::span<uint8_t> buffer) override;
 
 	    /**
 	     * Write bytes to the sensor
 	     * @param buffer bytes to be written
 	     * @param offset offset to the start of the write
-	     * @param len length of the write
 	     * @return number of bytes written
 	     */
-		ssize_t write(const uint8_t* buffer, size_t offset, size_t len) override;
+		ssize_t write(gsl::span<const uint8_t> buffer) override;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>
