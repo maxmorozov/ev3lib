@@ -1,7 +1,7 @@
 #include <chrono>
 #include <thread>
 #include <vector>
-#include <gsl/gsl_algorithm>
+#include <gsl/algorithm>
 
 #include <exceptions/EV3HardwareExceptions.h>
 

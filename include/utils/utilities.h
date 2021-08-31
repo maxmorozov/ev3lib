@@ -34,7 +34,7 @@ namespace ev3lib {
 	constexpr size_t count_of(T (&)[size]) { return size; }
 
 	//Helper function to convert span::size to size_t type
-	template <typename T, ptrdiff_t Extent>
+	template <typename T, size_t Extent>
 	constexpr size_t size(const gsl::span<T, Extent>& span) {
 		return static_cast<size_t>(span.size());
 	};

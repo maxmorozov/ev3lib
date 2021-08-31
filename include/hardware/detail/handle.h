@@ -30,6 +30,7 @@ namespace detail {
 
 		handle& operator=(handle&& other) noexcept {
 			std::swap(m_file, other.m_file);
+			return *this;
 		}
 
 		explicit operator int() const {
