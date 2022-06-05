@@ -4,11 +4,9 @@
 
 #include "EV3AnalogPort.h"
 #include "EV3SensorConstants.h"
-#include "EV3SensorType.h"
+#include "hardware/ports/SensorType.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 EV3AnalogPort::EV3AnalogPort(EV3DeviceManager* manager, size_t port)
 	: m_manager(manager), m_port(port)
@@ -49,38 +47,36 @@ int EV3AnalogPort::getPin1() const
  * sets the sensor type.
  * @return success status
  */
-bool EV3AnalogPort::setType(int type)
+bool EV3AnalogPort::setType(ports::SensorType type)
 {
     bool ret = true;
-    switch(EV3SensorType(type))
+    switch(type)
     {
-    case EV3SensorType::NO_SENSOR:
-    case EV3SensorType::SWITCH:
-    case EV3SensorType::TEMPERATURE:
-    case EV3SensorType::CUSTOM:
-    case EV3SensorType::ANGLE:
+    case ports::SensorType::NO_SENSOR:
+    case ports::SensorType::SWITCH:
+    case ports::SensorType::TEMPERATURE:
+    case ports::SensorType::CUSTOM:
+    case ports::SensorType::ANGLE:
         setPinMode(AnalogMode::Float);
         break;
-    case EV3SensorType::LIGHT_ACTIVE:
-    case EV3SensorType::SOUND_DBA:
-    case EV3SensorType::REFLECTION:
+    case ports::SensorType::LIGHT_ACTIVE:
+    case ports::SensorType::SOUND_DBA:
+    case ports::SensorType::REFLECTION:
         setPinMode(AnalogMode::Set|AnalogMode::Pin5);
         break;
-    case EV3SensorType::LIGHT_INACTIVE:
-    case EV3SensorType::SOUND_DB:
+    case ports::SensorType::LIGHT_INACTIVE:
+    case ports::SensorType::SOUND_DB:
+    case ports::SensorType::LOWSPEED:
         setPinMode(AnalogMode::Set);
         break;
-    case EV3SensorType::LOWSPEED:
-        setPinMode(AnalogMode::Set);
-        break;
-    case EV3SensorType::LOWSPEED_9V:
+    case ports::SensorType::LOWSPEED_9V:
         setPinMode(AnalogMode::Set|AnalogMode::Pin1);
         break;
-    case EV3SensorType::COLORFULL:
-    case EV3SensorType::COLORRED:
-    case EV3SensorType::COLORGREEN:
-    case EV3SensorType::COLORBLUE:
-    case EV3SensorType::COLORNONE:
+    case ports::SensorType::COLORFULL:
+    case ports::SensorType::COLORRED:
+    case ports::SensorType::COLORGREEN:
+    case ports::SensorType::COLORBLUE:
+    case ports::SensorType::COLORNONE:
         // Sensor type and pin modes are aligned
         setPinMode(AnalogMode(type));
         break;
@@ -101,12 +97,10 @@ bool EV3AnalogPort::setPinMode(AnalogMode mode)
 	}
 }
 
-void EV3AnalogPort::detach() 
+void EV3AnalogPort::detach()
 {
 	m_manager = nullptr;
 }
 
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */

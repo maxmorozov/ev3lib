@@ -2,18 +2,15 @@
 #define EV3_DETACH_SUBSCRIBER_H
 
 #include <utils/utilities.h>
-#include <stddef.h>
+#include <cstddef>
 #include <memory>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	struct DetachSubscriber : public ev3lib::destructible {
 		virtual void detach() = 0;
 	};
 
-
-}}}
+}
 
 #endif //EV3_DETACH_SUBSCRIBER_H

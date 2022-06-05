@@ -4,12 +4,14 @@ project(ev3lib)
 set(SOURCE_FILES
         include/exceptions/EV3HardwareExceptions.h
         include/hardware/detail/lejos/motor_data.h
-        include/hardware/detail/lejos/uart_data.h
+        include/hardware/detail/lejos/port_data.h
         include/hardware/detail/lms2012/ev3_constants.h
         include/hardware/detail/lms2012/ev3_types.h
-        include/hardware/detail/ports/AnalogPort.h
-        include/hardware/detail/ports/MultiModePort.h
-        include/hardware/detail/ports/UartPort.h
+        include/hardware/ports/AnalogPort.h
+        include/hardware/ports/MultiModePort.h
+        include/hardware/ports/UartPort.h
+        include/hardware/ports/I2CPort.h
+        include/hardware/ports/SensorType.h
         include/hardware/detail/BatteryManager.h
         include/hardware/detail/device_traits.h
         include/hardware/detail/ev3_brick.h
@@ -33,6 +35,7 @@ set(SOURCE_FILES
         include/hardware/sensor/SensorMode.h
         include/hardware/sensor/SensorModes.h
         include/hardware/sensor/UartSensor.h
+        include/hardware/sensor/I2CSensor.h
         include/hardware/Battery.h
         include/hardware/Brick.h
         include/hardware/Button.h
@@ -54,7 +57,8 @@ set(SOURCE_FILES
         src/hardware/detail/EV3MotorPort.cpp
         src/hardware/detail/EV3MotorPort.h
         src/hardware/detail/EV3SensorConstants.h
-        src/hardware/detail/EV3SensorType.h
+        src/hardware/detail/EV3I2CPort.cpp
+        src/hardware/detail/EV3I2CPort.h
         src/hardware/detail/EV3UartPort.cpp
         src/hardware/detail/EV3UartPort.h
         src/hardware/detail/handle.cpp
@@ -64,6 +68,7 @@ set(SOURCE_FILES
         src/hardware/sensor/MultiModeSensor.cpp
         src/hardware/sensor/NXTLightSensor.cpp
         src/hardware/sensor/UartSensor.cpp
+        src/hardware/sensor/I2CSensor.cpp
         src/hardware/Battery.cpp
         src/hardware/Brick.cpp
         src/hardware/Button.cpp
@@ -74,7 +79,7 @@ include_directories(include)
 add_library(ev3lib STATIC ${SOURCE_FILES})
 
 set_target_properties(ev3lib PROPERTIES
-        CXX_STANDARD 14
+        CXX_STANDARD 17
         CXX_STANDARD_REQUIRED YES
         CXX_EXTENSIONS NO
         )

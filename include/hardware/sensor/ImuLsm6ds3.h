@@ -8,10 +8,9 @@
 #include <hardware/sensor/eeprom/GyroEepromWriter.h>
 #include <utils/str_const.h>
 
-#include "UartSensor.h"
+#include <hardware/sensor/UartSensor.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 	class ImuLsm6ds3 : public UartSensor, public AccelScaleSelector, public GyroScaleSelector, public AccelEepromWriter, public GyroEepromWriter {
 	public:
@@ -120,7 +119,7 @@ namespace hardware {
 	    void readSample(size_t mode, gsl::span<int16_t> buffer);
 
 	public:
-	    explicit ImuLsm6ds3(std::unique_ptr<detail::UartPort> port, bool rawMode = false);
+	    explicit ImuLsm6ds3(std::unique_ptr<ports::UartPort> port, bool rawMode = false);
 
 	    void reset();
 
@@ -193,6 +192,7 @@ namespace hardware {
 		 * @param data EEPROM data (4x3 matrix of 16-bit integers)
 		 * @return true if the EEPROM data has been successfully written
 		 */
+        [[nodiscard]]
         bool writeAccelerometerEeprom(size_t scaleNo, gsl::span<const int16_t> data) override;
 
 		/**
@@ -203,8 +203,9 @@ namespace hardware {
 		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
+        [[nodiscard]]
         bool writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data) override;
 	};
 
 
-}}
+}

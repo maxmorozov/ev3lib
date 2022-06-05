@@ -3,14 +3,12 @@
 
 #include <vector>
 #include <hardware/detail/ev3_device.h>
-#include <hardware/detail/lejos/uart_data.h>
+#include <hardware/detail/lejos/port_data.h>
 #include "EV3DeviceManager.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
-	class EV3UartPort: public UartPort, public DetachSubscriber {
+	class EV3UartPort: public ports::UartPort, public DetachSubscriber {
 	    static const int TIMEOUT_DELTA = 1;
 	    static const int TIMEOUT = 4000;
 	    static const int INIT_DELAY = 5;
@@ -23,6 +21,20 @@ namespace detail {
 
     	size_t m_currentMode = 0;
     	std::vector<lms2012::TYPES> m_modeInfo;
+
+        const EV3InputDevice<device_type::uart_sensor>& getDevice() const {
+            if (m_manager == nullptr) {
+                throw device_error("Device manager is detached");
+            }
+            return m_manager->m_uartDevice;
+        }
+
+        EV3InputDevice<device_type::uart_sensor>& getDevice() {
+            if (m_manager == nullptr) {
+                throw device_error("Device manager is detached");
+            }
+            return m_manager->m_uartDevice;
+        }
 
 		/**
 		 * return the current status of the port
@@ -140,7 +152,7 @@ namespace detail {
 		bool setMode(size_t mode) override;
 
 	    /**
-	     * Returns numner of supported modes
+	     * Returns number of supported modes
 	     *
 	     * @return number of available modes
 	     */
@@ -169,8 +181,6 @@ namespace detail {
 		std::string getModeName(size_t mode) const override;
 	};
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */
 
 #endif /* EV3UARTPORT_H_ */

@@ -5,10 +5,9 @@
 #include <stdexcept>
 #include <hardware/sensor/AnalogSensor.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
-AnalogSensor::AnalogSensor(std::unique_ptr<detail::AnalogPort> port)
+AnalogSensor::AnalogSensor(std::unique_ptr<ports::AnalogPort> port)
 	: m_port(std::move(port))
 {
 
@@ -27,7 +26,7 @@ int AnalogSensor::getData() const
  * @param newType The type to switch to.
  * @param switchDelay Time in mS to delay after the switch.
  */
-void AnalogSensor::switchType(int newType)
+void AnalogSensor::switchType(ports::SensorType newType)
 {
     if (m_currentType != newType)
     {
@@ -37,5 +36,4 @@ void AnalogSensor::switchType(int newType)
     }
 }
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */

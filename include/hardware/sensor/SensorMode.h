@@ -6,8 +6,7 @@
 
 #include <robotics/SampleProvider.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 	struct SensorMode : public robotics::SampleProvider
 	{
@@ -21,4 +20,4 @@ namespace hardware {
 
 	};
 
-}}
+}

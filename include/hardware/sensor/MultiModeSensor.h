@@ -3,11 +3,9 @@
 #include <vector>
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
+#include <hardware/sensor/SensorModes.h>
 
-#include "SensorModes.h"
-
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 	class MultiModeSensor : public SensorModes {
     protected:
@@ -70,5 +68,4 @@ namespace hardware {
 	};
 
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */

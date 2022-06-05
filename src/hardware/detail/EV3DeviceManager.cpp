@@ -5,28 +5,28 @@
 #include <boost/exception/all.hpp>
 
 #include <hardware/detail/lms2012/ev3_constants.h>
-#include "exceptions/EV3HardwareExceptions.h"
+#include <exceptions/EV3HardwareExceptions.h>
+#include <memory>
 
 #include "EV3MotorPort.h"
 #include "EV3AnalogPort.h"
 #include "EV3UartPort.h"
+#include "EV3I2CPort.h"
 
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
-EV3DeviceManager::EV3DeviceManager() {
-	std::fill_n(m_openPorts, count_of(m_openPorts), nullptr);
+EV3DeviceManager::EV3DeviceManager(): m_openPorts{nullptr} {
 }
 
 EV3DeviceManager::~EV3DeviceManager() {
-	std::for_each(m_openPorts, m_openPorts + count_of(m_openPorts), [](DetachSubscriber* item) {if (item != nullptr) item->detach();});
+	std::for_each(m_openPorts, m_openPorts + count_of(m_openPorts),
+                  [](DetachSubscriber* item) {if (item != nullptr) item->detach();});
 }
 
-SensorType EV3DeviceManager::getSensorType(size_t port) const
+DeviceType EV3DeviceManager::getSensorType(size_t port) const
 {
-	return (SensorType)m_analogDevice.getSensorData()->InDcm[port];
+	return (DeviceType)m_analogDevice.getSensorData()->InDcm[port];
 }
 
 ConnectionType EV3DeviceManager::getConnectionType(size_t port) const
@@ -34,7 +34,7 @@ ConnectionType EV3DeviceManager::getConnectionType(size_t port) const
 	return (ConnectionType)m_analogDevice.getSensorData()->InConn[port];
 }
 
-void EV3DeviceManager::setDeviceType(DeviceInfo& deviceInfo, SensorType type, int mode)
+void EV3DeviceManager::setDeviceType(DeviceInfo& deviceInfo, DeviceType type, int mode)
 {
 /*
 	if (deviceInfo.connectionType == ConnectionType::None) {
@@ -78,16 +78,22 @@ void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
 	}
 }
 
-std::unique_ptr<AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
+std::unique_ptr<ports::AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
     auto sensor = std::make_unique<EV3AnalogPort>(this, port);
    	connectSensor(port, sensor.get());
-	return std::move(sensor);
+	return sensor;
 }
 
-std::unique_ptr<UartPort> EV3DeviceManager::getUartPort(size_t port) {
+std::unique_ptr<ports::UartPort> EV3DeviceManager::getUartPort(size_t port) {
     auto sensor = std::make_unique<EV3UartPort>(this, port);
    	connectSensor(port, sensor.get());
-	return std::move(sensor);
+	return sensor;
+}
+
+std::unique_ptr<ports::I2CPort> EV3DeviceManager::getI2CPort(size_t port) {
+    auto sensor = std::make_unique<EV3I2CPort>(this, port);
+    connectSensor(port, sensor.get());
+    return sensor;
 }
 
 /**
@@ -142,6 +148,4 @@ short EV3DeviceManager::getBatteryCurrent() const {
 	return m_analogDevice.getSensorData()->BatteryCurrent;
 }
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */

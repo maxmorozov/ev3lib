@@ -6,10 +6,8 @@
 #define BATTERY_H_
 
 #include <hardware/detail/Power.h>
-#include "detail/Power.h"
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 class Battery {
 private:
@@ -42,7 +40,6 @@ public:
 	float getMotorCurrent() const;
 };
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */
 
 #endif /* BATTERY_H_ */

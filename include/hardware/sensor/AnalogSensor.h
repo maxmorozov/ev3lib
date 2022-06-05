@@ -7,28 +7,27 @@
 
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
+#include <hardware/ports/SensorType.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 /**
  * Returns raw ADC output value
  */
 class AnalogSensor : public destructible, noncopyable {
 protected:
-	std::unique_ptr<detail::AnalogPort> m_port;
-    int m_currentType = -1;
+	std::unique_ptr<ports::AnalogPort> m_port;
+    ports::SensorType m_currentType = ports::SensorType::NO_DATA;
 
 protected:
-	void switchType(int newType);
+	void switchType(ports::SensorType newType);
 
 public:
-	explicit AnalogSensor(std::unique_ptr<detail::AnalogPort> port) ;
+	explicit AnalogSensor(std::unique_ptr<ports::AnalogPort> port) ;
 
 	int getData() const;
 };
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */
 
 #endif /* EV3LIB_ANALOGSENSOR_H_ */

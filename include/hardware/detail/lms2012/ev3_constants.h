@@ -5,11 +5,7 @@
 #ifndef EV3CONSTANTS_H_
 #define EV3CONSTANTS_H_
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
-
-namespace lms2012 {
+namespace ev3lib::hardware::detail::lms2012 {
 
 /**
  * Copied from EV3 sources to avoid macros usage
@@ -110,8 +106,5 @@ namespace lms2012 {
 	static const int UART_WRITE_REQUEST = 0x10;        //!< Write request
 
 }
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
 
 #endif /* EV3CONSTANTS_H_ */

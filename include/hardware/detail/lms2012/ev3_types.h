@@ -14,11 +14,7 @@
 #define   DISABLE_PREEMPTED_VM          //!< Don't run VM as preempted
 #define   DISABLE_USBSTICK_SUPPORT      //!< Don't use USB stick
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
-
-namespace lms2012 {
+namespace ev3lib::hardware::detail::lms2012 {
 
 typedef   unsigned char         UBYTE;  //!< Basic Type used to symbolise 8  bit unsigned values
 typedef   unsigned short        UWORD;  //!< Basic Type used to symbolise 16 bit unsigned values
@@ -43,6 +39,24 @@ typedef   FLOAT                 DATAF;  //!< VM Type for 4 byte floating point v
 
 static const int COLORS = 4;
 static const int CALPOINTS = 3;
+
+/*! \page results Results
+
+    Describes result from executing functions
+
+    \verbatim */
+
+
+typedef   enum
+{
+  OK            = 0,                    //!< No errors to report
+  BUSY          = 1,                    //!< Busy - try again
+  FAIL          = 2,                    //!< Something failed
+  STOP          = 4                     //!< Stopped
+}
+RESULT;
+
+/*  \endverbatim */
 
 
 /*! \page NxtColorMemory
@@ -122,8 +136,8 @@ ANALOG;
  *  \n
  */
 
-static const int TYPE_NAME_LENGTH = 11;
-static const int SYMBOL_LENGTH = 4;       //!< Symbol leng th (not including zero)
+static const size_t TYPE_NAME_LENGTH = 11;
+static const size_t SYMBOL_LENGTH = 4;       //!< Symbol leng th (not including zero)
 
 /*! \struct TYPES
  *          Device type data
@@ -165,8 +179,8 @@ TYPES;
  *  \verbatim
  */
 
-static const int UART_DATA_LENGTH = MAX_DEVICE_DATALENGTH;
-static const int UART_BUFFER_SIZE = 64;
+static const size_t UART_DATA_LENGTH = MAX_DEVICE_DATALENGTH;
+static const size_t UART_BUFFER_SIZE = 64;
 
 typedef   struct
 {
@@ -215,6 +229,134 @@ static const uint32_t UART_NACK_MODE_INFO  = _IOWR('u',2,UARTCTL);
 static const uint32_t UART_CLEAR_CHANGED   = _IOWR('u',3,UARTCTL);
 
 
+/*! \page IicModuleMemory
+ *
+ *  <b>     Shared Memory </b>
+ *
+ *  <hr size="1"/>
+ *
+ *  It is possible to get a pointer to the iic values for use in userspace
+ *  this pointer will point to a struct and the layout is following:
+ *
+ *  \verbatim
+ */
+
+static const size_t IIC_DATA_LENGTH = MAX_DEVICE_DATALENGTH;
+static const size_t IIC_NAME_LENGTH = 8;
+
+typedef   struct
+{
+  TYPES   TypeData[INPUTS][MAX_DEVICE_MODES]; //!< TypeData
+
+#ifndef DISABLE_FAST_DATALOG_BUFFER
+  UWORD   Repeat[INPUTS][DEVICE_LOGBUF_SIZE];
+  DATA8   Raw[INPUTS][DEVICE_LOGBUF_SIZE][IIC_DATA_LENGTH];      //!< Raw value from IIC device
+  UWORD   Actual[INPUTS];
+  UWORD   LogIn[INPUTS];
+#else
+  DATA8   Raw[INPUTS][IIC_DATA_LENGTH];      //!< Raw value from IIC device
+#endif
+  DATA8   Status[INPUTS];                     //!< Status
+  DATA8   Changed[INPUTS];
+  DATA8   Output[INPUTS][IIC_DATA_LENGTH];    //!< Bytes to IIC device
+  DATA8   OutputLength[INPUTS];
+}
+IIC;
+
+/*\endverbatim
+ *
+ *  \n
+ */
+
+
+static const uint32_t IIC_PORT_CHANGED     = 0x01;       //!< Input port changed
+static const uint32_t IIC_DATA_READY       = 0x08;       //!< Data is ready
+static const uint32_t IIC_WRITE_REQUEST    = 0x10;       //!< Write request
+
+
+typedef   struct
+{
+  TYPES   TypeData;
+  DATA8   Port;
+  DATA8   Mode;
+}
+IICCTL;
+
+
+typedef   struct
+{
+  RESULT  Result;
+  DATA8   Port;
+  DATA8   Repeat;
+  DATA16  Time;
+  DATA8   WrLng;
+  DATA8   WrData[IIC_DATA_LENGTH];
+  DATA8   RdLng;
+  DATA8   RdData[IIC_DATA_LENGTH];
+}
+IICDAT;
+
+
+typedef   struct
+{
+  DATA8   Port;
+  DATA16  Time;
+  DATA8   Type;
+  DATA8   Mode;
+  DATA8   Manufacturer[IIC_NAME_LENGTH + 1];
+  DATA8   SensorType[IIC_NAME_LENGTH + 1];
+  DATA8   SetupLng;
+  ULONG   SetupString;
+  DATA8   PollLng;
+  ULONG   PollString;
+  DATA8   ReadLng;
+}
+IICSTR;
+
+
+static const uint32_t IIC_SET_CONN          = _IOWR('i',2,DEVCON);
+static const uint32_t IIC_READ_TYPE_INFO    = _IOWR('i',3,IICCTL);
+static const uint32_t IIC_SETUP             = _IOWR('i',5,IICDAT);
+static const uint32_t IIC_SET               = _IOWR('i',6,IICSTR);
+
+
+
+
+static const size_t TST_PIN_LENGTH   = 8;
+
+typedef   struct
+{
+  DATA8   Port;
+  DATA8   Length;
+  DATA8   String[TST_PIN_LENGTH + 1];
+}
+TSTPIN;
+
+static const uint32_t TST_PIN_ON            = _IOWR('t',1,TSTPIN);
+static const uint32_t TST_PIN_OFF           = _IOWR('t',2,TSTPIN);
+static const uint32_t TST_PIN_READ          = _IOWR('t',3,TSTPIN);
+static const uint32_t TST_PIN_WRITE         = _IOWR('t',4,TSTPIN);
+
+
+static const size_t TST_UART_LENGTH         = UART_BUFFER_SIZE;
+
+typedef   struct
+{
+  DATA32  Bitrate;
+  DATA8   Port;
+  DATA8   Length;
+  DATA8   String[TST_UART_LENGTH];
+}
+TSTUART;
+
+static const uint32_t TST_UART_ON           = _IOWR('t',5,TSTUART);
+static const uint32_t TST_UART_OFF          = _IOWR('t',6,TSTUART);
+static const uint32_t TST_UART_EN           = _IOWR('t',7,TSTUART);
+static const uint32_t TST_UART_DIS          = _IOWR('t',8,TSTUART);
+static const uint32_t TST_UART_READ         = _IOWR('t',9,TSTUART);
+static const uint32_t TST_UART_WRITE        = _IOWR('t',10,TSTUART);
+
+
 /*! \page UiModuleMemory
  *
  *  <b>     Shared Memory </b>
@@ -251,8 +393,5 @@ struct MOTORDATA
 
 
 }
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
 
 #endif /* EV3_TYPES_H_ */

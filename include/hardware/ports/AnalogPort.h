@@ -1,13 +1,12 @@
 #ifndef EV3LIB_PORTS_ANALOG_PORT_H_
 #define EV3LIB_PORTS_ANALOG_PORT_H_
 
-#include <utils/utilities.h>
-#include <stddef.h>
+#include <cstddef>
 #include <memory>
+#include <utils/utilities.h>
+#include <hardware/ports/SensorType.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::ports {
 
 	struct AnalogPort: public destructible {
 	    /**
@@ -26,11 +25,11 @@ namespace detail {
 	     * sets the sensor type.
 	     * @return success status
 	     */
-		virtual bool setType(int mode) = 0;
+        [[nodiscard]]
+		virtual bool setType(SensorType mode) = 0;
 	};
 
-
-}}}
+}
 
 
 #endif /* EV3LIB_PORTS_ANALOG_PORT_H_ */

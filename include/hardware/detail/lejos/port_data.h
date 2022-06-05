@@ -1,13 +1,8 @@
-#ifndef LEJOS_UART_DATA_H
-#define LEJOS_UART_DATA_H
+#pragma once
 
 #include <hardware/detail/lms2012/ev3_types.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
-
-namespace lejos {
+namespace ev3lib::hardware::detail::lejos {
 
 
 	static const int UART_PORT_ERROR    = 0x80;        //!< Sensor error
@@ -39,6 +34,14 @@ namespace lejos {
 
 	static const int UART_MODE_RAW    =  ((lms2012::DATA8) -1);
 
-}}}}
+    //IIC extension
+    static const uint32_t IIC_CONNECT           = _IOWR('i',7,DEVCTL);
+    static const uint32_t IIC_DISCONNECT        = _IOWR('i',8,DEVCTL);
+    static const uint32_t IIC_IO                = _IOWR('i',9,DEVCTL);
 
-#endif //LEJOS_UART_DATA_H
+    static constexpr int STATUS_OK = 0;
+    static constexpr int STATUS_BUSY = 1;
+    static constexpr int STATUS_FAIL = 2;
+    static constexpr int STATUS_STOP = 4;
+
+}

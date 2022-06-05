@@ -1,13 +1,11 @@
 #ifndef EV3LIB_PORTS_MULTIMODE_PORT_H_
 #define EV3LIB_PORTS_MULTIMODE_PORT_H_
 
-#include <utils/utilities.h>
-#include <stddef.h>
+#include <cstddef>
 #include <memory>
+#include <utils/utilities.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::ports {
 
 	struct MultiModePort: public destructible {
 	    /**
@@ -21,10 +19,11 @@ namespace detail {
 	     * @param mode the new mode
 	     * @return true if the mode has been accepted
 	     */
+        [[nodiscard]]
 	    virtual bool setMode(size_t mode) = 0;
 
 	    /**
-	     * Returns numner of supported modes
+	     * Returns number of supported modes
 	     *
 	     * @return number of available modes
 	     */
@@ -32,7 +31,7 @@ namespace detail {
 	};
 
 
-}}}
+}
 
 
 #endif /* EV3LIB_PORTS_MULTIMODE_PORT_H_ */

@@ -6,9 +6,7 @@
 #include "EV3DeviceManager.h"
 #include "EV3Battery.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	class EV3Brick::EV3BrickImpl {
 	private:
@@ -76,7 +74,7 @@ const Power* EV3Brick::getBattery() const {
 }
 
 
-}}}
+}
 
 
 

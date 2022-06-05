@@ -4,10 +4,9 @@
 #include <vector>
 #include <string>
 
-#include "SensorMode.h"
+#include <hardware/sensor/SensorMode.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 	/**
 	 * Provide access to the modes supported by a sensor
@@ -44,5 +43,4 @@ namespace hardware {
 		virtual size_t getModeCount() const = 0;
 	};
 
-
-}}
+}

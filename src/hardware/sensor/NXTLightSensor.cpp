@@ -4,12 +4,11 @@
 
 #include <stdexcept>
 #include <hardware/sensor/NXTLightSensor.h>
-#include "../detail/EV3SensorType.h"
+#include "hardware/ports/SensorType.h"
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
-NXTLightSensor::NXTLightSensor(std::unique_ptr<detail::AnalogPort> port)
+NXTLightSensor::NXTLightSensor(std::unique_ptr<ports::AnalogPort> port)
 	: AnalogSensor(std::move(port))
 {
 
@@ -17,11 +16,10 @@ NXTLightSensor::NXTLightSensor(std::unique_ptr<detail::AnalogPort> port)
 
 void NXTLightSensor::setFloodlight(bool floodlight)
 {
-    switchType(int(floodlight ? detail::EV3SensorType::LIGHT_ACTIVE : detail::EV3SensorType::LIGHT_INACTIVE));
+    switchType(floodlight ? ports::SensorType::LIGHT_ACTIVE : ports::SensorType::LIGHT_INACTIVE);
     this->floodlight = floodlight;
 
 }
 
 
-} /* namespace hardware */
 } /* namespace ev3lib */

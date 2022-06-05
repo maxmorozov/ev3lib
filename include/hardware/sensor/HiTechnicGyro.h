@@ -8,22 +8,20 @@
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 class HiTechnicGyro: public destructible {
 private:
-	std::unique_ptr<detail::AnalogPort> m_port;
+	std::unique_ptr<ports::AnalogPort> m_port;
     float m_zero;
 
 public:
-	explicit HiTechnicGyro(std::unique_ptr<detail::AnalogPort> port);
+	explicit HiTechnicGyro(std::unique_ptr<ports::AnalogPort> port);
 
 	float getData() const;
 };
 
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */
 
 #endif /* EV3LIB_HITECHNICGYRO_H_ */

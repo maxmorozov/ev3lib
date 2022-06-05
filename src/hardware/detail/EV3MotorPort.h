@@ -8,9 +8,7 @@
 #include <hardware/detail/ev3_device.h>
 #include "EV3DeviceManager.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	class EV3MotorPort : public MotorPort {
 	private:
@@ -32,30 +30,28 @@ namespace detail {
 
 	public:
 		EV3MotorPort(EV3DeviceManager* manager, size_t port);
-		virtual ~EV3MotorPort() override;
+		~EV3MotorPort() override;
 
 		/**
 		 * returns tachometer count
 		 */
-		virtual int getTachoCount() const override;
+		int getTachoCount() const override;
 
 		/**
 		 * resets the tachometer count to 0;
 		 */
-		virtual void resetTachoCount() override;
+		void resetTachoCount() override;
 
 		/**
 		 * Starts and stops the motor
 		 */
-		virtual void controlMotor(int power, MotorCommand command) override;
+		void controlMotor(int power, MotorCommand command) override;
 
 		void setPower(int power);
 
 		void stop(bool flt);
 	};
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */
 
 #endif /* EV3MOTORPORT_H_ */

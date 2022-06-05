@@ -4,14 +4,12 @@
 
 #include <stdexcept>
 
-#include "EV3MotorPort.h"
 #include <exceptions/EV3HardwareExceptions.h>
+#include "EV3MotorPort.h"
 
 using namespace std;
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	EV3MotorPort::EV3MotorPort(EV3DeviceManager* manager, size_t port)
 		: m_manager(manager), m_port(port)
@@ -99,6 +97,4 @@ namespace detail {
 	}
 
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */

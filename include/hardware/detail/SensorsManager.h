@@ -5,18 +5,17 @@
 #ifndef EV3LIB_SENSOR_MANAGER_H_
 #define EV3LIB_SENSOR_MANAGER_H_
 
-#include <utils/utilities.h>
 #include <cstddef>
 #include <memory>
-#include <hardware/detail/ports/AnalogPort.h>
-#include <hardware/detail/ports/UartPort.h>
+#include <utils/utilities.h>
+#include <hardware/ports/AnalogPort.h>
+#include <hardware/ports/UartPort.h>
+#include <hardware/ports/I2CPort.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	//EV3 hardware type
-	enum class SensorType: char {
+	enum class DeviceType: char {
 	    NxtTouch                =   1,  //!< Device is NXT touch sensor
 	    NxtLight                =   2,  //!< Device is NXT light sensor
 	    NxtSound                =   3,  //!< Device is NXT sound sensor
@@ -91,16 +90,18 @@ namespace detail {
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
 	struct SensorsManager: public destructible {
-		virtual SensorType getSensorType(size_t port) const = 0;
+		virtual DeviceType getSensorType(size_t port) const = 0;
 		virtual ConnectionType getConnectionType(size_t port) const = 0;
 
 		virtual void setPortMode(size_t port, PortType type, AnalogMode mode) = 0;
 
 		virtual void disconnect(size_t port, PortType type) = 0;
 
-		virtual std::unique_ptr<AnalogPort> getAnalogPort(size_t port) = 0;
+		virtual std::unique_ptr<ports::AnalogPort> getAnalogPort(size_t port) = 0;
 
-		virtual std::unique_ptr<UartPort> getUartPort(size_t port) = 0;
+		virtual std::unique_ptr<ports::UartPort> getUartPort(size_t port) = 0;
+
+        virtual std::unique_ptr<ports::I2CPort> getI2CPort(size_t port) = 0;
 
 		/**
 		 * Current flowing from the battery
@@ -117,7 +118,7 @@ namespace detail {
 		return AnalogMode(int(left) | int(right));
 	}
 
-}}}
+}
 
 
 

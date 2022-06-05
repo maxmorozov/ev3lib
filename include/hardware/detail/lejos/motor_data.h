@@ -7,11 +7,7 @@
 
 #include <hardware/detail/lms2012/ev3_types.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
-
-namespace lejos {
+namespace ev3lib::hardware::detail::lejos {
 
 typedef struct
 {
@@ -25,6 +21,6 @@ typedef struct
 	lms2012::SLONG serial;
 } MOTORSHARED;
 
-}}}}
+}
 
 #endif /* MOTOR_DATA_H_ */

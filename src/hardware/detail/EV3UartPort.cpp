@@ -3,13 +3,11 @@
 #include <vector>
 #include <gsl/algorithm>
 
-#include <exceptions/EV3HardwareExceptions.h>
+#include "exceptions/EV3HardwareExceptions.h"
 
 #include "EV3UartPort.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 const int EV3UartPort::INIT_DELAY;
 
@@ -67,7 +65,7 @@ bool EV3UartPort::setMode(size_t mode)
 }
 
 /**
- * Returns numner of supported modes
+ * Returns number of supported modes
  *
  * @return number of available modes
  */
@@ -77,7 +75,7 @@ size_t EV3UartPort::getModeCount() const
 }
 
 const uint8_t* EV3UartPort::getData() const {
-	auto uartData = m_manager->m_uartDevice.getSensorData();
+	auto uartData = getDevice().getSensorData();
 #ifndef DISABLE_FAST_DATALOG_BUFFER
 	return (uint8_t*)uartData->Raw[m_port][uartData->Actual[m_port]];
 #else
@@ -109,7 +107,7 @@ ssize_t EV3UartPort::write(gsl::span<const uint8_t> buffer)
     std::vector<uint8_t> command(size(buffer) + 1);
     command[0] = (uint8_t) m_port;
     std::copy_n(buffer.data(), size(buffer), command.begin() + 1);
-	ssize_t ret = m_manager->m_uartDevice.sendCommand(command);
+	ssize_t ret = getDevice().sendCommand(command);
     if (ret > 0) 
     	--ret;
     return ret;
@@ -136,7 +134,7 @@ void EV3UartPort::connect()
 {
 	uint8_t command[1];
 	command[0] = m_port;
-	m_manager->m_uartDevice.ioctl(lejos::UART_CONNECT, command);
+    getDevice().ioctl(lejos::UART_CONNECT, command);
 }
 
 /**
@@ -146,7 +144,7 @@ void EV3UartPort::disconnect()
 {
     uint8_t command[1];
 	command[0] = m_port;
-	m_manager->m_uartDevice.ioctl(lejos::UART_DISCONNECT, command);
+    getDevice().ioctl(lejos::UART_DISCONNECT, command);
 }
 
 /**
@@ -306,7 +304,7 @@ int EV3UartPort::waitZeroStatus(int timeout)
  */
 int8_t EV3UartPort::getStatus() const
 {
-    return m_manager->m_uartDevice.getSensorData()->Status[m_port];
+    return getDevice().getSensorData()->Status[m_port];
 }
 
 /**
@@ -318,7 +316,7 @@ void EV3UartPort::setOperatingMode(size_t mode)
     uint8_t command[2];
 	command[0] = m_port;
 	command[1] = mode;
-	m_manager->m_uartDevice.ioctl(lejos::UART_SETMODE, command);
+    getDevice().ioctl(lejos::UART_SETMODE, command);
 }
 
 /**
@@ -331,7 +329,7 @@ bool EV3UartPort::getModeInfo(size_t mode, lms2012::UARTCTL* uc)
 {
     uc->Port = (int8_t)m_port;
     uc->Mode = (int8_t)mode;
-	m_manager->m_uartDevice.ioctl(lms2012::UART_READ_MODE_INFO, uc);
+    getDevice().ioctl(lms2012::UART_READ_MODE_INFO, uc);
     return uc->TypeData.Name[0] != 0;
 }
     
@@ -347,7 +345,7 @@ void EV3UartPort::clearModeCache(size_t mode, lms2012::UARTCTL* uc)
 {
     uc->Port = (int8_t)m_port;
     uc->Mode = (int8_t)mode;
-	m_manager->m_uartDevice.ioctl(lms2012::UART_NACK_MODE_INFO, uc);
+    getDevice().ioctl(lms2012::UART_NACK_MODE_INFO, uc);
 }
 
 /**
@@ -356,7 +354,7 @@ void EV3UartPort::clearModeCache(size_t mode, lms2012::UARTCTL* uc)
 void EV3UartPort::clearPortChanged(lms2012::UARTCTL* uc)
 {
     uc->Port = (int8_t)m_port;
-	m_manager->m_uartDevice.ioctl(lms2012::UART_CLEAR_CHANGED, uc);
+    getDevice().ioctl(lms2012::UART_CLEAR_CHANGED, uc);
 }
 
 /**
@@ -374,6 +372,4 @@ void EV3UartPort::checkSensor()
     }
 }
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */

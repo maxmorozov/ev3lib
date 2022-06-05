@@ -14,8 +14,7 @@
 #include <hardware/sensor/ImuLsm6ds3.h>
 #include <hardware/Battery.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 	enum class Buttons : int {
 		Up = 0,
@@ -63,7 +62,6 @@ public:
 
 };
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */
 
 #endif /* EV3LIB_BRICK_H_ */

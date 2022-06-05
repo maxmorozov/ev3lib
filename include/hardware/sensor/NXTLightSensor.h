@@ -7,8 +7,7 @@
 
 #include <hardware/sensor/AnalogSensor.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 /**
  * Returns raw ADC output value
@@ -18,7 +17,7 @@ private:
 	bool floodlight = false;
 
 public:
-	explicit NXTLightSensor(std::unique_ptr<detail::AnalogPort> port);
+	explicit NXTLightSensor(std::unique_ptr<ports::AnalogPort> port);
 
 	/**
 	 * Turns onboard light source of the sensor on or off
@@ -26,7 +25,6 @@ public:
 	void setFloodlight(bool floodlight);
 };
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */
 
 #endif /* EV3LIB_NXT_LIGHT_SENSOR_H_ */

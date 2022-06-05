@@ -7,9 +7,7 @@
 
 #include <hardware/detail/lms2012/ev3_constants.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 class EV3SensorConstants {
 public:
@@ -24,9 +22,7 @@ public:
 
 };
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */
 
 #endif /* EV3SENSORCONSTANTS_H_ */
 

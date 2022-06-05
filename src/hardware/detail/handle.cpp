@@ -5,11 +5,9 @@
 
 #include <hardware/detail/handle.h>
 #include <hardware/detail/lms2012/ev3_constants.h>
-#include<exceptions/EV3HardwareExceptions.h>
+#include <exceptions/EV3HardwareExceptions.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 handle::handle(const char* deviceName, int flags)
 {
@@ -57,7 +55,12 @@ void* handle::mmap(size_t size)
 //Send a control code to the device
 ssize_t handle::ioctl(unsigned long command, const void* data)
 {
-	return ::ioctl(m_file, command, data);
+	ssize_t size = ::ioctl(m_file, command, data);
+    if (size < 0) {
+        throw io_error("IoCtl operation has failed") <<
+                boost::errinfo_errno(errno);
+    }
+    return size;
 }
 
 int handle::munmap(void* address, size_t size) {
@@ -67,4 +70,4 @@ int handle::munmap(void* address, size_t size) {
 	return -1;
 }
 
-}}}
+}

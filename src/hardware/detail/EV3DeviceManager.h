@@ -16,9 +16,7 @@
 #include "EV3SensorConstants.h"
 #include "DetachSubscriber.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 struct DeviceInfo {
 	ConnectionType connectionType = ConnectionType::None;
@@ -28,6 +26,7 @@ class EV3DeviceManager: public SensorsManager, public MotorManager, public UIMan
 	friend class EV3MotorPort;
 	friend class EV3AnalogPort;
 	friend class EV3UartPort;
+    friend class EV3I2CPort;
 private:
 	EV3Device<device_type::dcm> m_dcmDevice;
 
@@ -44,14 +43,14 @@ private:
 
 	DetachSubscriber* m_openPorts[EV3SensorConstants::PORTS];
 
-	void setDeviceType(DeviceInfo& deviceInfo, SensorType type, int mode);
+	void setDeviceType(DeviceInfo& deviceInfo, DeviceType type, int mode);
 
 	void connectSensor(size_t port, DetachSubscriber* sensor);
 public:
 	EV3DeviceManager();
 	~EV3DeviceManager() override;
 
-	SensorType getSensorType(size_t port) const override;
+	DeviceType getSensorType(size_t port) const override;
 
 	ConnectionType getConnectionType(size_t port) const override;
 
@@ -59,13 +58,15 @@ public:
 
 	void disconnect(size_t port, PortType type) override;
 
-	std::unique_ptr<AnalogPort> getAnalogPort(size_t port) override;
+	std::unique_ptr<ports::AnalogPort> getAnalogPort(size_t port) override;
 
-	std::unique_ptr<UartPort> getUartPort(size_t port) override;
+	std::unique_ptr<ports::UartPort> getUartPort(size_t port) override;
 
-	/**
-	 * Returns internal motor port structure. The clients should not delete it
-	 */
+    std::unique_ptr<ports::I2CPort> getI2CPort(size_t port) override;
+
+    /**
+     * Returns internal motor port structure. The clients should not delete it
+     */
 	MotorPort* getMotorPort(size_t port) override;
 
 	/**
@@ -90,6 +91,6 @@ public:
 
 };
 
-}}}
+}
 
 #endif /* EV3DEVICEMANAGER_H_ */
