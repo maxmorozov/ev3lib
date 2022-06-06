@@ -4,8 +4,7 @@
 
 #include <hardware/sensor/MultiModeSensor.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware::sensor {
 
 MultiModeSensor::MultiModeSensor(std::vector<ModeInfo> modes, size_t mode)
 	: m_modes(std::move(modes)), m_currentMode(mode)
@@ -102,4 +101,4 @@ bool MultiModeSensor::isValid(size_t mode) const {
 	return mode < m_modes.size();
 }
 
-}}
+}

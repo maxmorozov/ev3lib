@@ -5,7 +5,7 @@
 #include <stdexcept>
 #include <hardware/sensor/AnalogSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 AnalogSensor::AnalogSensor(std::unique_ptr<ports::AnalogPort> port)
 	: m_port(std::move(port))

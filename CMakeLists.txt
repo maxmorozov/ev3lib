@@ -36,6 +36,7 @@ set(SOURCE_FILES
         include/hardware/sensor/SensorModes.h
         include/hardware/sensor/UartSensor.h
         include/hardware/sensor/I2CSensor.h
+		include/hardware/sensor/CurrentSensorINA226.h
         include/hardware/Battery.h
         include/hardware/Brick.h
         include/hardware/Button.h
@@ -69,6 +70,7 @@ set(SOURCE_FILES
         src/hardware/sensor/NXTLightSensor.cpp
         src/hardware/sensor/UartSensor.cpp
         src/hardware/sensor/I2CSensor.cpp
+		src/hardware/sensor/CurrentSensorINA226.cpp 
         src/hardware/Battery.cpp
         src/hardware/Brick.cpp
         src/hardware/Button.cpp

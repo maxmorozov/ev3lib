@@ -5,7 +5,7 @@
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/sensor/SensorModes.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 	class MultiModeSensor : public SensorModes {
     protected:

@@ -8,7 +8,7 @@
 #include <exceptions/EV3HardwareExceptions.h>
 #include <hardware/sensor/I2CSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
     I2CSensor::I2CSensor(std::unique_ptr<ports::I2CPort> port)
             : I2CSensor(std::move(port), DEFAULT_I2C_ADDRESS) {

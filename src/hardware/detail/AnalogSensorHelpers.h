@@ -5,9 +5,7 @@
 #ifndef ANALOGSENSORHELPERS_H_
 #define ANALOGSENSORHELPERS_H_
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 class AnalogSensorHelpers {
 public:
@@ -45,8 +43,6 @@ public:
 
 };
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */
 
 #endif /* ANALOGSENSORHELPERS_H_ */

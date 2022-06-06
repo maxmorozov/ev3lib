@@ -4,7 +4,7 @@
 #include <exceptions/EV3HardwareExceptions.h>
 #include <hardware/sensor/UartSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 UartSensor::UartSensor(std::unique_ptr<ports::UartPort> port, std::vector<ModeInfo> modes, size_t mode)
 	: MultiModeSensor(std::move(modes), mode), m_port(std::move(port))

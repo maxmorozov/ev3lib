@@ -44,19 +44,19 @@ private:
 	detail::EV3Brick m_brick;
 
 public:
-	Brick();
+	Brick() = default;
 
 	Button getButton(Buttons id);
 
 	UnregulatedMotor getMotor(Motors id);
 
-	HiTechnicGyro getGyro(Sensors id);
+	sensor::HiTechnicGyro getGyro(Sensors id);
 
-	AnalogSensor getAnalog(Sensors id);
+    sensor::AnalogSensor getAnalog(Sensors id);
 
-	NXTLightSensor getNxtLight(Sensors id);
+    sensor::NXTLightSensor getNxtLight(Sensors id);
 
-	ImuLsm6ds3 getImu(Sensors id);
+    sensor::ImuLsm6ds3 getImu(Sensors id);
 
 	Battery getBattery();
 

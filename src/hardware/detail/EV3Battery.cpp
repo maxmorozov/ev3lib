@@ -5,9 +5,7 @@
 #include "EV3Battery.h"
 #include "EV3SensorConstants.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 EV3Battery::EV3Battery(BatteryManager* manager)
 	: m_manager(manager)
@@ -58,4 +56,4 @@ float EV3Battery::getMotorCurrent() const {
     return (convert(m_manager->getMotorCurrent()) / AMP_COUT) / SHUNT_OUT;
 }
 
-}}}
+}

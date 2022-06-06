@@ -6,7 +6,7 @@
 
 #include <hardware/sensor/SensorMode.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 	/**
 	 * Provide access to the modes supported by a sensor

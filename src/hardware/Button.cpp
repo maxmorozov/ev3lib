@@ -4,8 +4,7 @@
 
 #include <hardware/Button.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 Button::Button(detail::UIManager* manager, size_t buttonNo)
 	: m_manager(manager), m_buttonNo(buttonNo)
@@ -20,5 +19,4 @@ bool Button::isPressed() const {
 
 
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */

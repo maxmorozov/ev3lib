@@ -5,7 +5,7 @@
 #include <hardware/sensor/HiTechnicGyro.h>
 #include "../detail/AnalogSensorHelpers.h"
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 HiTechnicGyro::HiTechnicGyro(std::unique_ptr<ports::AnalogPort> port)
 	: m_port(std::move(port)), m_zero(614.0f)

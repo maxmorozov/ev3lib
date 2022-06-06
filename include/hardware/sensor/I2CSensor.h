@@ -5,7 +5,7 @@
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/sensor/MultiModeSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
     class I2CSensor {
     private:
@@ -54,7 +54,7 @@ namespace ev3lib::hardware {
         std::string fetchString(uint8_t reg, size_t len);
 
     public:
-        I2CSensor(std::unique_ptr<ports::I2CPort> port);
+        explicit I2CSensor(std::unique_ptr<ports::I2CPort> port);
 
         I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address);
 

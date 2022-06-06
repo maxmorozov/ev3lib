@@ -3,11 +3,10 @@
 #include <hardware/sensor/ImuLsm6ds3.h>
 #include <exceptions/EV3HardwareExceptions.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 const float ImuLsm6ds3::gyroScale[5] = {8.75e-3f, 17.5e-3f, 35e-3f, 70e-3f, 4.375e-3f};//in degree per second / digit
 const float ImuLsm6ds3::accelScale[4] = {2.0f / ACCEL_SCALE, 4.0f / ACCEL_SCALE, 8.0f / ACCEL_SCALE , 16.0f / ACCEL_SCALE}; //in g / digit
-const constexpr ImuLsm6ds3::Mode ImuLsm6ds3::modes[3];
 
 ImuLsm6ds3::ImuLsm6ds3(std::unique_ptr<ports::UartPort> port, bool rawMode)
 	: UartSensor(std::move(port), createModes()), m_rawMode(rawMode)
@@ -153,16 +152,16 @@ bool ImuLsm6ds3::writeAccelerometerEeprom(size_t scaleNo, gsl::span<const int16_
  * @param data EEPROM data (4x3 matrix of 16-bit integers)
  * @return true if the EEPROM data has been successfully written
  */
-bool ImuLsm6ds3::writeGyroscopeEeprom(size_t scaleNo,gsl::span<const int16_t> data)
+bool ImuLsm6ds3::writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data)
 {
     return writeEeprom(CALIBRATE_GYRO_245DPS + scaleNo, data);
 }
 
 
-bool ImuLsm6ds3::writeEeprom(int writeCommand, gsl::span<const int16_t> data)
+bool ImuLsm6ds3::writeEeprom(uint8_t writeCommand, gsl::span<const int16_t> data)
 {
     std::vector<uint8_t> command(static_cast<size_t>(data.size_bytes() + 1));
-    command[0] = (uint8_t) writeCommand;
+    command[0] = writeCommand;
     std::copy(data.begin(), data.end(), (int16_t*)&command[1]);
 
     bool success = (size_t)m_port->write(command) == command.size();
@@ -173,9 +172,9 @@ bool ImuLsm6ds3::writeEeprom(int writeCommand, gsl::span<const int16_t> data)
     return success;
 }
 
-bool ImuLsm6ds3::updateScale(int scaleCommand)
+bool ImuLsm6ds3::updateScale(uint8_t scaleCommand)
 {
-	uint8_t command[1] = {(uint8_t)scaleCommand};
+	uint8_t command[1] = {scaleCommand};
     bool success = m_port->write(command) == sizeof(command);
     if (success) {
     	std::this_thread::sleep_for(std::chrono::milliseconds(SCALE_SWITCH_DELAY));

@@ -2,8 +2,7 @@
 
 #include <utils/utilities.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware::sensor::scale {
 
 	struct GyroScaleSelector : public destructible {
 		/**
@@ -23,4 +22,4 @@ namespace hardware {
 	};
 
 
-}}
+}

@@ -3,8 +3,7 @@
  */
 #include <hardware/UnregulatedMotor.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 using namespace detail;
 
@@ -95,7 +94,6 @@ void UnregulatedMotor::controlMotor(int power)
 	updateState();
 }
 
-
-}}
+}
 
 

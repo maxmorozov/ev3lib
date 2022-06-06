@@ -8,7 +8,7 @@
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 class HiTechnicGyro: public destructible {
 private:
@@ -22,6 +22,6 @@ public:
 };
 
 
-} /* namespace ev3lib::hardware */
+} /* namespace ev3lib::hardware::sensor */
 
 #endif /* EV3LIB_HITECHNICGYRO_H_ */

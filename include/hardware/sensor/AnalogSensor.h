@@ -9,7 +9,7 @@
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/ports/SensorType.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 /**
  * Returns raw ADC output value

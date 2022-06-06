@@ -7,8 +7,7 @@
 
 #include <hardware/detail/UIManager.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 class Button {
 private:
@@ -20,7 +19,6 @@ public:
 	bool isPressed() const;
 };
 
-} /* namespace hardware */
 } /* namespace ev3lib */
 
 #endif /* EV3LIB_BUTTON_H_ */

@@ -6,7 +6,7 @@
 #include <hardware/sensor/NXTLightSensor.h>
 #include "hardware/ports/SensorType.h"
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 NXTLightSensor::NXTLightSensor(std::unique_ptr<ports::AnalogPort> port)
 	: AnalogSensor(std::move(port))

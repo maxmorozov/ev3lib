@@ -2,8 +2,7 @@
 
 #include <utils/utilities.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware::sensor::eeprom {
 
 	struct MagEepromWriter : public destructible {
 		/**
@@ -17,4 +16,4 @@ namespace hardware {
 	};
 
 
-}}
+}

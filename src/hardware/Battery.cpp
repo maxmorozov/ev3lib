@@ -4,8 +4,7 @@
 
 #include <hardware/Battery.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 Battery::Battery(detail::Power* power)
 	: m_power(power)
@@ -45,5 +44,4 @@ float Battery::getMotorCurrent() const {
 	return m_power->getMotorCurrent();
 }
 
-} /* namespace hardware */
 } /* namespace ev3lib */

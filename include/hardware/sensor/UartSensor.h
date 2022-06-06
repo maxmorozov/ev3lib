@@ -4,7 +4,7 @@
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/sensor/MultiModeSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
     /**
      * Base class for concrete sensor adapters

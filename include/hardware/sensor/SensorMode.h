@@ -6,7 +6,7 @@
 
 #include <robotics/SampleProvider.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 	struct SensorMode : public robotics::SampleProvider
 	{

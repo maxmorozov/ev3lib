@@ -7,7 +7,7 @@
 
 #include <hardware/sensor/AnalogSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
 /**
  * Returns raw ADC output value

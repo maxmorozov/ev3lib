@@ -7,8 +7,7 @@
 
 #include <utils/utilities.h>
 
-namespace ev3lib {
-namespace hardware {
+namespace ev3lib::hardware {
 
 	struct Tachometer : public destructible {
 		/**
@@ -23,7 +22,6 @@ namespace hardware {
 	};
 
 
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware */
 
 #endif /* EV3LIB_TACHOMETER_H_ */

@@ -6,9 +6,7 @@
 #include "EV3SensorConstants.h"
 #include "AnalogSensorHelpers.h"
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 /**
  * Helper method. Take a voltage and return it as a normalized value in the
@@ -51,6 +49,4 @@ int AnalogSensorHelpers::NXTRawIntValue(float val)
     return static_cast<int>(std::lround(NXTRawValue(val)));
 }
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */

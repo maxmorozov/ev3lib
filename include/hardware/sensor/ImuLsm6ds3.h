@@ -10,9 +10,11 @@
 
 #include <hardware/sensor/UartSensor.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::sensor {
 
-	class ImuLsm6ds3 : public UartSensor, public AccelScaleSelector, public GyroScaleSelector, public AccelEepromWriter, public GyroEepromWriter {
+	class ImuLsm6ds3 : public UartSensor,
+            public scale::AccelScaleSelector, public scale::GyroScaleSelector,
+            public eeprom::AccelEepromWriter, public eeprom::GyroEepromWriter {
 	public:
 		enum class GyroScale : size_t {
 			SCALE_245DPS  = 0,
@@ -108,9 +110,9 @@ namespace ev3lib::hardware {
 
 	    static std::vector<ModeInfo> createModes();
 
-	    bool writeEeprom(int writeCommand, gsl::span<const int16_t> data);
+	    bool writeEeprom(uint8_t writeCommand, gsl::span<const int16_t> data);
 
-	    bool updateScale(int scaleCommand);
+	    bool updateScale(uint8_t scaleCommand);
 
 	    float getAccelScale() const;
 	    float getGyroScale() const;
