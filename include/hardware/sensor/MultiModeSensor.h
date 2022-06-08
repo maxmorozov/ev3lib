@@ -43,12 +43,14 @@ namespace ev3lib::hardware::sensor {
 	     */
 		void setCurrentMode(const std::string& modeName) override;
 
-	    /** Gets the index number of the current mode.
+	    /**
+	     * Gets the index number of the current mode.
 	     * @return the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
 	     */
 		size_t getCurrentMode() const override;
 
-	    /** Gets the number of supported modes
+	    /**
+	     * Gets the number of supported modes
 	     * @return the number of supported modes
 	     */
 		size_t getModeCount() const override;
@@ -59,7 +61,8 @@ namespace ev3lib::hardware::sensor {
 		 */
 		std::string getName() const override;
 
-		/** Returns the number of elements in a sample.<br>
+		/**
+		 * Returns the number of elements in a sample.<br>
 		 * The number of elements does not change during runtime.
 		 * @return
 		 * the number of elements in a sample

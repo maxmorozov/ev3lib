@@ -62,7 +62,8 @@ void MultiModeSensor::setCurrentMode(const std::string& modeName)
 	}
 }
 
-/** Gets the index number of the current mode.
+/**
+ * Gets the index number of the current mode.
  * @return the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
  */
 size_t MultiModeSensor::getCurrentMode() const
@@ -70,7 +71,8 @@ size_t MultiModeSensor::getCurrentMode() const
 	return m_currentMode;
 }
 
-/** Gets the number of supported modes
+/**
+ * Gets the number of supported modes
  * @return the number of supported modes
  */
 size_t MultiModeSensor::getModeCount() const
@@ -87,7 +89,8 @@ std::string MultiModeSensor::getName() const
 	return m_modes[m_currentMode].name;
 }
 
-/** Returns the number of elements in a sample.<br>
+/**
+ * Returns the number of elements in a sample.<br>
  * The number of elements does not change during runtime.
  * @return
  * the number of elements in a sample
@@ -98,7 +101,7 @@ size_t MultiModeSensor::sampleSize() const
 }
 
 bool MultiModeSensor::isValid(size_t mode) const {
-	return mode < m_modes.size();
+	return mode >= 0 && mode < m_modes.size();
 }
 
 }

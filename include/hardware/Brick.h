@@ -12,6 +12,7 @@
 #include <hardware/sensor/AnalogSensor.h>
 #include <hardware/sensor/NXTLightSensor.h>
 #include <hardware/sensor/ImuLsm6ds3.h>
+#include <hardware/sensor/CurrentSensorINA226.h>
 #include <hardware/Battery.h>
 
 namespace ev3lib::hardware {
@@ -57,6 +58,8 @@ public:
     sensor::NXTLightSensor getNxtLight(Sensors id);
 
     sensor::ImuLsm6ds3 getImu(Sensors id);
+
+    sensor::CurrentSensorINA226 getCurrentSensor(Sensors id);
 
 	Battery getBattery();
 

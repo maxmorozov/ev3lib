@@ -3,8 +3,7 @@
 #include <gsl/span>
 #include <utils/utilities.h>
 
-namespace ev3lib {
-namespace robotics {
+namespace ev3lib::robotics {
 
 	/** Abstraction for classes that fetch samples from a sensor and classes that are able to process samples.<br>
 	 * A sample is a measurement taken by a sensor at a single moment in time.
@@ -44,19 +43,19 @@ namespace robotics {
 	 *
 	 */
 	struct SampleProvider : public destructible {
-		/** Returns the number of elements in a sample.<br>
+		/**
+		 * Returns the number of elements in a sample.<br>
 		 * The number of elements does not change during runtime.
-		 * @return
-		 * the number of elements in a sample
+		 * @return the number of elements in a sample
 		 */
 		virtual size_t sampleSize() const = 0;
 
-		/** Fetches a sample from a sensor or filter.
+		/**
+		 * Fetches a sample from a sensor or filter.
 		 * @param sample The buffer to store the sample in.
 		 */
 		virtual void fetchSample(gsl::span<float> sample) = 0;
 
 	};
 
-
-}}
+}

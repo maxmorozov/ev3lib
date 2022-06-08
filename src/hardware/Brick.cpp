@@ -37,5 +37,9 @@ sensor::ImuLsm6ds3 Brick::getImu(Sensors id) {
 
 }
 
+sensor::CurrentSensorINA226 Brick::getCurrentSensor(Sensors id) {
+    return sensor::CurrentSensorINA226(m_brick.getSensorsManager()->getI2CPort((size_t)id));
+}
+
 
 } /* namespace ev3lib */

@@ -86,7 +86,7 @@ namespace ev3lib::hardware::detail {
         command[4] = deviceAddress >> 1;
 
         if (!writeBuf.empty()) {
-            gsl::copy(readBuf, gsl::make_span(command + 5, MAX_IO));
+            gsl::copy(writeBuf, gsl::make_span(command + 5, MAX_IO));
         }
 
         getDevice().ioctl(lejos::IIC_IO, command);

@@ -3,7 +3,6 @@
 #include <memory>
 #include <mutex>
 #include <hardware/detail/SensorsManager.h>
-#include <hardware/sensor/MultiModeSensor.h>
 
 namespace ev3lib::hardware::sensor {
 
@@ -75,9 +74,13 @@ namespace ev3lib::hardware::sensor {
          */
         I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address, ports::SensorType type);
 
-        int getRetryCount() const { return m_retryCount; }
+        int getRetryCount() const {
+            return m_retryCount;
+        }
 
-        void setRetryCount(int value);
+        void setRetryCount(int value) {
+            m_retryCount = value;
+        }
 
         /**
          * Return the the I2C address of the sensor.

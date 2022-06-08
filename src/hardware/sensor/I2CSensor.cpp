@@ -47,10 +47,6 @@ namespace ev3lib::hardware::sensor {
         }
     }
 
-    void I2CSensor::setRetryCount(int value) {
-        m_retryCount = value;
-    }
-
     /**
      * Executes an I2C read transaction and waits for the result.
      *
@@ -136,13 +132,11 @@ namespace ev3lib::hardware::sensor {
     std::string I2CSensor::fetchString(uint8_t reg, size_t len) {
         uint8_t buf[detail::lms2012::IIC_DATA_LENGTH];
 
-        try
-        {
+        try {
             getData(reg, gsl::make_span(buf));
-            return std::string{reinterpret_cast<char*>(buf), len};
+            return std::string{reinterpret_cast<char *>(buf), len};
         }
-        catch (const std::exception& e)
-        {
+        catch (const std::exception &e) {
             return std::string{};
         }
     }

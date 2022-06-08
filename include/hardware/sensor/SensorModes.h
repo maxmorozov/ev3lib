@@ -32,12 +32,14 @@ namespace ev3lib::hardware::sensor {
 	     */
 		virtual void setCurrentMode(const std::string& modeName) = 0;
 
-	    /** Gets the index number of the current mode.
+	    /**
+	     * Gets the index number of the current mode.
 	     * @return the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
 	     */
 		virtual size_t getCurrentMode() const = 0;
 
-	    /** Gets the number of supported modes
+	    /**
+	     * Gets the number of supported modes
 	     * @return the number of supported modes
 	     */
 		virtual size_t getModeCount() const = 0;

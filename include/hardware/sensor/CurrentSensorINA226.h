@@ -1,11 +1,14 @@
 #pragma once
 
 #include <cstdint>
+#include <vector>
+#include <utils/str_const.h>
 #include <hardware/sensor/I2CSensor.h>
+#include <hardware/sensor/SensorModes.h>
 
 namespace ev3lib::hardware::sensor {
 
-    class CurrentSensorINA226 : public I2CSensor {
+    class CurrentSensorINA226 : protected I2CSensor, public SensorModes {
     private:
         static constexpr int VBUS_MAX = 36;
 
@@ -26,21 +29,21 @@ namespace ev3lib::hardware::sensor {
         static constexpr uint8_t REG_CALIBRATION = 0x05;
         static constexpr uint8_t REG_MASK_ENABLE = 0x06;
         static constexpr uint8_t REG_ALERT_LIMIT = 0x07;
-        static constexpr uint8_t REG_MANUFACTURER_ID = (uint8_t) 0xFE;
-        static constexpr uint8_t REG_DIR_ID = (uint8_t) 0xFF;
+        static constexpr uint8_t REG_MANUFACTURER_ID = 0xFE;
+        static constexpr uint8_t REG_DIR_ID = 0xFF;
 
         //Mask register fiels
-        static constexpr int BIT_SOL = 0x8000;  //Shunt Voltage Over-Voltage
-        static constexpr int BIT_SUL = 0x4000;  //Shunt Voltage Under-Voltage
-        static constexpr int BIT_BOL = 0x2000;  //Bus Voltage Over-Voltage
-        static constexpr int BIT_BUL = 0x1000;  //Bus Voltage Under-Voltage
-        static constexpr int BIT_POL = 0x0800;  //Power Over-Limit
-        static constexpr int BIT_CNVR = 0x0400;  //Conversion Ready
-        static constexpr int BIT_AFF = 0x0010;  //Alert Function Flag
-        static constexpr int BIT_CVRF = 0x0008;  //Conversion Ready Flag
-        static constexpr int BIT_OVF = 0x0004;  //Math Overflow Flag
-        static constexpr int BIT_APOL = 0x0002;  //Alert Polarity bit; sets the Alert pin polarity.
-        static constexpr int BIT_LEN = 0x0001;  //Alert Latch Enable; configures the latching feature of the Alert pin and Alert Flag bits.
+        static constexpr uint16_t BIT_SOL = 0x8000;   //Shunt Voltage Over-Voltage
+        static constexpr uint16_t BIT_SUL = 0x4000;   //Shunt Voltage Under-Voltage
+        static constexpr uint16_t BIT_BOL = 0x2000;   //Bus Voltage Over-Voltage
+        static constexpr uint16_t BIT_BUL = 0x1000;   //Bus Voltage Under-Voltage
+        static constexpr uint16_t BIT_POL = 0x0800;   //Power Over-Limit
+        static constexpr uint16_t BIT_CNVR = 0x0400;  //Conversion Ready
+        static constexpr uint16_t BIT_AFF = 0x0010;   //Alert Function Flag
+        static constexpr uint16_t BIT_CVRF = 0x0008;  //Conversion Ready Flag
+        static constexpr uint16_t BIT_OVF = 0x0004;   //Math Overflow Flag
+        static constexpr uint16_t BIT_APOL = 0x0002;  //Alert Polarity bit; sets the Alert pin polarity.
+        static constexpr uint16_t BIT_LEN = 0x0001;   //Alert Latch Enable; configures the latching feature of the Alert pin and Alert Flag bits.
 
     public:
         //Default I2C address
@@ -98,7 +101,7 @@ namespace ev3lib::hardware::sensor {
     private:
         //Shunt value in Ohm
         float m_shuntValue;
-        int m_calibrationValue;
+        int16_t m_calibrationValue;
 
         // The following multipliers are used to convert raw current and power
         // values to mA and mW, taking into account the current config settings
@@ -106,7 +109,20 @@ namespace ev3lib::hardware::sensor {
         float m_currentOffset_mA;
         float m_powerMultiplier_mW;
 
-        int calculateCalibrationRegister(float maxCurrent) const;
+        std::vector<std::unique_ptr<SensorMode>> m_modes;
+        size_t m_currentMode = 0;
+
+        bool isValidMode(size_t mode) const;
+
+        std::unique_ptr<SensorMode>& currentMode() {
+            return m_modes[m_currentMode];
+        }
+
+        const std::unique_ptr<SensorMode>& currentMode() const {
+            return m_modes[m_currentMode];
+        }
+
+        int16_t calculateCalibrationRegister(float maxCurrent) const;
 
         /**
          * Calculates the current conversion ratio.
@@ -115,12 +131,17 @@ namespace ev3lib::hardware::sensor {
          * @param calibrationValue the calibration register value
          * @return the current conversion ratio.
          */
-        float calculateCurrentMultiplier(int calibrationValue) const;
+        float calculateCurrentMultiplier(int16_t calibrationValue) const;
 
     public:
-        explicit CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port);
+        explicit CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port)
+                : CurrentSensorINA226(std::move(port), DEFAULT_ADDRESS) {
+        }
 
-        CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port, uint8_t address);
+        CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port, uint8_t address)
+                : CurrentSensorINA226(std::move(port), address, ports::SensorType::LOWSPEED) {
+        }
+
 
         /**
          * Creates I2C sensor instance.<br/>
@@ -161,6 +182,61 @@ namespace ev3lib::hardware::sensor {
         void configure(Average avg, BusConversionTime busConvTime, ShuntConversionTime shuntConvTime, Mode mode);
 
         /**
+         * Fetches a sample from a sensor or filter.
+         *
+         * @param sample The buffer to store the sample in.
+         */
+        void fetchSample(gsl::span<float> sample) override;
+
+        /**
+         * Return a list of string descriptions for the sensors available modes.
+         * @return list of string descriptions
+         */
+        std::vector<std::string> getAvailableModes() const override;
+
+        /**
+         * Sets the current mode for fetching samples
+         * @param mode the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
+         */
+        void setCurrentMode(size_t mode) override;
+
+        /**
+         * Sets the current mode for fetching samples
+         * @param modeName the name of the mode. name corresponds with the item value of the list from getAvailableModes().
+         */
+        void setCurrentMode(const std::string& modeName) override;
+
+        /**
+         * Gets the index number of the current mode.
+         * @return the index number of the mode. Index number corresponds with the item order of the list from getAvailableModes().
+         */
+        size_t getCurrentMode() const override {
+            return m_currentMode;
+        }
+
+        /**
+         * Gets the number of supported modes
+         * @return the number of supported modes
+         */
+        size_t getModeCount() const override {
+            return m_modes.size();
+        }
+
+        /**
+         * return a string description of this sensor mode
+         * @return The description/name of this mode
+         */
+        std::string getName() const override;
+
+        /**
+         * Returns the number of elements in a sample.<br>
+         * The number of elements does not change during runtime.
+         * @return
+         * the number of elements in a sample
+         */
+        size_t sampleSize() const override;
+
+        /**
          * calculated I2C address: 0 = GND, 1 = V+
          **/
         static constexpr uint8_t getAddress(uint8_t addr0, uint8_t addr1) {
@@ -177,6 +253,71 @@ namespace ev3lib::hardware::sensor {
              */
             return DEFAULT_ADDRESS | (addr0 != 0 ? 0x02 : 0x00) | (addr1 != 0 ? 0x08 : 0x00);
         }
+
+    private:
+        /**
+         * Measuring the current in mA, the voltage in V
+         */
+        class CombinedMode : public SensorMode {
+        private:
+            CurrentSensorINA226 *m_sensor;
+        public:
+            explicit CombinedMode(CurrentSensorINA226 *sensor) : m_sensor(sensor) {
+            }
+
+            std::string getName() const override {
+                return "Combined";
+            }
+
+            size_t sampleSize() const override {
+                return 2;
+            }
+
+            void fetchSample(gsl::span<float> sample) override;
+        };
+
+        /**
+         * Measuring the consumed power in mW
+         */
+        class PowerMode : public SensorMode {
+        private:
+            CurrentSensorINA226 *m_sensor;
+        public:
+            explicit PowerMode(CurrentSensorINA226 *sensor) : m_sensor(sensor) {
+            }
+
+            std::string getName() const override {
+                return "Power";
+            }
+
+            size_t sampleSize() const override {
+                return 1;
+            }
+
+            void fetchSample(gsl::span<float> sample) override;
+
+        };
+
+        /**
+         * Measuring the shunt voltage in mV
+         */
+        class ShuntVoltageMode : public SensorMode {
+        private:
+            CurrentSensorINA226 *m_sensor;
+        public:
+            explicit ShuntVoltageMode(CurrentSensorINA226 *sensor) : m_sensor(sensor) {
+            }
+
+            std::string getName() const override {
+                return "Shunt Voltage";
+            }
+
+            size_t sampleSize() const override {
+                return 2;
+            }
+
+            void fetchSample(gsl::span<float> sample) override;
+        };
 
     };
 
