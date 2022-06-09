@@ -7,6 +7,7 @@ namespace ev3lib::hardware::sensor {
 
 const float ImuLsm6ds3::gyroScale[5] = {8.75e-3f, 17.5e-3f, 35e-3f, 70e-3f, 4.375e-3f};//in degree per second / digit
 const float ImuLsm6ds3::accelScale[4] = {2.0f / ACCEL_SCALE, 4.0f / ACCEL_SCALE, 8.0f / ACCEL_SCALE , 16.0f / ACCEL_SCALE}; //in g / digit
+const constexpr ImuLsm6ds3::Mode ImuLsm6ds3::modes[3];
 
 ImuLsm6ds3::ImuLsm6ds3(std::unique_ptr<ports::UartPort> port, bool rawMode)
 	: UartSensor(std::move(port), createModes()), m_rawMode(rawMode)

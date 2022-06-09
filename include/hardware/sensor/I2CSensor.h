@@ -74,6 +74,11 @@ namespace ev3lib::hardware::sensor {
          */
         I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address, ports::SensorType type);
 
+        I2CSensor(I2CSensor &&other) noexcept
+                : m_port(std::move(other.m_port)), m_address(other.m_address), m_retryCount(other.m_retryCount) {
+        }
+
+
         int getRetryCount() const {
             return m_retryCount;
         }
