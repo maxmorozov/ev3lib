@@ -109,6 +109,9 @@ namespace ev3lib::hardware::sensor {
         float m_currentOffset_mA;
         float m_powerMultiplier_mW;
 
+        float m_voltageMultiplier_V;
+        float m_voltageOffset_V;
+
         std::vector<std::unique_ptr<SensorMode>> m_modes;
         size_t m_currentMode = 0;
 
@@ -165,10 +168,12 @@ namespace ev3lib::hardware::sensor {
          *
          * @param shuntValue shunt value in Ohm
          * @param maxCurrent max expected current in A
-         * @param ratio the current correction coefficient
-         * @param offset the zero current offset in mA
+         * @param currentRatio the current correction coefficient
+         * @param currentOffset the zero current offset in mA
+         * @param voltageRatio the voltage correction coefficient
+         * @param voltageOffset the zero voltage offset in V
          */
-        void calibrate(float shuntValue, float maxCurrent, float ratio, float offset);
+        void calibrate(float shuntValue, float maxCurrent, float currentRatio, float currentOffset, float voltageRatio, float voltageOffset);
 
         /**
          * Setup reading mode.

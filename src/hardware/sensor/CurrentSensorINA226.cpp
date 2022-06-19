@@ -14,7 +14,7 @@ namespace ev3lib::hardware::sensor {
         m_modes.push_back(std::make_unique<PowerMode>(this));
         m_modes.push_back(std::make_unique<ShuntVoltageMode>(this));
 
-        calibrate(0.1f, 1.0f, 1, 0);
+        calibrate(0.1f, 1.0f, 1, 0, 1, 0);
     }
 
     /**
@@ -22,15 +22,19 @@ namespace ev3lib::hardware::sensor {
      *
      * @param shuntValue shunt value in Ohm
      * @param maxCurrent max expected current in A
-     * @param ratio the current correction coefficient
-     * @param offset the zero current offset in mA
+     * @param currentRatio the current correction coefficient
+     * @param currentOffset the zero current offset in mA
+     * @param voltageRatio the voltage correction coefficient
+     * @param voltageOffset the zero voltage offset in V
      */
-    void CurrentSensorINA226::calibrate(float shuntValue, float maxCurrent, float ratio, float offset) {
+    void CurrentSensorINA226::calibrate(float shuntValue, float maxCurrent, float currentRatio, float currentOffset, float voltageRatio, float voltageOffset) {
         m_shuntValue = shuntValue;
-        m_currentOffset_mA = offset;
+        m_currentOffset_mA = currentOffset;
+        m_voltageMultiplier_V = VOLTAGE_LSB * voltageRatio;
+        m_voltageOffset_V = voltageOffset;
 
         m_calibrationValue = calculateCalibrationRegister(maxCurrent);
-        m_currentMultiplier_mA = calculateCurrentMultiplier(m_calibrationValue) * ratio;
+        m_currentMultiplier_mA = calculateCurrentMultiplier(m_calibrationValue) * currentRatio;
         m_powerMultiplier_mW = 25.f * m_currentMultiplier_mA;
 
         // Set Calibration register to 'Cal' calculated above
@@ -151,7 +155,7 @@ namespace ev3lib::hardware::sensor {
         //std::cout<<currentRaw<<", "<<voltageRaw<<", "<<m_sensor->m_calibrationValue<<", "<<m_sensor->m_currentMultiplier_mA<<std::endl;
 
         sample[0] = currentRaw * m_sensor->m_currentMultiplier_mA + m_sensor->m_currentOffset_mA;
-        sample[1] = voltageRaw * VOLTAGE_LSB;
+        sample[1] = voltageRaw * m_sensor->m_voltageMultiplier_V + m_sensor->m_voltageOffset_V;
     }
 
     void CurrentSensorINA226::PowerMode::fetchSample(gsl::span<float> sample) {
