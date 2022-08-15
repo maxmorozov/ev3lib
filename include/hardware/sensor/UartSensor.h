@@ -11,11 +11,11 @@ namespace ev3lib::hardware::sensor {
      */
 	class UartSensor : public MultiModeSensor {
 	protected:
-		std::unique_ptr<ports::UartPort> m_port;
+		std::unique_ptr<port::UartPort> m_port;
 
 		void switchMode(size_t newMode);
 	public:
-		UartSensor(std::unique_ptr<ports::UartPort> port, std::vector<ModeInfo> modes, size_t mode = 0);
+		UartSensor(std::unique_ptr<port::UartPort> port, std::vector<ModeInfo> modes, size_t mode = 0);
 
 		/**
 		 * Reset the sensor

@@ -11,7 +11,7 @@
 
 namespace ev3lib::hardware::detail {
 
-	class EV3AnalogPort: public ports::AnalogPort, public DetachSubscriber {
+	class EV3AnalogPort: public port::AnalogPort, public DetachSubscriber {
 	private:
 		EV3DeviceManager* m_manager;
 		size_t m_port;
@@ -39,7 +39,7 @@ namespace ev3lib::hardware::detail {
 	     * sets the sensor type.
 	     * @return success status
 	     */
-		bool setType(ports::SensorType mode) override;
+		bool setType(port::SensorType mode) override;
 
 		void detach() override;
 	};

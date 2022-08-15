@@ -8,9 +8,9 @@
 #include <cstddef>
 #include <memory>
 #include <utils/utilities.h>
-#include <hardware/ports/AnalogPort.h>
-#include <hardware/ports/UartPort.h>
-#include <hardware/ports/I2CPort.h>
+#include <hardware/port/AnalogPort.h>
+#include <hardware/port/UartPort.h>
+#include <hardware/port/I2CPort.h>
 
 namespace ev3lib::hardware::detail {
 
@@ -97,11 +97,11 @@ namespace ev3lib::hardware::detail {
 
 		virtual void disconnect(size_t port, PortType type) = 0;
 
-		virtual std::unique_ptr<ports::AnalogPort> getAnalogPort(size_t port) = 0;
+		virtual std::unique_ptr<port::AnalogPort> getAnalogPort(size_t port) = 0;
 
-		virtual std::unique_ptr<ports::UartPort> getUartPort(size_t port) = 0;
+		virtual std::unique_ptr<port::UartPort> getUartPort(size_t port) = 0;
 
-        virtual std::unique_ptr<ports::I2CPort> getI2CPort(size_t port) = 0;
+        virtual std::unique_ptr<port::I2CPort> getI2CPort(size_t port) = 0;
 
 		/**
 		 * Current flowing from the battery

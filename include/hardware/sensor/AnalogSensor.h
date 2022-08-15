@@ -7,7 +7,7 @@
 
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
-#include <hardware/ports/SensorType.h>
+#include <hardware/port/SensorType.h>
 
 namespace ev3lib::hardware::sensor {
 
@@ -16,14 +16,14 @@ namespace ev3lib::hardware::sensor {
  */
 class AnalogSensor : public destructible, noncopyable {
 protected:
-	std::unique_ptr<ports::AnalogPort> m_port;
-    ports::SensorType m_currentType = ports::SensorType::NO_DATA;
+	std::unique_ptr<port::AnalogPort> m_port;
+    port::SensorType m_currentType = port::SensorType::NO_DATA;
 
 protected:
-	void switchType(ports::SensorType newType);
+	void switchType(port::SensorType newType);
 
 public:
-	explicit AnalogSensor(std::unique_ptr<ports::AnalogPort> port) ;
+	explicit AnalogSensor(std::unique_ptr<port::AnalogPort> port) ;
 
 	int getData() const;
 };

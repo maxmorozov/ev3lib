@@ -121,7 +121,7 @@ namespace ev3lib::hardware::sensor {
 	    void readSample(size_t mode, gsl::span<int16_t> buffer);
 
 	public:
-	    explicit ImuLsm6ds3(std::unique_ptr<ports::UartPort> port, bool rawMode = false);
+	    explicit ImuLsm6ds3(std::unique_ptr<port::UartPort> port, bool rawMode = false);
 
 	    void reset();
 

@@ -7,11 +7,13 @@ set(SOURCE_FILES
         include/hardware/detail/lejos/port_data.h
         include/hardware/detail/lms2012/ev3_constants.h
         include/hardware/detail/lms2012/ev3_types.h
-        include/hardware/ports/AnalogPort.h
-        include/hardware/ports/MultiModePort.h
-        include/hardware/ports/UartPort.h
-        include/hardware/ports/I2CPort.h
-        include/hardware/ports/SensorType.h
+		include/hardware/port/AnalogPort.h
+		include/hardware/port/MultiModePort.h
+		include/hardware/port/UartPort.h
+		include/hardware/port/I2CPort.h
+		include/hardware/port/SensorType.h
+		include/hardware/port/BasicMotorPort.h
+		include/hardware/port/TachoMotorPort.h
         include/hardware/detail/BatteryManager.h
         include/hardware/detail/device_traits.h
         include/hardware/detail/ev3_brick.h
@@ -37,12 +39,17 @@ set(SOURCE_FILES
         include/hardware/sensor/UartSensor.h
         include/hardware/sensor/I2CSensor.h
 		include/hardware/sensor/CurrentSensorINA226.h
+		include/hardware/motor/Tachometer.h
+		include/hardware/motor/BasicMotor.h
+		include/hardware/motor/UnregulatedMotor.h
         include/hardware/Battery.h
         include/hardware/Brick.h
         include/hardware/Button.h
-        include/hardware/Tachometer.h
-        include/hardware/UnregulatedMotor.h
-        include/robotics/SampleProvider.h
+		include/robotics/EncoderMotor.h
+		include/robotics/SampleProvider.h
+		include/robotics/Encoder.h
+		include/robotics/DCMotor.h
+		include/robotics/BaseMotor.h
         include/utils/utilities.h
         include/utils/str_const.h
         src/hardware/detail/AnalogSensorHelpers.cpp
@@ -70,11 +77,12 @@ set(SOURCE_FILES
         src/hardware/sensor/NXTLightSensor.cpp
         src/hardware/sensor/UartSensor.cpp
         src/hardware/sensor/I2CSensor.cpp
-		src/hardware/sensor/CurrentSensorINA226.cpp 
+		src/hardware/sensor/CurrentSensorINA226.cpp
+		src/hardware/motor/UnregulatedMotor.cpp
+		src/hardware/motor/BasicMotor.cpp
         src/hardware/Battery.cpp
         src/hardware/Brick.cpp
-        src/hardware/Button.cpp
-        src/hardware/UnregulatedMotor.cpp)
+        src/hardware/Button.cpp)
 
 include_directories(include)
 

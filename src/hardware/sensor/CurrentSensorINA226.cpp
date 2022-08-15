@@ -7,7 +7,7 @@
 
 namespace ev3lib::hardware::sensor {
 
-    CurrentSensorINA226::CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port, uint8_t address, ports::SensorType type)
+    CurrentSensorINA226::CurrentSensorINA226(std::unique_ptr<port::I2CPort> port, uint8_t address, port::SensorType type)
             : I2CSensor(std::move(port), address, type) {
 
         m_modes.push_back(std::make_unique<CombinedMode>(this));

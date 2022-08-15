@@ -4,7 +4,7 @@
  * SensorType.h
  */
 
-namespace ev3lib::hardware::ports {
+namespace ev3lib::hardware::port {
 
     enum class SensorType : int {
         NO_SENSOR = 0,

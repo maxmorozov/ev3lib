@@ -1,6 +1,6 @@
 #pragma once
 
-#include <hardware/ports/I2CPort.h>
+#include <hardware/port/I2CPort.h>
 #include <hardware/detail/lejos/port_data.h>
 #include "EV3DeviceManager.h"
 
@@ -14,7 +14,7 @@ namespace ev3lib::hardware::detail {
         to be of limited use because most i2c sensors provide multiple data values etc.
         Because of this we only implement the basic i2c interface.
      */
-    class EV3I2CPort : public ports::I2CPort, public DetachSubscriber {
+    class EV3I2CPort : public port::I2CPort, public DetachSubscriber {
     private:
         EV3DeviceManager* m_manager;
         size_t m_port;
@@ -61,7 +61,7 @@ namespace ev3lib::hardware::detail {
          * @param type
          * @return true if type accepted
          */
-        bool setType(ports::SensorType type) override;
+        bool setType(port::SensorType type) override;
 
         /**
          * High level i2c interface. Perform a complete i2c transaction and return

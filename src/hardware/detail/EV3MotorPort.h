@@ -2,56 +2,56 @@
  * Ev3MotorPort.h
  */
 
-#ifndef EV3MOTORPORT_H_
-#define EV3MOTORPORT_H_
+#pragma once
 
 #include <hardware/detail/ev3_device.h>
 #include "EV3DeviceManager.h"
 
 namespace ev3lib::hardware::detail {
 
-	class EV3MotorPort : public MotorPort {
-	private:
-		EV3DeviceManager* m_manager;
-		size_t m_port;
+    class EV3MotorPort : public port::TachoMotorPort {
+    private:
+        EV3DeviceManager* m_manager;
+        size_t m_port;
 
-		enum class OutputCommand : unsigned char {
-			Connect = 1,
-			Disconnect = 2,
-			Start = 4,
-			Stop = 5,
-			SetType = 6,
-			ClearCount = 7,
-			Power = 8
-		};
+        enum class OutputCommand : unsigned char {
+            Connect = 1,
+            Disconnect = 2,
+            Start = 4,
+            Stop = 5,
+            SetType = 6,
+            ClearCount = 7,
+            Power = 8
+        };
 
-		bool open();
-		void close();
+        bool open();
 
-	public:
-		EV3MotorPort(EV3DeviceManager* manager, size_t port);
-		~EV3MotorPort() override;
+        void close();
 
-		/**
-		 * returns tachometer count
-		 */
-		int getTachoCount() const override;
+    public:
+        EV3MotorPort(EV3DeviceManager* manager, size_t port);
 
-		/**
-		 * resets the tachometer count to 0;
-		 */
-		void resetTachoCount() override;
+        ~EV3MotorPort() override;
 
-		/**
-		 * Starts and stops the motor
-		 */
-		void controlMotor(int power, MotorCommand command) override;
+        /**
+         * returns tachometer count
+         */
+        int getTachoCount() const override;
 
-		void setPower(int power);
+        /**
+         * resets the tachometer count to 0;
+         */
+        void resetTachoCount() override;
 
-		void stop(bool flt);
-	};
+        /**
+         * Starts and stops the motor
+         */
+        void controlMotor(unsigned int power, port::MotorCommand command) override;
 
-} /* namespace ev3lib::hardware::detail */
+        void setPower(int power);
 
-#endif /* EV3MOTORPORT_H_ */
+        void stop(bool flt);
+    };
+
+}
+

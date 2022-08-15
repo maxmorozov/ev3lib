@@ -1,11 +1,10 @@
-#ifndef EV3LIB_PORTS_MULTIMODE_PORT_H_
-#define EV3LIB_PORTS_MULTIMODE_PORT_H_
+#pragma once
 
 #include <cstddef>
 #include <memory>
 #include <utils/utilities.h>
 
-namespace ev3lib::hardware::ports {
+namespace ev3lib::hardware::port {
 
 	struct MultiModePort: public destructible {
 	    /**
@@ -32,7 +31,3 @@ namespace ev3lib::hardware::ports {
 
 
 }
-
-
-#endif /* EV3LIB_PORTS_MULTIMODE_PORT_H_ */
-

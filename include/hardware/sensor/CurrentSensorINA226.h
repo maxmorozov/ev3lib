@@ -137,12 +137,12 @@ namespace ev3lib::hardware::sensor {
         float calculateCurrentMultiplier(int16_t calibrationValue) const;
 
     public:
-        explicit CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port)
+        explicit CurrentSensorINA226(std::unique_ptr<port::I2CPort> port)
                 : CurrentSensorINA226(std::move(port), DEFAULT_ADDRESS) {
         }
 
-        CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port, uint8_t address)
-                : CurrentSensorINA226(std::move(port), address, ports::SensorType::LOWSPEED) {
+        CurrentSensorINA226(std::unique_ptr<port::I2CPort> port, uint8_t address)
+                : CurrentSensorINA226(std::move(port), address, port::SensorType::LOWSPEED) {
         }
 
 
@@ -161,7 +161,7 @@ namespace ev3lib::hardware::sensor {
          * @param address 0x02 to 0xfe
          * @param type device type.
          */
-        CurrentSensorINA226(std::unique_ptr<ports::I2CPort> port, uint8_t address, ports::SensorType type);
+        CurrentSensorINA226(std::unique_ptr<port::I2CPort> port, uint8_t address, port::SensorType type);
 
         /**
          * Initializes the sensor with the maximum expected current value in A

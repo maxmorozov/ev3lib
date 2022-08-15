@@ -7,7 +7,7 @@
 
 namespace ev3lib::hardware::sensor {
 
-AnalogSensor::AnalogSensor(std::unique_ptr<ports::AnalogPort> port)
+AnalogSensor::AnalogSensor(std::unique_ptr<port::AnalogPort> port)
 	: m_port(std::move(port))
 {
 
@@ -26,7 +26,7 @@ int AnalogSensor::getData() const
  * @param newType The type to switch to.
  * @param switchDelay Time in mS to delay after the switch.
  */
-void AnalogSensor::switchType(ports::SensorType newType)
+void AnalogSensor::switchType(port::SensorType newType)
 {
     if (m_currentType != newType)
     {

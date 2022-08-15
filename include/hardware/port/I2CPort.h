@@ -5,9 +5,9 @@
 #include <gsl/span>
 #include <utils/utilities.h>
 #include <hardware/detail/lms2012/ev3_types.h>
-#include <hardware/ports/SensorType.h>
+#include <hardware/port/SensorType.h>
 
-namespace ev3lib::hardware::ports {
+namespace ev3lib::hardware::port {
 
     /**
      * Abstraction for a port that supports I2C sensors.

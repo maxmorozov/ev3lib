@@ -7,7 +7,7 @@
 
 #include <hardware/detail/ev3_brick.h>
 #include <hardware/Button.h>
-#include <hardware/UnregulatedMotor.h>
+#include <hardware/motor/UnregulatedMotor.h>
 #include <hardware/sensor/HiTechnicGyro.h>
 #include <hardware/sensor/AnalogSensor.h>
 #include <hardware/sensor/NXTLightSensor.h>
@@ -49,7 +49,7 @@ public:
 
 	Button getButton(Buttons id);
 
-	UnregulatedMotor getMotor(Motors id);
+    motor::UnregulatedMotor getMotor(Motors id);
 
 	sensor::HiTechnicGyro getGyro(Sensors id);
 

@@ -6,7 +6,7 @@
 
 namespace ev3lib::hardware::sensor {
 
-UartSensor::UartSensor(std::unique_ptr<ports::UartPort> port, std::vector<ModeInfo> modes, size_t mode)
+UartSensor::UartSensor(std::unique_ptr<port::UartPort> port, std::vector<ModeInfo> modes, size_t mode)
 	: MultiModeSensor(std::move(modes), mode), m_port(std::move(port))
 {
     if (!m_port->setMode(mode))

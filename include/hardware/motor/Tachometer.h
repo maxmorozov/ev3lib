@@ -2,12 +2,11 @@
  * Tachometer.h
  */
 
-#ifndef EV3LIB_TACHOMETER_H_
-#define EV3LIB_TACHOMETER_H_
+#pragma once
 
-#include <utils/utilities.h>
+#include "utils/utilities.h"
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::motor {
 
 	struct Tachometer : public destructible {
 		/**
@@ -22,6 +21,4 @@ namespace ev3lib::hardware {
 	};
 
 
-} /* namespace ev3lib::hardware */
-
-#endif /* EV3LIB_TACHOMETER_H_ */
+}

@@ -7,7 +7,7 @@
 
 namespace ev3lib::hardware::sensor {
 
-HiTechnicGyro::HiTechnicGyro(std::unique_ptr<ports::AnalogPort> port)
+HiTechnicGyro::HiTechnicGyro(std::unique_ptr<port::AnalogPort> port)
 	: m_port(std::move(port)), m_zero(614.0f)
 {
 

@@ -1,15 +1,20 @@
-#ifndef __EV3LIB_UNREGULATED_MOTOR_H
-#define __EV3LIB_UNREGULATED_MOTOR_H
+#pragma once
 
+#include "robotics/DCMotor.h"
 #include <hardware/detail/MotorManager.h>
 
-namespace ev3lib::hardware {
+namespace ev3lib::hardware::motor {
 
-    class UnregulatedMotor : public Tachometer {
+    /**
+     * Abstraction for basic motor operations.
+     *
+     * @author Lawrie Griffiths.
+     */
+    class BasicMotor : public robotics::DCMotor {
     private:
-        detail::MotorPort *m_port;
+        port::BasicMotorPort* m_port;
         unsigned int m_power;
-        detail::MotorCommand m_currentState;
+        port::MotorCommand m_currentState;
 
         /**
          * Sets the motor state according the object's state
@@ -17,7 +22,7 @@ namespace ev3lib::hardware {
         void updateState();
 
     public:
-        explicit UnregulatedMotor(detail::MotorPort *port);
+        explicit BasicMotor(port::BasicMotorPort* port);
 
         /**
          * Sets power and direction using one command.
@@ -31,39 +36,41 @@ namespace ev3lib::hardware {
         /**
          * Sets the output power in percents
          */
-        void setPower(unsigned int power);
+        void setPower(unsigned int power) override;
+
+        /**
+         * Returns the current motor power setting.
+         *
+         * @return current power 0-100
+         */
+        unsigned int getPower() const override;
 
         /**
          * Rotate the motor in the forward direction
          */
-        void forward();
+        void forward() override;
 
         /**
          * Rotate the motor in the backward direction
          */
-        void backward();
+        void backward() override;
 
         /**
          * Stops rotation and leaves the circuit closed to brake the motor
          */
-        void stop();
+        void stop() override;
 
         /**
          * Stops rotation and leaves the circuit opened. This lets the motor to rotate freely.
          */
-        void flt();
+        void flt() override;
 
         /**
-         * returns tachometer count
+         * Returns true iff the motor is in motion.
+         *
+         * @return true iff the motor is currently in motion.
          */
-        int getTachoCount() const override;
-
-        /**
-         * resets the tachometer count to 0;
-         */
-        void resetTachoCount() override;
-
+        bool isMoving() override;
     };
-}
 
-#endif //__EV3LIB_UNREGULATED_MOTOR_H
+}

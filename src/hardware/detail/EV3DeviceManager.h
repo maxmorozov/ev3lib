@@ -2,8 +2,7 @@
  * EV3DeviceManager.h
  */
 
-#ifndef EV3DEVICEMANAGER_H_
-#define EV3DEVICEMANAGER_H_
+#pragma once
 
 #include <memory>
 #include <boost/noncopyable.hpp>
@@ -18,79 +17,81 @@
 
 namespace ev3lib::hardware::detail {
 
-struct DeviceInfo {
-	ConnectionType connectionType = ConnectionType::None;
-};
+    struct DeviceInfo {
+        ConnectionType connectionType = ConnectionType::None;
+    };
 
-class EV3DeviceManager: public SensorsManager, public MotorManager, public UIManager, public BatteryManager, boost::noncopyable {
-	friend class EV3MotorPort;
-	friend class EV3AnalogPort;
-	friend class EV3UartPort;
-    friend class EV3I2CPort;
-private:
-	EV3Device<device_type::dcm> m_dcmDevice;
+    class EV3DeviceManager : public SensorsManager, public MotorManager, public UIManager, public BatteryManager, boost::noncopyable {
+        friend class EV3MotorPort;
 
-	EV3InputDevice<device_type::analog_sensor> m_analogDevice;
-	EV3InputDevice<device_type::uart_sensor> m_uartDevice;
-	EV3Device<device_type::i2c_sensor> m_i2cDevice;
+        friend class EV3AnalogPort;
 
-	EV3InputDevice<device_type::motor_encoder> m_encoderDevice;
-	EV3Device<device_type::pwm_motor> m_pwmDevice;
+        friend class EV3UartPort;
 
-	EV3InputDevice<device_type::ui> m_buttonsDevice;
+        friend class EV3I2CPort;
 
-	std::unique_ptr<MotorPort> m_ports[EV3SensorConstants::MOTORS];
+    private:
+        EV3Device<device_type::dcm> m_dcmDevice;
 
-	DetachSubscriber* m_openPorts[EV3SensorConstants::PORTS];
+        EV3InputDevice<device_type::analog_sensor> m_analogDevice;
+        EV3InputDevice<device_type::uart_sensor> m_uartDevice;
+        EV3Device<device_type::i2c_sensor> m_i2cDevice;
 
-	void setDeviceType(DeviceInfo& deviceInfo, DeviceType type, int mode);
+        EV3InputDevice<device_type::motor_encoder> m_encoderDevice;
+        EV3Device<device_type::pwm_motor> m_pwmDevice;
 
-	void connectSensor(size_t port, DetachSubscriber* sensor);
-public:
-	EV3DeviceManager();
-	~EV3DeviceManager() override;
+        EV3InputDevice<device_type::ui> m_buttonsDevice;
 
-	DeviceType getSensorType(size_t port) const override;
+        std::unique_ptr<port::TachoMotorPort> m_ports[EV3SensorConstants::MOTORS];
 
-	ConnectionType getConnectionType(size_t port) const override;
+        DetachSubscriber* m_openPorts[EV3SensorConstants::PORTS];
 
-	void setPortMode(size_t port, PortType type, AnalogMode mode) override;
+        void connectSensor(size_t port, DetachSubscriber* sensor);
 
-	void disconnect(size_t port, PortType type) override;
+    public:
+        EV3DeviceManager();
 
-	std::unique_ptr<ports::AnalogPort> getAnalogPort(size_t port) override;
+        ~EV3DeviceManager() override;
 
-	std::unique_ptr<ports::UartPort> getUartPort(size_t port) override;
+        DeviceType getSensorType(size_t port) const override;
 
-    std::unique_ptr<ports::I2CPort> getI2CPort(size_t port) override;
+        ConnectionType getConnectionType(size_t port) const override;
 
-    /**
-     * Returns internal motor port structure. The clients should not delete it
-     */
-	MotorPort* getMotorPort(size_t port) override;
+        void setPortMode(size_t port, PortType type, AnalogMode mode) override;
 
-	/**
-	 * Checks if the button is down
-	 */
-	bool checkButton(size_t buttonNo) const override;
+        void disconnect(size_t port, PortType type) override;
 
-	/**
-	 * Battery voltage
-	 */
-	short getBatteryVoltage() const override;
+        std::unique_ptr<port::AnalogPort> getAnalogPort(size_t port) override;
 
-	/**
-	 * Current flowing from the battery
-	 */
-	short getMotorCurrent() const override;
+        std::unique_ptr<port::UartPort> getUartPort(size_t port) override;
 
-	/**
-	 * Current flowing from the battery
-	 */
-	short getBatteryCurrent() const override;
+        std::unique_ptr<port::I2CPort> getI2CPort(size_t port) override;
 
-};
+        /**
+         * Returns internal motor port structure. The clients should not delete it
+         */
+        port::TachoMotorPort* getMotorPort(size_t port) override;
+
+        /**
+         * Checks if the button is down
+         */
+        bool checkButton(size_t buttonNo) const override;
+
+        /**
+         * Battery voltage
+         */
+        short getBatteryVoltage() const override;
+
+        /**
+         * Current flowing from the battery
+         */
+        short getMotorCurrent() const override;
+
+        /**
+         * Current flowing from the battery
+         */
+        short getBatteryCurrent() const override;
+
+    };
 
 }
-
-#endif /* EV3DEVICEMANAGER_H_ */

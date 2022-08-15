@@ -6,7 +6,7 @@
 
 namespace ev3lib::hardware::detail {
 
-    EV3I2CPort::EV3I2CPort(EV3DeviceManager *manager, size_t port)
+    EV3I2CPort::EV3I2CPort(EV3DeviceManager* manager, size_t port)
             : m_manager(manager), m_port(port) {
     }
 
@@ -40,19 +40,19 @@ namespace ev3lib::hardware::detail {
      * @param type
      * @return true if type accepted
      */
-    bool EV3I2CPort::setType(ports::SensorType type) {
+    bool EV3I2CPort::setType(port::SensorType type) {
         speed = I2CSpeed::SPEED_10KHZ;
         switch (type) {
-            case ports::SensorType::HIGHSPEED:
+            case port::SensorType::HIGHSPEED:
                 speed = I2CSpeed::SPEED_100KHZ;
                 [[fallthrough]];
-            case ports::SensorType::LOWSPEED:
+            case port::SensorType::LOWSPEED:
                 setPinMode(AnalogMode::Set | AnalogMode::Pin5);
                 break;
-            case ports::SensorType::HIGHSPEED_9V:
+            case port::SensorType::HIGHSPEED_9V:
                 speed = I2CSpeed::SPEED_100KHZ;
                 [[fallthrough]];
-            case ports::SensorType::LOWSPEED_9V:
+            case port::SensorType::LOWSPEED_9V:
                 setPinMode(AnalogMode::Set | AnalogMode::Pin1 | AnalogMode::Pin5);
                 break;
             default:

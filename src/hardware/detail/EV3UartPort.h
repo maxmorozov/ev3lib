@@ -8,7 +8,7 @@
 
 namespace ev3lib::hardware::detail {
 
-	class EV3UartPort: public ports::UartPort, public DetachSubscriber {
+	class EV3UartPort: public port::UartPort, public DetachSubscriber {
 	    static const int TIMEOUT_DELTA = 1;
 	    static const int TIMEOUT = 4000;
 	    static const int INIT_DELAY = 5;

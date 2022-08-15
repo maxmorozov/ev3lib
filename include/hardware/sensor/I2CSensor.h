@@ -28,7 +28,7 @@ namespace ev3lib::hardware::sensor {
         static constexpr size_t DEFAULT_I2C_ADDRESS = 0x02;
 
         std::mutex m_lock;
-        std::unique_ptr<ports::I2CPort> m_port;
+        std::unique_ptr<port::I2CPort> m_port;
         uint8_t m_address;
         int m_retryCount = 3;
 
@@ -53,9 +53,9 @@ namespace ev3lib::hardware::sensor {
         std::string fetchString(uint8_t reg, size_t len);
 
     public:
-        explicit I2CSensor(std::unique_ptr<ports::I2CPort> port);
+        explicit I2CSensor(std::unique_ptr<port::I2CPort> port);
 
-        I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address);
+        I2CSensor(std::unique_ptr<port::I2CPort> port, uint8_t address);
 
         /**
          * Creates I2C sensor instance.<br/>
@@ -72,7 +72,7 @@ namespace ev3lib::hardware::sensor {
          * @param address 0x02 to 0xfe
          * @param type device type.
          */
-        I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address, ports::SensorType type);
+        I2CSensor(std::unique_ptr<port::I2CPort> port, uint8_t address, port::SensorType type);
 
         I2CSensor(I2CSensor &&other) noexcept
                 : m_port(std::move(other.m_port)), m_address(other.m_address), m_retryCount(other.m_retryCount) {

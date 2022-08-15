@@ -12,11 +12,11 @@ namespace ev3lib::hardware::sensor {
 
 class HiTechnicGyro: public destructible {
 private:
-	std::unique_ptr<ports::AnalogPort> m_port;
+	std::unique_ptr<port::AnalogPort> m_port;
     float m_zero;
 
 public:
-	explicit HiTechnicGyro(std::unique_ptr<ports::AnalogPort> port);
+	explicit HiTechnicGyro(std::unique_ptr<port::AnalogPort> port);
 
 	float getData() const;
 };

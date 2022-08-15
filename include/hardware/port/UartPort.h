@@ -1,13 +1,12 @@
-#ifndef EV3LIB_PORTS_UART_PORT_H_
-#define EV3LIB_PORTS_UART_PORT_H_
+#pragma once
 
 #include <cstddef>
 #include <memory>
 #include <gsl/span>
 #include <utils/utilities.h>
-#include <hardware/ports/MultiModePort.h>
+#include <hardware/port/MultiModePort.h>
 
-namespace ev3lib::hardware::ports {
+namespace ev3lib::hardware::port {
 
 	struct UartPort: public MultiModePort {
 	    /**
@@ -43,7 +42,3 @@ namespace ev3lib::hardware::ports {
 
 
 }
-
-
-#endif /* EV3LIB_PORTS_UART_PORT_H_ */
-

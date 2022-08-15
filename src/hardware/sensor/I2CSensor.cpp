@@ -10,13 +10,13 @@
 
 namespace ev3lib::hardware::sensor {
 
-    I2CSensor::I2CSensor(std::unique_ptr<ports::I2CPort> port)
+    I2CSensor::I2CSensor(std::unique_ptr<port::I2CPort> port)
             : I2CSensor(std::move(port), DEFAULT_I2C_ADDRESS) {
 
     }
 
-    I2CSensor::I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address)
-            : I2CSensor(std::move(port), address, ports::SensorType::LOWSPEED) {
+    I2CSensor::I2CSensor(std::unique_ptr<port::I2CPort> port, uint8_t address)
+            : I2CSensor(std::move(port), address, port::SensorType::LOWSPEED) {
 
     }
 
@@ -35,7 +35,7 @@ namespace ev3lib::hardware::sensor {
      * @param address 0x02 to 0xfe
      * @param type device type.
      */
-    I2CSensor::I2CSensor(std::unique_ptr<ports::I2CPort> port, uint8_t address, ports::SensorType type)
+    I2CSensor::I2CSensor(std::unique_ptr<port::I2CPort> port, uint8_t address, port::SensorType type)
             : m_port(std::move(port)), m_address(address) {
 
         if ((address & 1) != 0)

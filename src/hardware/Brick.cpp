@@ -10,8 +10,8 @@ Button Brick::getButton(Buttons id) {
 	return Button(m_brick.getUIManager(), (size_t)id);
 }
 
-UnregulatedMotor Brick::getMotor(Motors id) {
-	return UnregulatedMotor(m_brick.getMotorManager()->getMotorPort((size_t)id));
+motor::UnregulatedMotor Brick::getMotor(Motors id) {
+	return motor::UnregulatedMotor(m_brick.getMotorManager()->getMotorPort((size_t)id));
 }
 
 sensor::HiTechnicGyro Brick::getGyro(Sensors id) {
