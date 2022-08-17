@@ -12,7 +12,7 @@ namespace detail {
 /**
  * Provides information about battery state
  */
-struct BatteryManager: public destructible {
+struct BatteryManager: public utils::destructible {
 	/**
 	 * Battery voltage
 	 */

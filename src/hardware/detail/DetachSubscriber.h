@@ -1,5 +1,4 @@
-#ifndef EV3_DETACH_SUBSCRIBER_H
-#define EV3_DETACH_SUBSCRIBER_H
+#pragma once
 
 #include <utils/utilities.h>
 #include <cstddef>
@@ -7,10 +6,8 @@
 
 namespace ev3lib::hardware::detail {
 
-	struct DetachSubscriber : public ev3lib::destructible {
+	struct DetachSubscriber : public utils::destructible {
 		virtual void detach() = 0;
 	};
 
 }
-
-#endif //EV3_DETACH_SUBSCRIBER_H

@@ -7,7 +7,7 @@
 
 namespace ev3lib::hardware::port {
 
-	struct AnalogPort: public destructible {
+    struct AnalogPort: public utils::destructible {
 	    /**
 	     * return the voltage present on pin 6 of the sensor port
 	     * @return raw ADC voltage reading

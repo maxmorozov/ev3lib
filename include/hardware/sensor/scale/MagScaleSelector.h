@@ -4,7 +4,7 @@
 
 namespace ev3lib::hardware::sensor::scale {
 
-	struct MagScaleSelector : public destructible {
+	struct MagScaleSelector : public utils::destructible {
 		/**
 		 * Changes the magnetometer full-scale range
 		 *

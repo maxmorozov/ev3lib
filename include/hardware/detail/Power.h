@@ -16,7 +16,7 @@ namespace detail {
  * @author Brian Bagnall, Lawrie Griffiths Andy Shaw
  *
  */
-struct Power : public destructible {
+struct Power : public utils::destructible {
 
 	/**
 	 * The NXT uses 6 batteries of 1500 mV each.

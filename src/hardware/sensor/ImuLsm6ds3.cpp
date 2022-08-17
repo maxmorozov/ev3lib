@@ -82,7 +82,7 @@ namespace ev3lib::hardware::sensor {
      * @return true if the current scale range has been successfully changed
      */
     bool ImuLsm6ds3::setAccelerometerScale(size_t scaleNo) {
-        if (scaleNo < count_of(accelScale)) {
+        if (scaleNo < utils::count_of(accelScale)) {
             m_accelScale = scaleNo;
             return updateScale(ACC_SCALE_2G + scaleNo);
         }
@@ -95,7 +95,7 @@ namespace ev3lib::hardware::sensor {
      * @return number of scales supported by the sensor
      */
     size_t ImuLsm6ds3::getAccelerometerScales() const {
-        return count_of(accelScale);
+        return utils::count_of(accelScale);
     }
 
     /**
@@ -105,7 +105,7 @@ namespace ev3lib::hardware::sensor {
      * @return true if the current scale range has been successfully changed
      */
     bool ImuLsm6ds3::setGyroscopeScale(size_t scaleNo) {
-        if (scaleNo < count_of(gyroScale)) {
+        if (scaleNo < utils::count_of(gyroScale)) {
             m_gyroScale = scaleNo;
             return updateScale(GYRO_SCALE_245DPS + scaleNo);
         }
@@ -118,7 +118,7 @@ namespace ev3lib::hardware::sensor {
      * @return number of scales supported by the sensor
      */
     size_t ImuLsm6ds3::getGyroscopeScales() const {
-        return count_of(gyroScale);
+        return utils::count_of(gyroScale);
     }
 
     //EEPROM

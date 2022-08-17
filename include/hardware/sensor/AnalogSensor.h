@@ -14,7 +14,7 @@ namespace ev3lib::hardware::sensor {
 /**
  * Returns raw ADC output value
  */
-class AnalogSensor : public destructible, noncopyable {
+class AnalogSensor : public utils::destructible, utils::noncopyable {
 protected:
 	std::unique_ptr<port::AnalogPort> m_port;
     port::SensorType m_currentType = port::SensorType::NO_DATA;

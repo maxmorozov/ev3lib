@@ -42,7 +42,7 @@ namespace ev3lib::robotics {
 	 * @author Aswin Bouwmeester
 	 *
 	 */
-	struct SampleProvider : public destructible {
+	struct SampleProvider : public utils::destructible {
 		/**
 		 * Returns the number of elements in a sample.<br>
 		 * The number of elements does not change during runtime.

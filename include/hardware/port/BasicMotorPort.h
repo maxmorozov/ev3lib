@@ -22,7 +22,7 @@ namespace ev3lib::hardware::port {
      *
      * @author Lawrie Griffiths.
      */
-    struct BasicMotorPort : public destructible {
+    struct BasicMotorPort : public utils::destructible {
         /** Maximum power setting = 100% */
         static const int MAX_POWER = 100;
 

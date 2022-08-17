@@ -36,15 +36,15 @@ namespace ev3lib::hardware::sensor {
 		friend class GyroMode;
 
         struct Mode {
-            str_const name;
+            utils::str_const name;
             std::size_t sampleSize;
             std::size_t modeId;
         };
 
         static const constexpr Mode modes[3] = {
-                {str_const("ALL"), 6, 0},
-                {str_const("Acceleration"), 3, 1},
-                {str_const("Rate"), 3, 2}
+                {utils::str_const("ALL"), 6, 0},
+                {utils::str_const("Acceleration"), 3, 1},
+                {utils::str_const("Rate"), 3, 2}
         };
 
         static constexpr size_t maxSampleSize() {
@@ -56,7 +56,7 @@ namespace ev3lib::hardware::sensor {
         }
 
         static constexpr size_t getModeId(size_t index) {
-            if (index >= count_of(modes))
+            if (index >= utils::count_of(modes))
                 throw std::out_of_range("");
             return modes[index].modeId;
         }

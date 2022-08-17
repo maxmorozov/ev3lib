@@ -1,10 +1,9 @@
-#if !defined(__EV3LIB_UTILITIES_H__)
-#define __EV3LIB_UTILITIES_H__
+#pragma once
 
 #include <cstdlib>
 #include <gsl/span>
 
-namespace ev3lib {
+namespace ev3lib::utils {
 
 	struct destructible
 	{
@@ -39,5 +38,3 @@ namespace ev3lib {
 		return static_cast<size_t>(span.size());
 	};
 }
-
-#endif // !defined(__EV3LIB_UTILITIES_H__)

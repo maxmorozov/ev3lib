@@ -8,7 +8,7 @@
 
 namespace ev3lib::hardware::motor {
 
-	struct Tachometer : public destructible {
+	struct Tachometer : public utils::destructible {
 		/**
 		 * returns tachometer count
 		 */

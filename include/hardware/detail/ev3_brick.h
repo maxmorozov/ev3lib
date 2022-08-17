@@ -2,8 +2,7 @@
  * ev3_brick.h
  */
 
-#ifndef EV3LIB_EV3_BRICK_H_
-#define EV3LIB_EV3_BRICK_H_
+#pragma once
 
 #include <hardware/detail/SensorsManager.h>
 #include <hardware/detail/MotorManager.h>
@@ -12,11 +11,9 @@
 #include <utils/utilities.h>
 #include <memory>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
-	class EV3Brick: public destructible, noncopyable {
+    class EV3Brick: public utils::destructible, utils::noncopyable {
 		class EV3BrickImpl;
 	private:
 		std::unique_ptr<EV3BrickImpl> m_pimpl;
@@ -37,8 +34,4 @@ namespace detail {
 		const Power* getBattery() const;
 	};
 
-}}}
-
-
-
-#endif /* EV3LIB_EV3_BRICK_H_ */
+}

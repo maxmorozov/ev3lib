@@ -6,7 +6,7 @@
 
 namespace ev3lib::hardware::port {
 
-	struct MultiModePort: public destructible {
+    struct MultiModePort: public utils::destructible {
 	    /**
 	     * Get the current operating mode of the sensor
 	     * @return the current mode

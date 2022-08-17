@@ -10,7 +10,7 @@
 
 namespace ev3lib::hardware::sensor {
 
-class HiTechnicGyro: public destructible {
+class HiTechnicGyro: public utils::destructible {
 private:
 	std::unique_ptr<port::AnalogPort> m_port;
     float m_zero;

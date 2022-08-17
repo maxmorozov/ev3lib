@@ -89,7 +89,7 @@ namespace ev3lib::hardware::detail {
 	/**
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
-	struct SensorsManager: public destructible {
+    struct SensorsManager: public utils::destructible {
 		virtual DeviceType getSensorType(size_t port) const = 0;
 		virtual ConnectionType getConnectionType(size_t port) const = 0;
 

@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.23)
 project(ev3lib)
 
 set(SOURCE_FILES
@@ -50,8 +50,10 @@ set(SOURCE_FILES
 		include/robotics/Encoder.h
 		include/robotics/DCMotor.h
 		include/robotics/BaseMotor.h
+		include/robotics/ReversedEncoderMotor.h
         include/utils/utilities.h
         include/utils/str_const.h
+		include/utils/type_utils.h
         src/hardware/detail/AnalogSensorHelpers.cpp
         src/hardware/detail/AnalogSensorHelpers.h
         src/hardware/detail/DetachSubscriber.h
@@ -89,7 +91,7 @@ include_directories(include)
 add_library(ev3lib STATIC ${SOURCE_FILES})
 
 set_target_properties(ev3lib PROPERTIES
-        CXX_STANDARD 17
+        CXX_STANDARD 20
         CXX_STANDARD_REQUIRED YES
         CXX_EXTENSIONS NO
         )

@@ -4,7 +4,7 @@
 
 namespace ev3lib::hardware::sensor::eeprom {
 
-	struct MagEepromWriter : public destructible {
+	struct MagEepromWriter : public utils::destructible {
 		/**
 		 * Update magnetometer EEPROM
 		 *

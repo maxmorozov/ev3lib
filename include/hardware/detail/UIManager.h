@@ -2,24 +2,17 @@
  * UIManager.h
  */
 
-#ifndef EV3LIB_UIMANAGER_H_
-#define EV3LIB_UIMANAGER_H_
+#pragma once
 
 #include <utils/utilities.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
-struct UIManager : public destructible {
-	/**
-	 * Returns true if the specified button is down
-	 */
-	virtual bool checkButton(size_t buttonNo) const = 0;
-};
+    struct UIManager : public utils::destructible {
+        /**
+         * Returns true if the specified button is down
+         */
+        virtual bool checkButton(size_t buttonNo) const = 0;
+    };
 
-} /* namespace detail */
-} /* namespace hardware */
 } /* namespace ev3lib */
-
-#endif /* EV3LIB_UIMANAGER_H_ */

@@ -6,7 +6,7 @@ namespace ev3lib::robotics {
     /**
      * Base motor interface. Contains basic movement commands.
      */
-    struct BaseMotor : public destructible {
+    struct BaseMotor : public utils::destructible {
 
         /**
           * Causes motor to rotate forward until <code>stop()</code> or <code>flt()</code> is called.

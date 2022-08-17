@@ -104,9 +104,9 @@ void EV3UartPort::read(gsl::span<uint8_t> buffer)
  */
 ssize_t EV3UartPort::write(gsl::span<const uint8_t> buffer)
 {
-    std::vector<uint8_t> command(size(buffer) + 1);
+    std::vector<uint8_t> command(utils::size(buffer) + 1);
     command[0] = (uint8_t) m_port;
-    std::copy_n(buffer.data(), size(buffer), command.begin() + 1);
+    std::copy_n(buffer.data(), utils::size(buffer), command.begin() + 1);
 	ssize_t ret = getDevice().sendCommand(command);
     if (ret > 0) 
     	--ret;
