@@ -72,7 +72,7 @@ namespace ev3lib::hardware::detail {
          * @param writeBuf The buffer containing data to be written to the device.
          * @param readBuf The buffer to use for the transaction results
          */
-        void i2cTransaction(uint8_t deviceAddress, gsl::span<const uint8_t> writeBuf, gsl::span<uint8_t> readBuf) override;
+        void i2cTransaction(uint8_t deviceAddress, std::span<const uint8_t> writeBuf, std::span<uint8_t> readBuf) override;
     };
 
 }

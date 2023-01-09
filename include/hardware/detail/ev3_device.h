@@ -2,16 +2,13 @@
  * ev3_device.h
  */
 
-#ifndef EV3LIB_EV3_DEVICE_H_
-#define EV3LIB_EV3_DEVICE_H_
+#pragma once
 
 #include <hardware/detail/handle.h>
 #include <hardware/detail/device_traits.h>
-#include <gsl/span>
+#include <span>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	/**
 	 * Device that can be controlled using commands
@@ -27,7 +24,7 @@ namespace detail {
 
 		//Writes the command into the file.
 		//Returns the number of written bytes or -1
-		ssize_t sendCommand(const gsl::span<uint8_t> command) {
+		ssize_t sendCommand(const std::span<uint8_t> command) {
 			//TODO add error checking using exceptions
 			return m_device.write(command);
 		}
@@ -73,8 +70,4 @@ namespace detail {
 		const device_map_type* getSensorData() const { return m_map; }
 	};
 
-}}}
-
-
-
-#endif /* EV3LIB_EV3_DEVICE_H_ */
+}

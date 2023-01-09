@@ -42,7 +42,7 @@ namespace ev3lib::hardware::sensor {
 
         static_assert(sizeof(int16_t) == sizeof(buf));
 
-        sendData(REG_CALIBRATION, gsl::make_span(buf.data(), sizeof(buf)));
+        sendData(REG_CALIBRATION, std::span(buf.data(), sizeof(buf)));
 
         // Set Config register to take into account the settings above
         //Reading of two registers takes 13 ms, so we can use 4 samples for smoothing (8.8 ms)
@@ -62,7 +62,7 @@ namespace ev3lib::hardware::sensor {
                                         CurrentSensorINA226::ShuntConversionTime shuntConvTime, CurrentSensorINA226::Mode mode) {
         boost::endian::big_uint16_t config = uint16_t(avg) << 9 | uint16_t(busConvTime) << 6 | uint16_t(shuntConvTime) << 3 | uint16_t(mode);;
 
-        sendData(REG_CONFIG, gsl::make_span(config.data(), sizeof(config)));
+        sendData(REG_CONFIG, std::span(config.data(), sizeof(config)));
     }
 
     int16_t CurrentSensorINA226::calculateCalibrationRegister(float maxCurrent) const {
@@ -94,7 +94,7 @@ namespace ev3lib::hardware::sensor {
      *
      * @param sample The buffer to store the sample in.
      */
-    void CurrentSensorINA226::fetchSample(gsl::span<float> sample) {
+    void CurrentSensorINA226::fetchSample(std::span<float> sample) {
         currentMode()->fetchSample(sample);
     }
 
@@ -138,19 +138,19 @@ namespace ev3lib::hardware::sensor {
     }
 
     //Modes
-    void CurrentSensorINA226::CombinedMode::fetchSample(gsl::span<float> sample) {
+    void CurrentSensorINA226::CombinedMode::fetchSample(std::span<float> sample) {
         // Sometimes a sharp load will reset the INA226, which will
         // reset the cal register, meaning CURRENT and POWER will
         // not be available ... avoid this by always setting a cal
         // value even if it's an unfortunate extra step
         //boost::endian::big_int16_t calibrationReg = m_sensor->m_calibrationValue;
-        //m_sensor->sendData(REG_CALIBRATION, gsl::make_span(calibrationReg.data(), sizeof(calibrationReg)));
+        //m_sensor->sendData(REG_CALIBRATION, std::span(calibrationReg.data(), sizeof(calibrationReg)));
 
         boost::endian::big_int16_t currentRaw;
-        m_sensor->getData(REG_CURRENT, gsl::make_span(currentRaw.data(), sizeof(currentRaw)));
+        m_sensor->getData(REG_CURRENT, std::span(currentRaw.data(), sizeof(currentRaw)));
 
         boost::endian::big_int16_t voltageRaw;
-        m_sensor->getData(REG_BUS_VOLTAGE, gsl::make_span(voltageRaw.data(), sizeof(voltageRaw)));
+        m_sensor->getData(REG_BUS_VOLTAGE, std::span(voltageRaw.data(), sizeof(voltageRaw)));
 
         //std::cout<<currentRaw<<", "<<voltageRaw<<", "<<m_sensor->m_calibrationValue<<", "<<m_sensor->m_currentMultiplier_mA<<std::endl;
 
@@ -158,23 +158,23 @@ namespace ev3lib::hardware::sensor {
         sample[1] = voltageRaw * m_sensor->m_voltageMultiplier_V + m_sensor->m_voltageOffset_V;
     }
 
-    void CurrentSensorINA226::PowerMode::fetchSample(gsl::span<float> sample) {
+    void CurrentSensorINA226::PowerMode::fetchSample(std::span<float> sample) {
         // Sometimes a sharp load will reset the INA226, which will
         // reset the cal register, meaning CURRENT and POWER will
         // not be available ... avoid this by always setting a cal
         // value even if it's an unfortunate extra step
         //boost::endian::big_int16_t calibrationReg = m_sensor->m_calibrationValue;
-        //m_sensor->sendData(REG_CALIBRATION, gsl::make_span(calibrationReg.data(), sizeof(calibrationReg)));
+        //m_sensor->sendData(REG_CALIBRATION, std::span(calibrationReg.data(), sizeof(calibrationReg)));
 
         boost::endian::big_int16_t powerRaw;
-        m_sensor->getData(REG_POWER, gsl::make_span(powerRaw.data(), sizeof(powerRaw)));
+        m_sensor->getData(REG_POWER, std::span(powerRaw.data(), sizeof(powerRaw)));
 
         sample[0] = powerRaw * m_sensor->m_powerMultiplier_mW;
     }
 
-    void CurrentSensorINA226::ShuntVoltageMode::fetchSample(gsl::span<float> sample) {
+    void CurrentSensorINA226::ShuntVoltageMode::fetchSample(std::span<float> sample) {
         boost::endian::big_int16_t vShuntRaw;
-        m_sensor->getData(REG_SHUNT_VOLTAGE, gsl::make_span(vShuntRaw.data(), sizeof(vShuntRaw)));
+        m_sensor->getData(REG_SHUNT_VOLTAGE, std::span(vShuntRaw.data(), sizeof(vShuntRaw)));
 
         sample[0] = vShuntRaw * VSHUNT_LSB;
     }

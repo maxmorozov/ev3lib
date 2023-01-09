@@ -2,7 +2,7 @@
 
 #include <cstddef>
 #include <memory>
-#include <gsl/span>
+#include <span>
 #include <utils/utilities.h>
 #include <hardware/detail/lms2012/ev3_types.h>
 #include <hardware/port/SensorType.h>
@@ -35,7 +35,7 @@ namespace ev3lib::hardware::port {
          * @param writeBuf The buffer containing data to be written to the device.
          * @param readBuf The buffer to use for the transaction results
          */
-        virtual void i2cTransaction(uint8_t deviceAddress, gsl::span<const uint8_t> writeBuf, gsl::span<uint8_t> readBuf) = 0;
+        virtual void i2cTransaction(uint8_t deviceAddress, std::span<const uint8_t> writeBuf, std::span<uint8_t> readBuf) = 0;
 
     };
 

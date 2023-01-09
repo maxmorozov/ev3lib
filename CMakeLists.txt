@@ -51,6 +51,7 @@ set(SOURCE_FILES
 		include/robotics/DCMotor.h
 		include/robotics/BaseMotor.h
 		include/robotics/ReversedEncoderMotor.h
+		include/utils/algorithm.h
         include/utils/utilities.h
         include/utils/str_const.h
 		include/utils/type_utils.h

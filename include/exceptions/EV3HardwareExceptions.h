@@ -2,8 +2,7 @@
  * IoException.h
  */
 
-#ifndef EV3LIB_HARDWARE_EXCEPTIONS_H_
-#define EV3LIB_HARDWARE_EXCEPTIONS_H_
+#pragma once
 
 #include <stdexcept>
 #include <boost/exception/all.hpp>
@@ -54,5 +53,3 @@ namespace ev3lib {
 
     typedef boost::error_info<struct tag_error_code,size_t> error_code;
 }
-
-#endif /* EV3LIB_HARDWARE_EXCEPTIONS_H_ */

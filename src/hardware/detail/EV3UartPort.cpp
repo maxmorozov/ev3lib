@@ -1,7 +1,7 @@
 #include <chrono>
 #include <thread>
 #include <vector>
-#include <gsl/algorithm>
+#include <utils/algorithm.h>
 
 #include "exceptions/EV3HardwareExceptions.h"
 
@@ -88,12 +88,12 @@ const uint8_t* EV3UartPort::getData() const {
  * @param buffer byte array to accept the data
  * @param offset offset (in bytes) at which to store the data
  */
-void EV3UartPort::read(gsl::span<uint8_t> buffer)
+void EV3UartPort::read(std::span<uint8_t> buffer)
 {
     checkSensor();
 
     const uint8_t* data = getData();
-    gsl::copy(gsl::make_span(data, buffer.size()), buffer);
+    utils::copy(std::span(data, buffer.size()), buffer);
 }
 
 /**
@@ -102,11 +102,11 @@ void EV3UartPort::read(gsl::span<uint8_t> buffer)
  * @param offset offset to the start of the write
  * @return number of bytes written
  */
-ssize_t EV3UartPort::write(gsl::span<const uint8_t> buffer)
+ssize_t EV3UartPort::write(std::span<const uint8_t> buffer)
 {
-    std::vector<uint8_t> command(utils::size(buffer) + 1);
+    std::vector<uint8_t> command(buffer.size() + 1);
     command[0] = (uint8_t) m_port;
-    std::copy_n(buffer.data(), utils::size(buffer), command.begin() + 1);
+    std::copy_n(buffer.data(), buffer.size(), command.begin() + 1);
 	ssize_t ret = getDevice().sendCommand(command);
     if (ret > 0) 
     	--ret;

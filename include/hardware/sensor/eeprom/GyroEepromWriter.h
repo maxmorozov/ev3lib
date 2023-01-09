@@ -1,5 +1,6 @@
 #pragma once
 
+#include <span>
 #include <utils/utilities.h>
 
 namespace ev3lib::hardware::sensor::eeprom {
@@ -12,7 +13,8 @@ namespace ev3lib::hardware::sensor::eeprom {
 		 * @param data EEPROM data (4x3 matrix of 16-bit integers)
 		 * @return true if the EEPROM data has been successfully written
 		 */
-		virtual bool writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data) = 0;
+        [[nodiscard]]
+		virtual bool writeGyroscopeEeprom(size_t scaleNo, std::span<const int16_t> data) = 0;
 	};
 
 

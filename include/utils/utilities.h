@@ -1,7 +1,6 @@
 #pragma once
 
 #include <cstdlib>
-#include <gsl/span>
 
 namespace ev3lib::utils {
 
@@ -30,11 +29,6 @@ namespace ev3lib::utils {
 
 
 	template<typename T,size_t size>
-	constexpr size_t count_of(T (&)[size]) { return size; }
+	constexpr size_t count_of(T (&)[size]) noexcept { return size; }
 
-	//Helper function to convert span::size to size_t type
-	template <typename T, size_t Extent>
-	constexpr size_t size(const gsl::span<T, Extent>& span) {
-		return static_cast<size_t>(span.size());
-	};
 }

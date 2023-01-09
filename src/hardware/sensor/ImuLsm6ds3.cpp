@@ -23,22 +23,22 @@ namespace ev3lib::hardware::sensor {
 
     void ImuLsm6ds3::reset() {
         uint8_t buffer = DEVICE_RESET;
-        m_port->write(gsl::make_span(&buffer, 1));
+        m_port->write(std::span(&buffer, 1));
     }
 
     /** Fetches a sample from a sensor or filter.
      *
      * @param sample The array to store the sample in.
     */
-    void ImuLsm6ds3::fetchSample(gsl::span<float> sample) {
+    void ImuLsm6ds3::fetchSample(std::span<float> sample) {
         short buffer[maxSampleSize()];
 
-        readSample(getModeId(m_currentMode), gsl::make_span(buffer, sampleSize()));
+        readSample(getModeId(m_currentMode), std::span(buffer, sampleSize()));
 
-        scaleData(gsl::make_span(const_cast<const short*>(buffer), sampleSize()), gsl::make_span(sample.data(), sampleSize()));
+        scaleData(std::span(const_cast<const short*>(buffer), sampleSize()), std::span(sample.data(), sampleSize()));
     }
 
-    void ImuLsm6ds3::scaleData(gsl::span<const int16_t> buffer, gsl::span<float> sample) {
+    void ImuLsm6ds3::scaleData(std::span<const int16_t> buffer, std::span<float> sample) {
         //Use switch instead of calling the mode's object method to simplify move constructor and move operator
         switch (m_currentMode) {
             case 0:
@@ -60,12 +60,12 @@ namespace ev3lib::hardware::sensor {
     }
 
     //Apply the current scale to the sample
-    void ImuLsm6ds3::scaleCombined(gsl::span<const int16_t> source, gsl::span<float> target) {
-        scale(gsl::make_span(source.data(), 3), target, getAccelScale());
-        scale(gsl::make_span(source.data() + 3, 3), gsl::make_span(target.data() + 3, 3), getGyroScale());
+    void ImuLsm6ds3::scaleCombined(std::span<const int16_t> source, std::span<float> target) {
+        scale(std::span(source.data(), 3), target, getAccelScale());
+        scale(std::span(source.data() + 3, 3), std::span(target.data() + 3, 3), getGyroScale());
     }
 
-    void ImuLsm6ds3::scale(gsl::span<const int16_t> source, gsl::span<float> target, float scale) {
+    void ImuLsm6ds3::scale(std::span<const int16_t> source, std::span<float> target, float scale) {
         auto out = target.begin();
         for (int16_t value: source) {
             *out++ = value * scale;
@@ -129,7 +129,7 @@ namespace ev3lib::hardware::sensor {
      * @param data EEPROM data (4x3 matrix of 16-bit integers)
      * @return true if the EEPROM data has been successfully written
      */
-    bool ImuLsm6ds3::writeAccelerometerEeprom(size_t scaleNo, gsl::span<const int16_t> data) {
+    bool ImuLsm6ds3::writeAccelerometerEeprom(size_t scaleNo, std::span<const int16_t> data) {
         return writeEeprom(CALIBRATE_ACC_2G + scaleNo, data);
     }
 
@@ -140,12 +140,12 @@ namespace ev3lib::hardware::sensor {
      * @param data EEPROM data (4x3 matrix of 16-bit integers)
      * @return true if the EEPROM data has been successfully written
      */
-    bool ImuLsm6ds3::writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data) {
+    bool ImuLsm6ds3::writeGyroscopeEeprom(size_t scaleNo, std::span<const int16_t> data) {
         return writeEeprom(CALIBRATE_GYRO_245DPS + scaleNo, data);
     }
 
 
-    bool ImuLsm6ds3::writeEeprom(uint8_t writeCommand, gsl::span<const int16_t> data) {
+    bool ImuLsm6ds3::writeEeprom(uint8_t writeCommand, std::span<const int16_t> data) {
         std::vector<uint8_t> command(static_cast<size_t>(data.size_bytes() + 1));
         command[0] = writeCommand;
         std::copy(data.begin(), data.end(), (int16_t*) &command[1]);
@@ -168,13 +168,13 @@ namespace ev3lib::hardware::sensor {
 
     }
 
-    void ImuLsm6ds3::readSample(size_t mode, gsl::span<int16_t> buffer) {
+    void ImuLsm6ds3::readSample(size_t mode, std::span<int16_t> buffer) {
         if (mode != getCurrentMode()) {
             switchMode(mode);
             setAccelerometerScale(0);
             setGyroscopeScale(0);
         }
-        m_port->read(gsl::make_span((uint8_t*) (buffer.data()), buffer.size_bytes()));
+        m_port->read(std::span((uint8_t*) (buffer.data()), buffer.size_bytes()));
     }
 
     float ImuLsm6ds3::getAccelScale() const {

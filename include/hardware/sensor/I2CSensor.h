@@ -38,7 +38,7 @@ namespace ev3lib::hardware::sensor {
          * @param writeBuf input buffer
          * @param readBuf output buffer
          */
-        void execute(gsl::span<const uint8_t> writeBuf, gsl::span<uint8_t> readBuf);
+        void execute(std::span<const uint8_t> writeBuf, std::span<uint8_t> readBuf);
 
     protected:
         /**
@@ -102,7 +102,7 @@ namespace ev3lib::hardware::sensor {
          * @param reg I2C register, e.g 0x41
          * @param readBuf Buffer to return data
          */
-        void getData(uint8_t reg, gsl::span<uint8_t> readBuf);
+        void getData(uint8_t reg, std::span<uint8_t> readBuf);
 
         /**
          *  Executes an I2C write transaction.
@@ -110,7 +110,7 @@ namespace ev3lib::hardware::sensor {
          * @param register I2C register, e.g 0x42
          * @param writeBuf Buffer containing data to send
          */
-        void sendData(uint8_t reg, gsl::span<const uint8_t> writeBuf);
+        void sendData(uint8_t reg, std::span<const uint8_t> writeBuf);
 
         /**
          *  Executes an I2C write transaction.

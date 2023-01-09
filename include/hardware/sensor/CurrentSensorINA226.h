@@ -191,7 +191,7 @@ namespace ev3lib::hardware::sensor {
          *
          * @param sample The buffer to store the sample in.
          */
-        void fetchSample(gsl::span<float> sample) override;
+        void fetchSample(std::span<float> sample) override;
 
         /**
          * Return a list of string descriptions for the sensors available modes.
@@ -278,7 +278,7 @@ namespace ev3lib::hardware::sensor {
                 return 2;
             }
 
-            void fetchSample(gsl::span<float> sample) override;
+            void fetchSample(std::span<float> sample) override;
         };
 
         /**
@@ -299,7 +299,7 @@ namespace ev3lib::hardware::sensor {
                 return 1;
             }
 
-            void fetchSample(gsl::span<float> sample) override;
+            void fetchSample(std::span<float> sample) override;
 
         };
 
@@ -321,7 +321,7 @@ namespace ev3lib::hardware::sensor {
                 return 2;
             }
 
-            void fetchSample(gsl::span<float> sample) override;
+            void fetchSample(std::span<float> sample) override;
         };
 
     };

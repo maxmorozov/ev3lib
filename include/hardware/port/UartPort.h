@@ -2,7 +2,7 @@
 
 #include <cstddef>
 #include <memory>
-#include <gsl/span>
+#include <span>
 #include <utils/utilities.h>
 #include <hardware/port/MultiModePort.h>
 
@@ -15,7 +15,7 @@ namespace ev3lib::hardware::port {
 	     * @param offset offset (in bytes) at which to store the data
 	     * @param len number of bytes to read
 	     */
-	    virtual void read(gsl::span<uint8_t> buffer) = 0;
+	    virtual void read(std::span<uint8_t> buffer) = 0;
 
 	    /**
 	     * Write bytes to the sensor
@@ -24,7 +24,7 @@ namespace ev3lib::hardware::port {
 	     * @param len length of the write
 	     * @return number of bytes written
 	     */
-	    virtual ssize_t write(gsl::span<const uint8_t> buffer) = 0;
+	    virtual ssize_t write(std::span<const uint8_t> buffer) = 0;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>

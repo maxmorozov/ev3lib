@@ -1,6 +1,6 @@
 #pragma once
 
-#include <gsl/span>
+#include <span>
 #include <utils/utilities.h>
 
 namespace ev3lib::robotics {
@@ -54,7 +54,7 @@ namespace ev3lib::robotics {
 		 * Fetches a sample from a sensor or filter.
 		 * @param sample The buffer to store the sample in.
 		 */
-		virtual void fetchSample(gsl::span<float> sample) = 0;
+		virtual void fetchSample(std::span<float> sample) = 0;
 
 	};
 

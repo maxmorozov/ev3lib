@@ -2,9 +2,8 @@
  * I2CSensor.cpp
  */
 
-#include <memory>
 #include <thread>
-#include <gsl/algorithm>
+#include <utils/algorithm.h>
 #include <exceptions/EV3HardwareExceptions.h>
 #include <hardware/sensor/I2CSensor.h>
 
@@ -53,12 +52,12 @@ namespace ev3lib::hardware::sensor {
      * @param reg I2C register, e.g 0x41
      * @param readBuf Buffer to return data
      */
-    void I2CSensor::getData(uint8_t reg, gsl::span<uint8_t> readBuf) {
+    void I2CSensor::getData(uint8_t reg, std::span<uint8_t> readBuf) {
         std::lock_guard<std::mutex> guard(m_lock);
 
         uint8_t buf[1]{reg};
 
-        execute(gsl::make_span(buf), readBuf);
+        execute(std::span(buf), readBuf);
     }
 
     /**
@@ -67,7 +66,7 @@ namespace ev3lib::hardware::sensor {
      * @param register I2C register, e.g 0x42
      * @param writeBuf Buffer containing data to send
      */
-    void I2CSensor::sendData(uint8_t reg, gsl::span<const uint8_t> writeBuf) {
+    void I2CSensor::sendData(uint8_t reg, std::span<const uint8_t> writeBuf) {
         std::lock_guard<std::mutex> guard(m_lock);
 
         if (writeBuf.size() > detail::lms2012::IIC_DATA_LENGTH)
@@ -78,10 +77,10 @@ namespace ev3lib::hardware::sensor {
         buf[0] = reg;
 
         if (!writeBuf.empty()) {
-            gsl::copy(writeBuf, gsl::make_span(buf + 1, detail::lms2012::IIC_DATA_LENGTH));
+            utils::copy(writeBuf, std::span(buf + 1, detail::lms2012::IIC_DATA_LENGTH));
         }
 
-        execute(gsl::make_span(buf, writeBuf.size() + 1), gsl::span<uint8_t>());
+        execute(std::span(buf, writeBuf.size() + 1), std::span<uint8_t>());
     }
 
     /**
@@ -90,14 +89,14 @@ namespace ev3lib::hardware::sensor {
      * @param writeBuf input buffer
      * @param readBuf output buffer
      */
-    void I2CSensor::execute(gsl::span<const uint8_t> writeBuf, gsl::span<uint8_t> readBuf) {
+    void I2CSensor::execute(std::span<const uint8_t> writeBuf, std::span<uint8_t> readBuf) {
         int counter = m_retryCount;
         for (;;) {
             try {
                 m_port->i2cTransaction(m_address, writeBuf, readBuf);
                 return;
             }
-            catch (const iic_error &e) {
+            catch (const iic_error& e) {
                 if (--counter == 0) {
                     throw;
                 }
@@ -117,7 +116,7 @@ namespace ev3lib::hardware::sensor {
 
         uint8_t buf[2]{reg, value};
 
-        execute(gsl::make_span(buf), gsl::span<uint8_t>());
+        execute(std::span(buf), std::span<uint8_t>());
     }
 
     /**
@@ -133,10 +132,10 @@ namespace ev3lib::hardware::sensor {
         uint8_t buf[detail::lms2012::IIC_DATA_LENGTH];
 
         try {
-            getData(reg, gsl::make_span(buf));
-            return std::string{reinterpret_cast<char *>(buf), len};
+            getData(reg, std::span(buf));
+            return std::string{reinterpret_cast<char*>(buf), len};
         }
-        catch (const std::exception &e) {
+        catch (const std::exception& e) {
             return std::string{};
         }
     }

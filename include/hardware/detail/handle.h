@@ -7,7 +7,8 @@
 #include <cstddef>
 #include <sys/types.h>
 #include <utils/utilities.h>
-#include <gsl/span>
+#include <span>
+#include <cstdint>
 
 namespace ev3lib::hardware::detail {
     /*
@@ -38,7 +39,7 @@ namespace ev3lib::hardware::detail {
         }
 
         //Write bytes to the device
-        ssize_t write(gsl::span<const uint8_t> data);
+        ssize_t write(std::span<const uint8_t> data);
 
         //Send a control code to the device
         ssize_t ioctl(unsigned long command, const void* data);

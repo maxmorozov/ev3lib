@@ -96,9 +96,9 @@ namespace ev3lib::hardware::sensor {
 	    static constexpr int ACCEL_SCALE = std::numeric_limits<short>::max() + 1;
 
 	private:
-		void scaleData(gsl::span<const int16_t> buffer, gsl::span<float> sample);
-        void scaleCombined(gsl::span<const int16_t> source, gsl::span<float> target);
-		void scale(gsl::span<const int16_t> source, gsl::span<float> target, float scale);
+		void scaleData(std::span<const int16_t> buffer, std::span<float> sample);
+        void scaleCombined(std::span<const int16_t> source, std::span<float> target);
+		void scale(std::span<const int16_t> source, std::span<float> target, float scale);
 
 	private:
 		static const float gyroScale[5];    //in degree per second / digit
@@ -110,7 +110,7 @@ namespace ev3lib::hardware::sensor {
 
 	    static std::vector<ModeInfo> createModes();
 
-	    bool writeEeprom(uint8_t writeCommand, gsl::span<const int16_t> data);
+	    bool writeEeprom(uint8_t writeCommand, std::span<const int16_t> data);
 
 	    bool updateScale(uint8_t scaleCommand);
 
@@ -118,7 +118,7 @@ namespace ev3lib::hardware::sensor {
 	    float getGyroScale() const;
 
 	    //Set the required mode and fetch sample
-	    void readSample(size_t mode, gsl::span<int16_t> buffer);
+	    void readSample(size_t mode, std::span<int16_t> buffer);
 
 	public:
 	    explicit ImuLsm6ds3(std::unique_ptr<port::UartPort> port, bool rawMode = false);
@@ -129,7 +129,7 @@ namespace ev3lib::hardware::sensor {
 		/** Fetches a sample from a sensor or filter.
 		 * @param sample The buffer to store the sample in.
 		 */
-		void fetchSample(gsl::span<float> sample) override;
+		void fetchSample(std::span<float> sample) override;
 
 		//Change scale support
 
@@ -195,7 +195,7 @@ namespace ev3lib::hardware::sensor {
 		 * @return true if the EEPROM data has been successfully written
 		 */
         [[nodiscard]]
-        bool writeAccelerometerEeprom(size_t scaleNo, gsl::span<const int16_t> data) override;
+        bool writeAccelerometerEeprom(size_t scaleNo, std::span<const int16_t> data) override;
 
 		/**
 		 * Update gyroscope EEPROM
@@ -206,7 +206,7 @@ namespace ev3lib::hardware::sensor {
 		 * @return true if the EEPROM data has been successfully written
 		 */
         [[nodiscard]]
-        bool writeGyroscopeEeprom(size_t scaleNo, gsl::span<const int16_t> data) override;
+        bool writeGyroscopeEeprom(size_t scaleNo, std::span<const int16_t> data) override;
 	};
 
 

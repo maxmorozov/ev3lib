@@ -29,11 +29,11 @@ namespace ev3lib::hardware::detail {
             close(m_file);
     }
 
-    ssize_t handle::write(gsl::span<const uint8_t> data) {
-        ssize_t written = ::write(m_file, data.data(), utils::size(data));
+    ssize_t handle::write(std::span<const uint8_t> data) {
+        ssize_t written = ::write(m_file, data.data(), data.size());
         if (written < 0) {
-            throw io_error("Write operation has failed") <<
-                                                         boost::errinfo_errno(errno);
+            throw io_error("Write operation has failed")
+                    << boost::errinfo_errno(errno);
         }
         return written;
     }
@@ -41,8 +41,8 @@ namespace ev3lib::hardware::detail {
     void* handle::mmap(size_t size) {
         void* p = ::mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED, m_file, 0);
         if (p == MAP_FAILED) {
-            throw io_error("Mapping device memory has failed") <<
-                                                               boost::errinfo_errno(errno);
+            throw io_error("Mapping device memory has failed")
+                    << boost::errinfo_errno(errno);
         }
         return p;
     }
@@ -51,8 +51,8 @@ namespace ev3lib::hardware::detail {
     ssize_t handle::ioctl(unsigned long command, const void* data) {
         ssize_t size = ::ioctl(m_file, command, data);
         if (size < 0) {
-            throw io_error("IoCtl operation has failed") <<
-                                                         boost::errinfo_errno(errno);
+            throw io_error("IoCtl operation has failed")
+                    << boost::errinfo_errno(errno);
         }
         return size;
     }

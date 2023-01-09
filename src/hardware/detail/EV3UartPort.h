@@ -163,7 +163,7 @@ namespace ev3lib::hardware::detail {
 	     * @param buffer byte array to accept the data
 	     * @param offset offset (in bytes) at which to store the data
 	     */
-		void read(gsl::span<uint8_t> buffer) override;
+		void read(std::span<uint8_t> buffer) override;
 
 	    /**
 	     * Write bytes to the sensor
@@ -171,7 +171,7 @@ namespace ev3lib::hardware::detail {
 	     * @param offset offset to the start of the write
 	     * @return number of bytes written
 	     */
-		ssize_t write(gsl::span<const uint8_t> buffer) override;
+		ssize_t write(std::span<const uint8_t> buffer) override;
 
 	    /**
 	     * Get the string name of the specified mode.<p><p>
