@@ -2,8 +2,7 @@
  * Battery.h
  */
 
-#ifndef BATTERY_H_
-#define BATTERY_H_
+#pragma once
 
 #include <hardware/detail/Power.h>
 
@@ -41,5 +40,3 @@ public:
 };
 
 } /* namespace ev3lib::hardware */
-
-#endif /* BATTERY_H_ */

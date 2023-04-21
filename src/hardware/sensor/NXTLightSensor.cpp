@@ -13,10 +13,13 @@ namespace ev3lib::hardware::sensor {
 
     }
 
-    void NXTLightSensor::setFloodlight(bool floodlight) {
-        switchType(floodlight ? port::SensorType::LIGHT_ACTIVE : port::SensorType::LIGHT_INACTIVE);
-        this->floodlight = floodlight;
+    void NXTLightSensor::setFloodlight(bool floodLight) {
+        switchType(floodLight ? port::SensorType::LIGHT_ACTIVE : port::SensorType::LIGHT_INACTIVE);
+        floodlight = floodLight;
+    }
 
+    bool NXTLightSensor::isFloodlight() const {
+        return floodlight;
     }
 
 

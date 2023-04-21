@@ -2,8 +2,7 @@
  * ev3constants.h
  */
 
-#ifndef EV3CONSTANTS_H_
-#define EV3CONSTANTS_H_
+#pragma once
 
 namespace ev3lib::hardware::detail::lms2012 {
 
@@ -106,5 +105,3 @@ namespace ev3lib::hardware::detail::lms2012 {
 	static const int UART_WRITE_REQUEST = 0x10;        //!< Write request
 
 }
-
-#endif /* EV3CONSTANTS_H_ */

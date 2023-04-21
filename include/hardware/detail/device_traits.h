@@ -2,8 +2,7 @@
  * device_traits.h
  */
 
-#ifndef EV3_DEVICE_TRAITS_H_
-#define EV3_DEVICE_TRAITS_H_
+#pragma once
 
 #include <fcntl.h>
 #include <hardware/detail/lms2012/ev3_constants.h>
@@ -11,9 +10,7 @@
 
 #define LEJOS
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 	//EV3 hardware type
 	enum class device_type {
@@ -108,8 +105,4 @@ namespace detail {
 		static const int device_flags = O_RDWR | O_SYNC;
 	};
 
-}}}
-
-
-
-#endif /* EV3_DEVICE_TRAITS_H_ */
+}

@@ -2,8 +2,7 @@
  * AnalogSensor.h
  */
 
-#ifndef EV3LIB_ANALOGSENSOR_H_
-#define EV3LIB_ANALOGSENSOR_H_
+#pragma once
 
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
@@ -29,5 +28,3 @@ public:
 };
 
 } /* namespace ev3lib::hardware */
-
-#endif /* EV3LIB_ANALOGSENSOR_H_ */

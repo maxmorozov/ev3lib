@@ -2,8 +2,7 @@
  * EV3SensorConstants.h
  */
 
-#ifndef EV3SENSORCONSTANTS_H_
-#define EV3SENSORCONSTANTS_H_
+#pragma once
 
 #include <hardware/detail/lms2012/ev3_constants.h>
 
@@ -23,6 +22,4 @@ public:
 };
 
 } /* namespace ev3lib::hardware::detail */
-
-#endif /* EV3SENSORCONSTANTS_H_ */
 

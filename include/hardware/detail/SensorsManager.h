@@ -2,8 +2,7 @@
  * SensorManager.h
  */
 
-#ifndef EV3LIB_SENSOR_MANAGER_H_
-#define EV3LIB_SENSOR_MANAGER_H_
+#pragma once
 
 #include <cstddef>
 #include <memory>
@@ -119,8 +118,3 @@ namespace ev3lib::hardware::detail {
 	}
 
 }
-
-
-
-
-#endif /* EV3LIB_SENSOR_MANAGER_H_ */

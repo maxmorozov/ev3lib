@@ -2,8 +2,6 @@
  * Ev3MotorPort.cpp
  */
 
-#include <stdexcept>
-
 #include <exceptions/EV3HardwareExceptions.h>
 #include "EV3MotorPort.h"
 

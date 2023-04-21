@@ -15,4 +15,4 @@ namespace ev3lib::hardware::detail {
         virtual bool checkButton(size_t buttonNo) const = 0;
     };
 
-} /* namespace ev3lib */
+} /* namespace ev3lib::hardware::detail */

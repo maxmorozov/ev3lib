@@ -2,8 +2,7 @@
  * motor_data.h
  */
 
-#ifndef MOTOR_DATA_H_
-#define MOTOR_DATA_H_
+#pragma once
 
 #include <hardware/detail/lms2012/ev3_types.h>
 
@@ -22,5 +21,3 @@ typedef struct
 } MOTORSHARED;
 
 }
-
-#endif /* MOTOR_DATA_H_ */

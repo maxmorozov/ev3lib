@@ -2,8 +2,7 @@
  * NXTLightSensor.h
  */
 
-#ifndef EV3LIB_NXT_LIGHT_SENSOR_H_
-#define EV3LIB_NXT_LIGHT_SENSOR_H_
+#pragma once
 
 #include <hardware/sensor/AnalogSensor.h>
 
@@ -21,10 +20,16 @@ public:
 
 	/**
 	 * Turns onboard light source of the sensor on or off
+	 *
+	 * @param floodLight new light source state
 	 */
-	void setFloodlight(bool floodlight);
+	void setFloodlight(bool floodLight);
+
+    /**
+     * Gets the current status of the onboard light source
+     * @return true if the light source if turned on
+     */
+    bool isFloodlight() const;
 };
 
 } /* namespace ev3lib::hardware */
-
-#endif /* EV3LIB_NXT_LIGHT_SENSOR_H_ */

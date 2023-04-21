@@ -2,8 +2,7 @@
  * EV3AnalogPort.h
  */
 
-#ifndef EV3ANALOGPORT_H_
-#define EV3ANALOGPORT_H_
+#pragma once
 
 #include <hardware/detail/ev3_device.h>
 #include "EV3DeviceManager.h"
@@ -45,5 +44,3 @@ namespace ev3lib::hardware::detail {
 	};
 
 } /* namespace ev3lib::hardware::detail */
-
-#endif /* EV3ANALOGPORT_H_ */

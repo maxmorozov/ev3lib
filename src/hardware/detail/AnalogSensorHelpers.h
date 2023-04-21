@@ -2,8 +2,7 @@
  * AnalogSensorHelpers.h
  */
 
-#ifndef ANALOGSENSORHELPERS_H_
-#define ANALOGSENSORHELPERS_H_
+#pragma once
 
 namespace ev3lib::hardware::detail {
 
@@ -44,5 +43,3 @@ public:
 };
 
 } /* namespace ev3lib::hardware::detail */
-
-#endif /* ANALOGSENSORHELPERS_H_ */

@@ -1,5 +1,4 @@
-#ifndef EV3UARTPORT_H_
-#define EV3UARTPORT_H_
+#pragma once
 
 #include <vector>
 #include <hardware/detail/ev3_device.h>
@@ -182,5 +181,3 @@ namespace ev3lib::hardware::detail {
 	};
 
 } /* namespace ev3lib::hardware::detail */
-
-#endif /* EV3UARTPORT_H_ */

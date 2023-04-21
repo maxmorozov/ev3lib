@@ -38,10 +38,7 @@ EV3Brick::EV3Brick()
 {
 }
 
-EV3Brick::~EV3Brick()
-{
-
-}
+EV3Brick::~EV3Brick() = default;
 
 SensorsManager* EV3Brick::getSensorsManager() {
 	return m_pimpl->getSensorsManager();

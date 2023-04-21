@@ -2,8 +2,7 @@
  * EV3Battery.h
  */
 
-#ifndef EV3BATTERY_H_
-#define EV3BATTERY_H_
+#pragma once
 
 #include <hardware/detail/Power.h>
 #include <hardware/detail/BatteryManager.h>
@@ -58,5 +57,3 @@ public:
 };
 
 }
-
-#endif /* EV3BATTERY_H_ */

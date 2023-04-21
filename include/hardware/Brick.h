@@ -2,8 +2,7 @@
  * Brick.h
  */
 
-#ifndef EV3LIB_BRICK_H_
-#define EV3LIB_BRICK_H_
+#pragma once
 
 #include <hardware/detail/ev3_brick.h>
 #include <hardware/Button.h>
@@ -66,5 +65,3 @@ public:
 };
 
 } /* namespace ev3lib::hardware */
-
-#endif /* EV3LIB_BRICK_H_ */

@@ -98,7 +98,7 @@ namespace ev3lib::hardware::sensor {
 	private:
 		void scaleData(std::span<const int16_t> buffer, std::span<float> sample);
         void scaleCombined(std::span<const int16_t> source, std::span<float> target);
-		void scale(std::span<const int16_t> source, std::span<float> target, float scale);
+		static void scale(std::span<const int16_t> source, std::span<float> target, float scale);
 
 	private:
 		static const float gyroScale[5];    //in degree per second / digit

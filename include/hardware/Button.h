@@ -2,8 +2,7 @@
  * Button.h
  */
 
-#ifndef EV3LIB_BUTTON_H_
-#define EV3LIB_BUTTON_H_
+#pragma once
 
 #include <hardware/detail/UIManager.h>
 
@@ -20,5 +19,3 @@ public:
 };
 
 } /* namespace ev3lib */
-
-#endif /* EV3LIB_BUTTON_H_ */

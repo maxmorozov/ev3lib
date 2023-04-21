@@ -2,8 +2,7 @@
  * ev3_types.h
  */
 
-#ifndef EV3_TYPES_H_
-#define EV3_TYPES_H_
+#pragma once
 
 #include <sys/ioctl.h>
 #include <hardware/detail/lms2012/ev3_constants.h>
@@ -393,5 +392,3 @@ struct MOTORDATA
 
 
 }
-
-#endif /* EV3_TYPES_H_ */

@@ -2,14 +2,11 @@
  * Power.h
  */
 
-#ifndef POWER_H_
-#define POWER_H_
+#pragma once
 
 #include <utils/utilities.h>
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 /**
  * Interface used to access information about the EV3 battery and current usage.
@@ -43,6 +40,4 @@ struct Power : public utils::destructible {
 	virtual float getMotorCurrent() const = 0;
 };
 
-}}}
-
-#endif /* POWER_H_ */
+}

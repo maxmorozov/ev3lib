@@ -32,7 +32,7 @@ namespace ev3lib::hardware::detail::lejos {
 	static const uint32_t UART_SETMODE     =  _IOWR('u',9,DEVCTL);
 
 
-	static const int UART_MODE_RAW    =  ((lms2012::DATA8) -1);
+	static const lms2012::DATA8 UART_MODE_RAW   =  ((lms2012::DATA8) -1);
 
     //IIC extension
     static const uint32_t IIC_CONNECT           = _IOWR('i',7,DEVCTL);

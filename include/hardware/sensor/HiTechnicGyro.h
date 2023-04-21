@@ -2,8 +2,7 @@
  * HiTechnicGyro.h
  */
 
-#ifndef EV3LIB_HITECHNICGYRO_H_
-#define EV3LIB_HITECHNICGYRO_H_
+#pragma once
 
 #include <memory>
 #include <hardware/detail/SensorsManager.h>
@@ -23,5 +22,3 @@ public:
 
 
 } /* namespace ev3lib::hardware::sensor */
-
-#endif /* EV3LIB_HITECHNICGYRO_H_ */

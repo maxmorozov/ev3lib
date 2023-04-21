@@ -60,7 +60,7 @@ namespace ev3lib::hardware::sensor {
      */
     void CurrentSensorINA226::configure(CurrentSensorINA226::Average avg, CurrentSensorINA226::BusConversionTime busConvTime,
                                         CurrentSensorINA226::ShuntConversionTime shuntConvTime, CurrentSensorINA226::Mode mode) {
-        boost::endian::big_uint16_t config = uint16_t(avg) << 9 | uint16_t(busConvTime) << 6 | uint16_t(shuntConvTime) << 3 | uint16_t(mode);;
+        boost::endian::big_uint16_t config = uint16_t(avg) << 9 | uint16_t(busConvTime) << 6 | uint16_t(shuntConvTime) << 3 | uint16_t(mode);
 
         sendData(REG_CONFIG, std::span(config.data(), sizeof(config)));
     }
@@ -134,7 +134,7 @@ namespace ev3lib::hardware::sensor {
     }
 
     bool CurrentSensorINA226::isValidMode(size_t mode) const {
-        return mode >= 0 && mode < m_modes.size();
+        return mode < m_modes.size();
     }
 
     //Modes

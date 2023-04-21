@@ -2,12 +2,9 @@
  * BatteryManager.h
  */
 
-#ifndef BATTERYMANAGER_H_
-#define BATTERYMANAGER_H_
+#pragma once
 
-namespace ev3lib {
-namespace hardware {
-namespace detail {
+namespace ev3lib::hardware::detail {
 
 /**
  * Provides information about battery state
@@ -29,8 +26,4 @@ struct BatteryManager: public utils::destructible {
 	virtual short getBatteryCurrent() const = 0;
 };
 
-} /* namespace detail */
-} /* namespace hardware */
-} /* namespace ev3lib */
-
-#endif /* BATTERYMANAGER_H_ */
+} /* namespace ev3lib::hardware::detail */
