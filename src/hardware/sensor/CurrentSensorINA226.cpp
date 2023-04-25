@@ -105,7 +105,7 @@ namespace ev3lib::hardware::sensor {
     std::vector<std::string> CurrentSensorINA226::getAvailableModes() const {
         std::vector<std::string> result;
         for (auto &mode: m_modes) {
-            result.push_back(mode->getName());
+            result.emplace_back(mode->getName());
         }
         return result;
     }

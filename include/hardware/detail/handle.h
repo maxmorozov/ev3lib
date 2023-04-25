@@ -45,10 +45,10 @@ namespace ev3lib::hardware::detail {
         ssize_t ioctl(unsigned long command, const void* data);
 
         //Maps sensors data into user-mode memory.
-        void* mmap(size_t size);
+        volatile void* mmap(size_t size);
 
         // Deallocate any mapping for the region starting at ADDR and extending LEN bytes.
         //Returns 0 if successful, -1 for errors (and sets errno).
-        int munmap(void* address, size_t size);
+        static int munmap(volatile void* address, size_t size);
     };
 }

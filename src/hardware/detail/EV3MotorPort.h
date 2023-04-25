@@ -14,7 +14,7 @@ namespace ev3lib::hardware::detail {
         EV3DeviceManager* m_manager;
         size_t m_port;
 
-        enum class OutputCommand : unsigned char {
+        enum class OutputCommand : uint8_t {
             Connect = 1,
             Disconnect = 2,
             Start = 4,

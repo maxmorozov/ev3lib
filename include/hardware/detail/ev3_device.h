@@ -24,13 +24,14 @@ namespace ev3lib::hardware::detail {
 
 		//Writes the command into the file.
 		//Returns the number of written bytes or -1
-		ssize_t sendCommand(const std::span<uint8_t> command) {
+		ssize_t sendCommand(std::span<uint8_t> command) {
 			//TODO add error checking using exceptions
 			return m_device.write(command);
 		}
 
 		//Writes the command into the file.
-		//Returns the number of written bytes or -1
+        //Returns the status. It depends on the command.
+        //Usually 0 means success and -1 means failure
 		ssize_t ioctl(unsigned long command, const void* data) {
 			return m_device.ioctl(command, data);
 		}

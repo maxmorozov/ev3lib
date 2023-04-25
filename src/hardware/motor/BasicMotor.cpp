@@ -77,13 +77,18 @@ namespace ev3lib::hardware::motor {
     }
 
     void BasicMotor::controlMotor(int power) {
-        m_power = static_cast<unsigned int>(abs(power));
-        if (power > 0)
+        if (power > 0) {
+            m_power = power;
             m_currentState = port::MotorCommand::Forward;
-        else if (power < 0)
+        }
+        else if (power < 0) {
+            m_power = -power;
             m_currentState = port::MotorCommand::Backward;
-        else
+        }
+        else {
+            m_power = 0;
             m_currentState = port::MotorCommand::Stop;
+        }
 
         updateState();
     }

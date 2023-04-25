@@ -22,7 +22,7 @@ namespace ev3lib::hardware::detail {
 
     void EV3MotorPort::setPower(int power) {
         uint8_t command[3];
-        command[0] = (unsigned char) OutputCommand::Power;
+        command[0] = (uint8_t) OutputCommand::Power;
         command[1] = m_port;
         command[2] = power;
         m_manager->m_pwmDevice.sendCommand(command);
@@ -30,7 +30,7 @@ namespace ev3lib::hardware::detail {
 
     void EV3MotorPort::stop(bool flt) {
         uint8_t command[3];
-        command[0] = (unsigned char) OutputCommand::Stop;
+        command[0] = (uint8_t) OutputCommand::Stop;
         command[1] = m_port;
         command[2] = flt ? 0 : 1;
         m_manager->m_pwmDevice.sendCommand(command);
@@ -48,7 +48,7 @@ namespace ev3lib::hardware::detail {
      */
     void EV3MotorPort::resetTachoCount() {
         uint8_t command[2];
-        command[0] = (unsigned char) OutputCommand::ClearCount;
+        command[0] = (uint8_t) OutputCommand::ClearCount;
         command[1] = m_port;
         m_manager->m_pwmDevice.sendCommand(command);
     }
@@ -76,7 +76,7 @@ namespace ev3lib::hardware::detail {
     bool EV3MotorPort::open() {
         try {
             uint8_t command[2];
-            command[0] = (unsigned char) OutputCommand::Connect;
+            command[0] = (uint8_t) OutputCommand::Connect;
             command[1] = m_port;
             m_manager->m_pwmDevice.sendCommand(command);
         } catch (const io_error& e) {
@@ -88,7 +88,7 @@ namespace ev3lib::hardware::detail {
     void EV3MotorPort::close() {
         try {
             uint8_t command[2];
-            command[0] = (unsigned char) OutputCommand::Disconnect;
+            command[0] = (uint8_t) OutputCommand::Disconnect;
             command[1] = m_port;
             m_manager->m_pwmDevice.sendCommand(command);
         } catch (const io_error& e) {

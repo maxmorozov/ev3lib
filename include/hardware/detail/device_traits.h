@@ -46,9 +46,9 @@ namespace ev3lib::hardware::detail {
 		static const size_t ports_count = lms2012::vmOUTPUTS;
 
 #ifdef LEJOS
-		typedef lejos::MOTORSHARED device_map_type;
+		typedef volatile lejos::MOTORSHARED device_map_type;
 #else
-		typedef lms2012::MOTORDATA device_map_type;
+		typedef volatile lms2012::MOTORDATA device_map_type;
 #endif
 
 		static const size_t sensor_data_size = ports_count * sizeof(device_map_type);
@@ -61,7 +61,7 @@ namespace ev3lib::hardware::detail {
 	struct device_traits<device_type::uart_sensor> {
 		static const size_t ports_count = lms2012::vmINPUTS;
 
-		typedef lms2012::UART device_map_type;
+		typedef volatile lms2012::UART device_map_type;
 
 		static const size_t sensor_data_size = sizeof(device_map_type);
 
@@ -85,7 +85,7 @@ namespace ev3lib::hardware::detail {
 	struct device_traits<device_type::analog_sensor> {
 		static const size_t ports_count = lms2012::vmINPUTS;
 
-		typedef lms2012::ANALOG device_map_type;
+		typedef volatile lms2012::ANALOG device_map_type;
 
 		static const size_t sensor_data_size = sizeof(device_map_type);
 
@@ -97,7 +97,7 @@ namespace ev3lib::hardware::detail {
 	struct device_traits<device_type::ui> {
 		static const size_t ports_count = 1;
 
-		typedef lms2012::UI device_map_type;
+		typedef volatile lms2012::UI device_map_type;
 
 		static const size_t sensor_data_size = sizeof(device_map_type);
 

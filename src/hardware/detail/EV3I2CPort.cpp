@@ -18,15 +18,15 @@ namespace ev3lib::hardware::detail {
     }
 
     void EV3I2CPort::connect() {
-        uint8_t command[1];
-        command[0] = m_port;
-        getDevice().ioctl(lejos::IIC_CONNECT, command);
+        lejos::DEVCTL command;
+        command.Port = lms2012::DATA8(m_port);
+        getDevice().ioctl(lejos::IIC_CONNECT, &command);
     }
 
     void EV3I2CPort::disconnect() {
-        uint8_t command[1];
-        command[0] = m_port;
-        getDevice().ioctl(lejos::IIC_DISCONNECT, command);
+        lejos::DEVCTL command;
+        command.Port = lms2012::DATA8(m_port);
+        getDevice().ioctl(lejos::IIC_DISCONNECT, &command);
     }
 
     void EV3I2CPort::detach() {
@@ -77,6 +77,9 @@ namespace ev3lib::hardware::detail {
 
         if (writeBuf.size() > MAX_IO) {
             throw std::invalid_argument("Write buffer overflow. Buffer size " + std::to_string(writeBuf.size()));
+        }
+        if (readBuf.size() > MAX_IO) {
+            throw std::invalid_argument("Read buffer overflow. Buffer size " + std::to_string(readBuf.size()));
         }
 
         command[0] = m_port;

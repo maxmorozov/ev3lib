@@ -132,9 +132,9 @@ std::string EV3UartPort::getModeName(size_t mode) const
  */
 void EV3UartPort::connect()
 {
-	uint8_t command[1];
-	command[0] = m_port;
-    getDevice().ioctl(lejos::UART_CONNECT, command);
+    lejos::DEVCTL command;
+    command.Port = lms2012::DATA8(m_port);
+    getDevice().ioctl(lejos::UART_CONNECT, &command);
 }
 
 /**
@@ -142,9 +142,9 @@ void EV3UartPort::connect()
  */
 void EV3UartPort::disconnect()
 {
-    uint8_t command[1];
-	command[0] = m_port;
-    getDevice().ioctl(lejos::UART_DISCONNECT, command);
+    lejos::DEVCTL command;
+    command.Port = lms2012::DATA8(m_port);
+    getDevice().ioctl(lejos::UART_DISCONNECT, &command);
 }
 
 /**
@@ -313,10 +313,10 @@ int8_t EV3UartPort::getStatus() const
  */
 void EV3UartPort::setOperatingMode(size_t mode)
 {
-    uint8_t command[2];
-	command[0] = m_port;
-	command[1] = mode;
-    getDevice().ioctl(lejos::UART_SETMODE, command);
+    lejos::DEVCTL command;
+    command.Port = lms2012::DATA8(m_port);
+    command.Arg = lms2012::DATA8(mode);
+    getDevice().ioctl(lejos::UART_SETMODE, &command);
 }
 
 /**
@@ -327,8 +327,8 @@ void EV3UartPort::setOperatingMode(size_t mode)
  */
 bool EV3UartPort::getModeInfo(size_t mode, lms2012::UARTCTL* uc)
 {
-    uc->Port = (int8_t)m_port;
-    uc->Mode = (int8_t)mode;
+    uc->Port = lms2012::DATA8(m_port);
+    uc->Mode = lms2012::DATA8(mode);
     getDevice().ioctl(lms2012::UART_READ_MODE_INFO, uc);
     return uc->TypeData.Name[0] != 0;
 }
@@ -343,8 +343,8 @@ bool EV3UartPort::getModeInfo(size_t mode, lms2012::UARTCTL* uc)
  */
 void EV3UartPort::clearModeCache(size_t mode, lms2012::UARTCTL* uc)
 {
-    uc->Port = (int8_t)m_port;
-    uc->Mode = (int8_t)mode;
+    uc->Port = lms2012::DATA8(m_port);
+    uc->Mode = lms2012::DATA8(mode);
     getDevice().ioctl(lms2012::UART_NACK_MODE_INFO, uc);
 }
 
@@ -353,7 +353,7 @@ void EV3UartPort::clearModeCache(size_t mode, lms2012::UARTCTL* uc)
  */
 void EV3UartPort::clearPortChanged(lms2012::UARTCTL* uc)
 {
-    uc->Port = (int8_t)m_port;
+    uc->Port = lms2012::DATA8(m_port);
     getDevice().ioctl(lms2012::UART_CLEAR_CHANGED, uc);
 }
 

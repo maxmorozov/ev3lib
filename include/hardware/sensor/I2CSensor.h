@@ -78,6 +78,7 @@ namespace ev3lib::hardware::sensor {
                 : m_port(std::move(other.m_port)), m_address(other.m_address), m_retryCount(other.m_retryCount) {
         }
 
+        I2CSensor& operator=(I2CSensor&&) = delete;
 
         int getRetryCount() const {
             return m_retryCount;

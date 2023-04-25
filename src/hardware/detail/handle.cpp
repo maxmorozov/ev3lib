@@ -38,8 +38,8 @@ namespace ev3lib::hardware::detail {
         return written;
     }
 
-    void* handle::mmap(size_t size) {
-        void* p = ::mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED, m_file, 0);
+    volatile void* handle::mmap(size_t size) {
+        volatile void* p = ::mmap(nullptr, size, PROT_READ | PROT_WRITE, MAP_FILE | MAP_SHARED, m_file, 0);
         if (p == MAP_FAILED) {
             throw io_error("Mapping device memory has failed")
                     << boost::errinfo_errno(errno);
@@ -57,9 +57,9 @@ namespace ev3lib::hardware::detail {
         return size;
     }
 
-    int handle::munmap(void* address, size_t size) {
+    int handle::munmap(volatile void* address, size_t size) {
         if (address != MAP_FAILED)
-            return ::munmap(address, size);
+            return ::munmap(const_cast<void*>(address), size);
 
         return -1;
     }
