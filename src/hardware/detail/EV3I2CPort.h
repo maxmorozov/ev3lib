@@ -21,6 +21,7 @@ namespace ev3lib::hardware::detail {
 
         void connect();
         void disconnect();
+        void close();
 
         bool setPinMode(AnalogMode mode);
 

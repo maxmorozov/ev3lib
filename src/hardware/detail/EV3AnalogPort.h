@@ -17,6 +17,7 @@ namespace ev3lib::hardware::detail {
 
 		bool setPinMode(AnalogMode mode);
 
+        void close();
 	public:
 		EV3AnalogPort(EV3DeviceManager* manager, size_t port);
 

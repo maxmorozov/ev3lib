@@ -9,11 +9,13 @@ namespace ev3lib::hardware::detail {
 
     EV3AnalogPort::EV3AnalogPort(EV3DeviceManager* manager, size_t port)
             : m_manager(manager), m_port(port) {
+        //Try to connect the sensor in the constructor to avoid
+        //destructor calling if another sensor is already attached to this port
+        manager->connectSensor(port, this);
     }
 
     EV3AnalogPort::~EV3AnalogPort() {
-        if (m_manager)
-            m_manager->disconnect(m_port, PortType::Sensor);
+        close();
     }
 
     /**
@@ -90,8 +92,14 @@ namespace ev3lib::hardware::detail {
     }
 
     void EV3AnalogPort::detach() {
+        close();
         m_manager = nullptr;
     }
 
+    void EV3AnalogPort::close() {
+        if (m_manager) {
+            m_manager->disconnect(m_port, PortType::Sensor);
+        }
+    }
 
 } /* namespace ev3lib::hardware::detail */

@@ -19,7 +19,7 @@ namespace ev3lib::hardware::detail {
     }
 
     EV3DeviceManager::~EV3DeviceManager() {
-        std::for_each(m_openPorts, m_openPorts + count_of(m_openPorts),
+        std::for_each(m_openPorts.begin(), m_openPorts.end(),
                       [](DetachSubscriber* item) { if (item != nullptr) item->detach(); });
     }
 
@@ -33,7 +33,7 @@ namespace ev3lib::hardware::detail {
 
     void EV3DeviceManager::setPortMode(size_t port, PortType type, AnalogMode mode) {
         uint8_t command[2];
-        int offset = type == PortType::Motor ? EV3SensorConstants::PORTS : 0;
+        int offset = type == PortType::Motor ? EV3SensorConstants::SENSORS : 0;
         command[0] = (unsigned char) (port + offset);
         command[1] = (unsigned char) mode;
         m_dcmDevice.sendCommand(command);
@@ -47,10 +47,10 @@ namespace ev3lib::hardware::detail {
     }
 
     void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
-        if (port >= count_of(m_openPorts)) {
+        if (port >= m_openPorts.size()) {
             throw boost::enable_error_info(std::range_error("Sensor port index is out of range"))
                     << std_range_min(0)
-                    << std_range_max(EV3SensorConstants::PORTS - 1)
+                    << std_range_max(EV3SensorConstants::SENSORS - 1)
                     << std_range_index(port);
         }
 
@@ -64,33 +64,27 @@ namespace ev3lib::hardware::detail {
     }
 
     std::unique_ptr<port::AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
-        auto sensor = std::make_unique<EV3AnalogPort>(this, port);
-        connectSensor(port, sensor.get());
-        return sensor;
+        return std::make_unique<EV3AnalogPort>(this, port);
     }
 
     std::unique_ptr<port::UartPort> EV3DeviceManager::getUartPort(size_t port) {
-        auto sensor = std::make_unique<EV3UartPort>(this, port);
-        connectSensor(port, sensor.get());
-        return sensor;
+        return std::make_unique<EV3UartPort>(this, port);
     }
 
     std::unique_ptr<port::I2CPort> EV3DeviceManager::getI2CPort(size_t port) {
-        auto sensor = std::make_unique<EV3I2CPort>(this, port);
-        connectSensor(port, sensor.get());
-        return sensor;
+        return std::make_unique<EV3I2CPort>(this, port);
     }
 
     /**
      * Returns internal motor port structure. The clients should not delete it
      */
     port::TachoMotorPort* EV3DeviceManager::getMotorPort(size_t port) {
-        if (port < EV3SensorConstants::MOTORS) {
-            if (!m_ports[port]) {
+        if (port < m_motorPorts.size()) {
+            if (!m_motorPorts[port]) {
                 setPortMode(port, PortType::Motor, AnalogMode::Connected);
-                m_ports[port] = std::make_unique<EV3MotorPort>(this, port);
+                m_motorPorts[port] = std::make_unique<EV3MotorPort>(this, port);
             }
-            return m_ports[port].get();
+            return m_motorPorts[port].get();
         } else {
             throw boost::enable_error_info(std::range_error("Motor index is out of range"))
                     << std_range_min(0)

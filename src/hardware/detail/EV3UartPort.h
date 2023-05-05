@@ -124,6 +124,7 @@ namespace ev3lib::hardware::detail {
 
 		void disconnect();
 
+        void close();
 
 	public:
 		EV3UartPort(EV3DeviceManager* manager, size_t port);

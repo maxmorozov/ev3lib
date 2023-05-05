@@ -14,6 +14,10 @@ const int EV3UartPort::INIT_DELAY;
 EV3UartPort::EV3UartPort(EV3DeviceManager* manager, size_t port)
 	: m_manager(manager), m_port(port)
 {
+    //Try to connect the sensor in the constructor to avoid
+    //destructor calling if another sensor is already attached to this port
+    manager->connectSensor(port, this);
+
     //Double init. After the Device Manager calls connectSensor we need to reconnect sensor.
     //So, we need postpone sensor initialization after it is connected by Device Manager
     //TODO redesign the Device Manager to init sensors in constructor
@@ -22,14 +26,20 @@ EV3UartPort::EV3UartPort(EV3DeviceManager* manager, size_t port)
 
 EV3UartPort::~EV3UartPort()
 {
-	disconnect();
-    if (m_manager != nullptr)
-    	m_manager->disconnect(m_port, PortType::Sensor);
+    close();
 }
 
-void EV3UartPort::detach() 
+void EV3UartPort::close() {
+    if (m_manager != nullptr) {
+        disconnect();
+        m_manager->disconnect(m_port, PortType::Sensor);
+    }
+}
+
+void EV3UartPort::detach()
 {
-	m_manager = nullptr;
+    close();
+    m_manager = nullptr;
 }
 
 /**
@@ -108,7 +118,7 @@ ssize_t EV3UartPort::write(std::span<const uint8_t> buffer)
     command[0] = (uint8_t) m_port;
     std::copy_n(buffer.data(), buffer.size(), command.begin() + 1);
 	ssize_t ret = getDevice().sendCommand(command);
-    if (ret > 0) 
+    if (ret > 0)
     	--ret;
     return ret;
 }
@@ -201,7 +211,7 @@ bool EV3UartPort::initializeSensor(size_t mode)
         // initialize the sensor, if we have no mode data
         // then read it, otherwise use what we have
         int res = initSensor(mode);
-        if (res < 0) 
+        if (res < 0)
 			break;
         if (res > 0 && (!m_modeInfo.empty() || readModeInfo()))
         {
@@ -237,7 +247,7 @@ void EV3UartPort::reset()
 
 
 /**
- * Read the mode information from the port. return true 
+ * Read the mode information from the port. return true
  * @return
  */
 bool EV3UartPort::readModeInfo()
@@ -294,7 +304,7 @@ int EV3UartPort::waitZeroStatus(int timeout)
     	std::this_thread::sleep_for(delay);
         status = getStatus();
     }
-    return status;       
+    return status;
 }
 
 
@@ -332,7 +342,7 @@ bool EV3UartPort::getModeInfo(size_t mode, lms2012::UARTCTL* uc)
     getDevice().ioctl(lms2012::UART_READ_MODE_INFO, uc);
     return uc->TypeData.Name[0] != 0;
 }
-    
+
 /**
  * Clear the flag that indicates the mode info has been cached. This
  * allows us to read the same information again later without having to
@@ -368,7 +378,7 @@ void EV3UartPort::checkSensor()
         // try and reinitialize it
         if (!initializeSensor(getMode()))
             throw device_error("Sensor changed. Unable to reset");
-            
+
     }
 }
 

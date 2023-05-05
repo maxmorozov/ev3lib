@@ -10,7 +10,7 @@ namespace ev3lib::hardware::detail {
 
 class EV3SensorConstants {
 public:
-	static const int PORTS = lms2012::INPUTS;
+	static const int SENSORS = lms2012::INPUTS;
 	static const int MOTORS = lms2012::OUTPUTS;
 
 	static constexpr float ADC_REF = lms2012::ADC_REF / 1000.0f; //5 V

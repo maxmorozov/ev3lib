@@ -8,13 +8,20 @@ namespace ev3lib::hardware::detail {
 
     EV3I2CPort::EV3I2CPort(EV3DeviceManager* manager, size_t port)
             : m_manager(manager), m_port(port) {
+        //Try to connect the sensor in the constructor to avoid
+        //destructor calling if another sensor is already attached to this port
+        manager->connectSensor(port, this);
     }
 
     EV3I2CPort::~EV3I2CPort() {
-        disconnect();
-        if (m_manager != nullptr)
-            m_manager->disconnect(m_port, PortType::Sensor);
+        close();
+    }
 
+    void EV3I2CPort::close() {
+        if (m_manager != nullptr) {
+            disconnect();
+            m_manager->disconnect(m_port, PortType::Sensor);
+        }
     }
 
     void EV3I2CPort::connect() {
@@ -30,6 +37,7 @@ namespace ev3lib::hardware::detail {
     }
 
     void EV3I2CPort::detach() {
+        close();
         m_manager = nullptr;
     }
 

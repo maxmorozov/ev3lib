@@ -42,9 +42,9 @@ namespace ev3lib::hardware::detail {
 
         EV3InputDevice<device_type::ui> m_buttonsDevice;
 
-        std::unique_ptr<port::TachoMotorPort> m_ports[EV3SensorConstants::MOTORS];
+        std::array<std::unique_ptr<port::TachoMotorPort>, EV3SensorConstants::MOTORS> m_motorPorts;
 
-        DetachSubscriber* m_openPorts[EV3SensorConstants::PORTS];
+        std::array<DetachSubscriber*, EV3SensorConstants::SENSORS> m_openPorts;
 
         void connectSensor(size_t port, DetachSubscriber* sensor);
 
