@@ -11,8 +11,8 @@ namespace ev3lib::hardware::detail {
 
 class EV3Battery : public Power {
 protected:
-    constexpr static float SHUNT_IN = 0.11f;     //  [Ohm]
-    constexpr static float AMP_CIN = 22.0f;      //  [Times]
+    constexpr static float SHUNT_IN = 0.05f;     //  [Ohm]
+    constexpr static float AMP_CIN = 15.0f;      //  [Times]
     constexpr static float SHUNT_OUT = 0.055f;   //  [Ohm]
     constexpr static float AMP_COUT = 19.0f;     //  [Times]
     constexpr static float VCE = 0.05f;          //  [V]
