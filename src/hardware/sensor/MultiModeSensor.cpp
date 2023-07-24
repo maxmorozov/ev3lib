@@ -39,6 +39,7 @@ namespace ev3lib::hardware::sensor {
                     << std_range_max(m_modes.size() - 1)
                     << std_range_index(mode);
         } else {
+            switchMode(mode);
             m_currentMode = mode;
         }
 
@@ -52,7 +53,7 @@ namespace ev3lib::hardware::sensor {
         auto it = std::find_if(m_modes.begin(), m_modes.end(), [&](const ModeInfo& mode) { return mode.name == modeName; });
 
         if (it != m_modes.end()) {
-            m_currentMode = static_cast<size_t>(std::distance(m_modes.begin(), it));
+            setCurrentMode(static_cast<size_t>(std::distance(m_modes.begin(), it)));
         }
     }
 

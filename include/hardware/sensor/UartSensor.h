@@ -13,7 +13,7 @@ namespace ev3lib::hardware::sensor {
 	protected:
 		std::unique_ptr<port::UartPort> m_port;
 
-		void switchMode(size_t newMode);
+		void switchMode(size_t newMode) override;
 	public:
 		UartSensor(std::unique_ptr<port::UartPort> port, std::vector<ModeInfo> modes, size_t mode = 0);
 

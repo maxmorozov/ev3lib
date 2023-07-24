@@ -62,36 +62,35 @@ namespace ev3lib::hardware::sensor {
         }
 
 	private:
-		//static const int SCALE_SWITCH_DELAY = 10;
-		enum {SCALE_SWITCH_DELAY = 10};
+		static constexpr int SCALE_SWITCH_DELAY = 10;
 
 		//Return device to the state right after power on
-	    static const uint8_t DEVICE_RESET  = 0x11;
+	    static constexpr uint8_t DEVICE_RESET  = 0x11;
 
 	    //Accelerometer sensitivity
-	    static const uint8_t ACC_SCALE_2G  = 0x20;
-	    static const uint8_t ACC_SCALE_4G  = 0x21;
-	    static const uint8_t ACC_SCALE_8G  = 0x22;
-	    static const uint8_t ACC_SCALE_16G = 0x23;
+	    static constexpr uint8_t ACC_SCALE_2G  = 0x20;
+	    static constexpr uint8_t ACC_SCALE_4G  = 0x21;
+	    static constexpr uint8_t ACC_SCALE_8G  = 0x22;
+	    static constexpr uint8_t ACC_SCALE_16G = 0x23;
 
 	    //Gyroscope sensitivity
-	    static const uint8_t GYRO_SCALE_245DPS  = 0x30;
-	    static const uint8_t GYRO_SCALE_500DPS  = 0x31;
-	    static const uint8_t GYRO_SCALE_1000DPS = 0x32;
-	    static const uint8_t GYRO_SCALE_2000DPS = 0x33;
-	    static const uint8_t GYRO_SCALE_125DPS  = 0x34;
+	    static constexpr uint8_t GYRO_SCALE_245DPS  = 0x30;
+	    static constexpr uint8_t GYRO_SCALE_500DPS  = 0x31;
+	    static constexpr uint8_t GYRO_SCALE_1000DPS = 0x32;
+	    static constexpr uint8_t GYRO_SCALE_2000DPS = 0x33;
+	    static constexpr uint8_t GYRO_SCALE_125DPS  = 0x34;
 
 	    //Write calibration matrix into EEPROM
-	    static const uint8_t CALIBRATE_ACC_2G  = 0x40;
-	    static const uint8_t CALIBRATE_ACC_4G  = 0x41;
-	    static const uint8_t CALIBRATE_ACC_8G  = 0x42;
-	    static const uint8_t CALIBRATE_ACC_16G = 0x43;
+	    static constexpr uint8_t CALIBRATE_ACC_2G  = 0x40;
+	    static constexpr uint8_t CALIBRATE_ACC_4G  = 0x41;
+	    static constexpr uint8_t CALIBRATE_ACC_8G  = 0x42;
+	    static constexpr uint8_t CALIBRATE_ACC_16G = 0x43;
 
-	    static const uint8_t CALIBRATE_GYRO_245DPS  = 0x50;
-	    static const uint8_t CALIBRATE_GYRO_500DPS  = 0x51;
-	    static const uint8_t CALIBRATE_GYRO_1000DPS = 0x52;
-	    static const uint8_t CALIBRATE_GYRO_2000DPS = 0x53;
-	    static const uint8_t CALIBRATE_GYRO_125DPS  = 0x54;
+	    static constexpr uint8_t CALIBRATE_GYRO_245DPS  = 0x50;
+	    static constexpr uint8_t CALIBRATE_GYRO_500DPS  = 0x51;
+	    static constexpr uint8_t CALIBRATE_GYRO_1000DPS = 0x52;
+	    static constexpr uint8_t CALIBRATE_GYRO_2000DPS = 0x53;
+	    static constexpr uint8_t CALIBRATE_GYRO_125DPS  = 0x54;
 
 	    static constexpr int ACCEL_SCALE = std::numeric_limits<short>::max() + 1;
 
@@ -118,7 +117,10 @@ namespace ev3lib::hardware::sensor {
 	    float getGyroScale() const;
 
 	    //Set the required mode and fetch sample
-	    void readSample(size_t mode, std::span<int16_t> buffer);
+	    void readSample(std::span<int16_t> buffer);
+
+    protected:
+        void switchMode(size_t newMode) override;
 
 	public:
 	    explicit ImuLsm6ds3(std::unique_ptr<port::UartPort> port, bool rawMode = false);

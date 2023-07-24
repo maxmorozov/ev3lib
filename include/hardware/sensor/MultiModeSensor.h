@@ -20,6 +20,7 @@ namespace ev3lib::hardware::sensor {
 
         bool isValid(size_t mode) const;
 
+        virtual void switchMode(size_t mode) = 0;
 
     public:
         explicit MultiModeSensor(std::vector<ModeInfo> modes, size_t mode);

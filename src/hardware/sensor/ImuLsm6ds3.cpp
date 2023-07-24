@@ -33,7 +33,7 @@ namespace ev3lib::hardware::sensor {
     void ImuLsm6ds3::fetchSample(std::span<float> sample) {
         short buffer[maxSampleSize()];
 
-        readSample(getModeId(m_currentMode), std::span(buffer, sampleSize()));
+        readSample(std::span(buffer, sampleSize()));
 
         scaleData(std::span(const_cast<const short*>(buffer), sampleSize()), std::span(sample.data(), sampleSize()));
     }
@@ -168,12 +168,7 @@ namespace ev3lib::hardware::sensor {
 
     }
 
-    void ImuLsm6ds3::readSample(size_t mode, std::span<int16_t> buffer) {
-        if (mode != getCurrentMode()) {
-            switchMode(mode);
-            setAccelerometerScale(0);
-            setGyroscopeScale(0);
-        }
+    void ImuLsm6ds3::readSample(std::span<int16_t> buffer) {
         m_port->read(std::span((uint8_t*) (buffer.data()), buffer.size_bytes()));
     }
 
@@ -189,6 +184,14 @@ namespace ev3lib::hardware::sensor {
             return 1;
         else
             return gyroScale[m_gyroScale];
+    }
+
+    void ImuLsm6ds3::switchMode(size_t newMode) {
+        if (newMode != getCurrentMode()) {
+            UartSensor::switchMode(newMode);
+            setAccelerometerScale(0);
+            setGyroscopeScale(0);
+        }
     }
 
 }
