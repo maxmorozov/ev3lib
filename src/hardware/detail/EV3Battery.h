@@ -25,7 +25,7 @@ protected:
      * @param val
      * @return
      */
-    static float convert(int val);
+    static float convert(short val);
 
 public:
 	explicit EV3Battery(BatteryManager* manager);

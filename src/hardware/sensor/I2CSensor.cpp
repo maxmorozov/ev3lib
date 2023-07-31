@@ -4,6 +4,7 @@
 
 #include <thread>
 #include <utils/algorithm.h>
+#include <utils/type_utils.h>
 #include <exceptions/EV3HardwareExceptions.h>
 #include <hardware/sensor/I2CSensor.h>
 
@@ -42,7 +43,7 @@ namespace ev3lib::hardware::sensor {
 
 
         if (!m_port->setType(type)) {
-            throw std::logic_error("Invalid sensor mode: " + std::to_string(static_cast<int>(type)));
+            throw std::logic_error("Invalid sensor mode: " + std::to_string(utils::to_underlying(type)));
         }
     }
 

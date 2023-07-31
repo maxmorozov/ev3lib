@@ -30,79 +30,75 @@ namespace ev3lib::hardware::detail {
 	template<>
 	struct device_traits<device_type::dcm> {
 		static constexpr const char* device_name = lms2012::DCM_DEVICE_NAME;
-		static const int device_flags = O_RDWR | O_SYNC;
+		static constexpr int device_flags = O_RDWR | O_SYNC;
 	};
 
 	template<>
 	struct device_traits<device_type::pwm_motor> {
-		static const size_t ports_count = lms2012::vmOUTPUTS;
+		static constexpr size_t ports_count = lms2012::vmOUTPUTS;
 
 		static constexpr const char* device_name = lms2012::PWM_DEVICE_NAME;
-		static const int device_flags = O_RDWR;
+		static constexpr int device_flags = O_RDWR;
 	};
 
 	template<>
 	struct device_traits<device_type::motor_encoder> {
-		static const size_t ports_count = lms2012::vmOUTPUTS;
+		static constexpr size_t ports_count = lms2012::vmOUTPUTS;
 
 #ifdef LEJOS
-		typedef volatile lejos::MOTORSHARED device_map_type;
+		using device_map_type = volatile lejos::MOTORSHARED;
 #else
-		typedef volatile lms2012::MOTORDATA device_map_type;
+        using device_map_type = volatile lms2012::MOTORDATA;
 #endif
 
-		static const size_t sensor_data_size = ports_count * sizeof(device_map_type);
+		static constexpr size_t sensor_data_size = ports_count * sizeof(device_map_type);
 
 		static constexpr const char* device_name = lms2012::MOTOR_DEVICE_NAME;
-		static const int device_flags = O_RDWR | O_SYNC;
+		static constexpr int device_flags = O_RDWR | O_SYNC;
 	};
 
 	template<>
 	struct device_traits<device_type::uart_sensor> {
-		static const size_t ports_count = lms2012::vmINPUTS;
+		static constexpr size_t ports_count = lms2012::vmINPUTS;
 
-		typedef volatile lms2012::UART device_map_type;
+		using device_map_type = volatile lms2012::UART;
 
-		static const size_t sensor_data_size = sizeof(device_map_type);
+		static constexpr size_t sensor_data_size = sizeof(device_map_type);
 
 		static constexpr const char* device_name = lms2012::UART_DEVICE_NAME;
-		static const int device_flags = O_RDWR | O_SYNC;
+		static constexpr int device_flags = O_RDWR | O_SYNC;
 	};
 
 	template<>
 	struct device_traits<device_type::i2c_sensor> {
-		static const size_t ports_count = lms2012::vmINPUTS;
-
-		//typedef UART device_map_type;
-
-		//static const size_t sensor_data_size = sizeof(device_map_type);
+		static constexpr size_t ports_count = lms2012::vmINPUTS;
 
 		static constexpr const char* device_name = lms2012::IIC_DEVICE_NAME;
-		static const int device_flags = O_RDWR | O_SYNC;
+		static constexpr int device_flags = O_RDWR | O_SYNC;
 	};
 
 	template<>
 	struct device_traits<device_type::analog_sensor> {
-		static const size_t ports_count = lms2012::vmINPUTS;
+		static constexpr size_t ports_count = lms2012::vmINPUTS;
 
-		typedef volatile lms2012::ANALOG device_map_type;
+		using device_map_type = volatile lms2012::ANALOG;
 
-		static const size_t sensor_data_size = sizeof(device_map_type);
+		static constexpr size_t sensor_data_size = sizeof(device_map_type);
 
 		static constexpr const char* device_name = lms2012::ANALOG_DEVICE_NAME;
-		static const int device_flags = O_RDWR | O_SYNC;
+		static constexpr int device_flags = O_RDWR | O_SYNC;
 	};
 
 	template<>
 	struct device_traits<device_type::ui> {
-		static const size_t ports_count = 1;
+		static constexpr size_t ports_count = 1;
 
-		typedef volatile lms2012::UI device_map_type;
+		using device_map_type = volatile lms2012::UI;
 
-		static const size_t sensor_data_size = sizeof(device_map_type);
+		static constexpr size_t sensor_data_size = sizeof(device_map_type);
 
 		static constexpr const char* device_name = lms2012::UI_DEVICE_NAME;
-		static const int device_flags = O_RDWR | O_SYNC;
+		static constexpr int device_flags = O_RDWR | O_SYNC;
 	};
 
 }

@@ -52,8 +52,8 @@ namespace ev3lib::hardware::detail {
 	class EV3InputDevice: public EV3Device<type>
 	{
 	public:
-		typedef typename device_traits<type>::device_map_type device_map_type;
-		static const size_t ports_count = device_traits<type>::ports_count;
+		using device_map_type = typename device_traits<type>::device_map_type;
+		static constexpr size_t ports_count = device_traits<type>::ports_count;
 
 	private:
 		device_map_type* m_map;

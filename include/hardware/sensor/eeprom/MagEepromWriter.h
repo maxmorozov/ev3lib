@@ -1,5 +1,6 @@
 #pragma once
 
+#include <span>
 #include <utils/utilities.h>
 
 namespace ev3lib::hardware::sensor::eeprom {

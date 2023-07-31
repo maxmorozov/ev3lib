@@ -11,9 +11,12 @@
 namespace ev3lib::hardware::detail {
 
 	class EV3AnalogPort: public port::AnalogPort, public DetachSubscriber {
+    public:
+        using port_type = SensorsManager::port_type;
+
 	private:
 		EV3DeviceManager* m_manager;
-		size_t m_port;
+        port_type m_port;
 
 		bool setPinMode(AnalogMode mode);
 
@@ -27,13 +30,13 @@ namespace ev3lib::hardware::detail {
 	     * return the voltage present on pin 6 of the sensor port
 	     * @return raw ADC voltage reading
 	     */
-		int getPin6() const override;
+		short getPin6() const override;
 
 	    /**
 	     * return the voltage present on pin 1 of the sensor port
 	     * @return raw ADC voltage reading
 	     */
-		int getPin1() const override;
+		short getPin1() const override;
 
 	    /**
 	     * sets the sensor type.

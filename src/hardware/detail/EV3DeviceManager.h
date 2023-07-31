@@ -46,31 +46,31 @@ namespace ev3lib::hardware::detail {
 
         std::array<DetachSubscriber*, EV3SensorConstants::SENSORS> m_openPorts;
 
-        void connectSensor(size_t port, DetachSubscriber* sensor);
+        void connectSensor(port_type port, DetachSubscriber* sensor);
 
     public:
         EV3DeviceManager();
 
         ~EV3DeviceManager() override;
 
-        DeviceType getSensorType(size_t port) const override;
+        DeviceType getSensorType(port_type port) const override;
 
-        ConnectionType getConnectionType(size_t port) const override;
+        ConnectionType getConnectionType(port_type port) const override;
 
-        void setPortMode(size_t port, PortType type, AnalogMode mode) override;
+        void setPortMode(port_type port, PortType type, AnalogMode mode) override;
 
-        void disconnect(size_t port, PortType type) override;
+        void disconnect(port_type port, PortType type) override;
 
-        std::unique_ptr<port::AnalogPort> getAnalogPort(size_t port) override;
+        std::unique_ptr<port::AnalogPort> getAnalogPort(port_type port) override;
 
-        std::unique_ptr<port::UartPort> getUartPort(size_t port) override;
+        std::unique_ptr<port::UartPort> getUartPort(port_type port) override;
 
-        std::unique_ptr<port::I2CPort> getI2CPort(size_t port) override;
+        std::unique_ptr<port::I2CPort> getI2CPort(port_type port) override;
 
         /**
          * Returns internal motor port structure. The clients should not delete it
          */
-        port::TachoMotorPort* getMotorPort(size_t port) override;
+        port::TachoMotorPort* getMotorPort(uint8_t port) override;
 
         /**
          * Checks if the button is down

@@ -1,12 +1,13 @@
 #include <exceptions/EV3HardwareExceptions.h>
 #include <hardware/detail/lejos/port_data.h>
 #include <utils/algorithm.h>
+#include <utils/type_utils.h>
 #include "EV3I2CPort.h"
 
 
 namespace ev3lib::hardware::detail {
 
-    EV3I2CPort::EV3I2CPort(EV3DeviceManager* manager, size_t port)
+    EV3I2CPort::EV3I2CPort(EV3DeviceManager* manager, port_type port)
             : m_manager(manager), m_port(port) {
         //Try to connect the sensor in the constructor to avoid
         //destructor calling if another sensor is already attached to this port
@@ -26,13 +27,13 @@ namespace ev3lib::hardware::detail {
 
     void EV3I2CPort::connect() {
         lejos::DEVCTL command;
-        command.Port = lms2012::DATA8(m_port);
+        command.Port = m_port;
         getDevice().ioctl(lejos::IIC_CONNECT, &command);
     }
 
     void EV3I2CPort::disconnect() {
         lejos::DEVCTL command;
-        command.Port = lms2012::DATA8(m_port);
+        command.Port = m_port;
         getDevice().ioctl(lejos::IIC_DISCONNECT, &command);
     }
 
@@ -91,7 +92,7 @@ namespace ev3lib::hardware::detail {
         }
 
         command[0] = m_port;
-        command[1] = (uint8_t) speed;
+        command[1] = utils::to_underlying(speed);
         command[2] = readBuf.size();
         command[3] = writeBuf.size();
         command[4] = deviceAddress >> 1;
@@ -102,7 +103,7 @@ namespace ev3lib::hardware::detail {
 
         getDevice().ioctl(lejos::IIC_IO, command);
 
-        int result = (int) command[1];
+        int result = command[1];
         switch (result) {
             case lejos::STATUS_OK:
                 if (!readBuf.empty()) {

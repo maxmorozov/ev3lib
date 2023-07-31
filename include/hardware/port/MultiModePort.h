@@ -7,11 +7,14 @@
 namespace ev3lib::hardware::port {
 
     struct MultiModePort: public utils::destructible {
+        //Valid mode index range is 0..7, value -1 is reserved for RAW UART mode
+        using mode_type = int8_t;
+
 	    /**
 	     * Get the current operating mode of the sensor
 	     * @return the current mode
 	     */
-	    virtual size_t getMode() const = 0;
+	    virtual mode_type getMode() const = 0;
 
 	    /**
 	     * Set the current operating mode for the sensor attached to the port.
@@ -19,7 +22,7 @@ namespace ev3lib::hardware::port {
 	     * @return true if the mode has been accepted
 	     */
         [[nodiscard]]
-	    virtual bool setMode(size_t mode) = 0;
+	    virtual bool setMode(mode_type mode) = 0;
 
 	    /**
 	     * Returns number of supported modes

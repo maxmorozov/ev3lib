@@ -12,13 +12,13 @@ namespace ev3lib::hardware::port {
 	     * return the voltage present on pin 6 of the sensor port
 	     * @return raw ADC voltage reading
 	     */
-		virtual int getPin6() const = 0;
+		virtual short getPin6() const = 0;
 
 	    /**
 	     * return the voltage present on pin 1 of the sensor port
 	     * @return raw ADC voltage reading
 	     */
-		virtual int getPin1() const = 0;
+		virtual short getPin1() const = 0;
 
 	    /**
 	     * sets the sensor type.

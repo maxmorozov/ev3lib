@@ -7,6 +7,7 @@
 #include <hardware/detail/lms2012/ev3_constants.h>
 #include <exceptions/EV3HardwareExceptions.h>
 #include <memory>
+#include <utils/type_utils.h>
 
 #include "EV3MotorPort.h"
 #include "EV3AnalogPort.h"
@@ -23,30 +24,30 @@ namespace ev3lib::hardware::detail {
                       [](DetachSubscriber* item) { if (item != nullptr) item->detach(); });
     }
 
-    DeviceType EV3DeviceManager::getSensorType(size_t port) const {
+    DeviceType EV3DeviceManager::getSensorType(port_type port) const {
         return (DeviceType) m_analogDevice.getSensorData()->InDcm[port];
     }
 
-    ConnectionType EV3DeviceManager::getConnectionType(size_t port) const {
+    ConnectionType EV3DeviceManager::getConnectionType(port_type port) const {
         return (ConnectionType) m_analogDevice.getSensorData()->InConn[port];
     }
 
-    void EV3DeviceManager::setPortMode(size_t port, PortType type, AnalogMode mode) {
+    void EV3DeviceManager::setPortMode(port_type port, PortType type, AnalogMode mode) {
         uint8_t command[2];
-        int offset = type == PortType::Motor ? EV3SensorConstants::SENSORS : 0;
-        command[0] = (unsigned char) (port + offset);
-        command[1] = (unsigned char) mode;
+        int8_t offset = type == PortType::Motor ? EV3SensorConstants::SENSORS : 0;
+        command[0] = port + offset;
+        command[1] = utils::to_underlying(mode);
         m_dcmDevice.sendCommand(command);
     }
 
-    void EV3DeviceManager::disconnect(size_t port, PortType type) {
+    void EV3DeviceManager::disconnect(port_type port, PortType type) {
         if (type == PortType::Sensor) {
             m_openPorts[port] = nullptr;
         }
         setPortMode(port, type, AnalogMode::Disconnected);
     }
 
-    void EV3DeviceManager::connectSensor(size_t port, DetachSubscriber* sensor) {
+    void EV3DeviceManager::connectSensor(port_type port, DetachSubscriber* sensor) {
         if (port >= m_openPorts.size()) {
             throw boost::enable_error_info(std::range_error("Sensor port index is out of range"))
                     << std_range_min(0)
@@ -63,22 +64,22 @@ namespace ev3lib::hardware::detail {
         }
     }
 
-    std::unique_ptr<port::AnalogPort> EV3DeviceManager::getAnalogPort(size_t port) {
+    std::unique_ptr<port::AnalogPort> EV3DeviceManager::getAnalogPort(port_type port) {
         return std::make_unique<EV3AnalogPort>(this, port);
     }
 
-    std::unique_ptr<port::UartPort> EV3DeviceManager::getUartPort(size_t port) {
+    std::unique_ptr<port::UartPort> EV3DeviceManager::getUartPort(port_type port) {
         return std::make_unique<EV3UartPort>(this, port);
     }
 
-    std::unique_ptr<port::I2CPort> EV3DeviceManager::getI2CPort(size_t port) {
+    std::unique_ptr<port::I2CPort> EV3DeviceManager::getI2CPort(port_type port) {
         return std::make_unique<EV3I2CPort>(this, port);
     }
 
     /**
      * Returns internal motor port structure. The clients should not delete it
      */
-    port::TachoMotorPort* EV3DeviceManager::getMotorPort(size_t port) {
+    port::TachoMotorPort* EV3DeviceManager::getMotorPort(uint8_t port) {
         if (port < m_motorPorts.size()) {
             if (!m_motorPorts[port]) {
                 setPortMode(port, PortType::Motor, AnalogMode::Connected);

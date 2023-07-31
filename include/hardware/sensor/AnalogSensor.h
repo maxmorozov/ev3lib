@@ -24,7 +24,7 @@ protected:
 public:
 	explicit AnalogSensor(std::unique_ptr<port::AnalogPort> port) ;
 
-	int getData() const;
+    short getData() const;
 };
 
 } /* namespace ev3lib::hardware */

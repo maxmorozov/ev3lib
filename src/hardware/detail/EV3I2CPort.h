@@ -15,9 +15,12 @@ namespace ev3lib::hardware::detail {
         Because of this we only implement the basic i2c interface.
      */
     class EV3I2CPort : public port::I2CPort, public DetachSubscriber {
+    public:
+        using port_type = SensorsManager::port_type;
+
     private:
         EV3DeviceManager* m_manager;
-        size_t m_port;
+        port_type m_port;
 
         void connect();
         void disconnect();
@@ -50,7 +53,7 @@ namespace ev3lib::hardware::detail {
         I2CSpeed speed = I2CSpeed::SPEED_10KHZ;
 
     public:
-        EV3I2CPort(EV3DeviceManager* manager, size_t port);
+        EV3I2CPort(EV3DeviceManager* manager, port_type port);
         ~EV3I2CPort() override;
 
         void detach() override;

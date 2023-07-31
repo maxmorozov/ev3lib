@@ -143,7 +143,7 @@ static const size_t SYMBOL_LENGTH = 4;       //!< Symbol leng th (not including 
  */
 typedef   struct // if data type changes - remember to change "cInputTypeDataInit" !
 {
-  SBYTE     Name[TYPE_NAME_LENGTH + 1]; //!< Device name
+  char      Name[TYPE_NAME_LENGTH + 1]; //!< Device name
   DATA8     Type;                       //!< Device type
   DATA8     Connection;
   DATA8     Mode;                       //!< Device mode
@@ -187,11 +187,11 @@ typedef   struct
 
 #ifndef DISABLE_FAST_DATALOG_BUFFER
   UWORD   Repeat[INPUTS][DEVICE_LOGBUF_SIZE];
-  DATA8   Raw[INPUTS][DEVICE_LOGBUF_SIZE][UART_DATA_LENGTH];      //!< Raw value from UART device
+  UBYTE   Raw[INPUTS][DEVICE_LOGBUF_SIZE][UART_DATA_LENGTH];      //!< Raw value from UART device
   UWORD   Actual[INPUTS];
   UWORD   LogIn[INPUTS];
 #else
-  DATA8   Raw[INPUTS][UART_DATA_LENGTH];      //!< Raw value from UART device
+  UBYTE   Raw[INPUTS][UART_DATA_LENGTH];      //!< Raw value from UART device
 #endif
   DATA8   Status[INPUTS];                     //!< Status
   DATA8   Output[INPUTS][UART_DATA_LENGTH];   //!< Bytes to UART device
@@ -217,7 +217,7 @@ DEVCON;
 typedef   struct
 {
   TYPES   TypeData;
-  DATA8   Port;
+  UBYTE   Port;
   DATA8   Mode;
 }
 UARTCTL;

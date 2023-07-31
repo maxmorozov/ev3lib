@@ -7,6 +7,7 @@
 #include <hardware/sensor/eeprom/AccelEepromWriter.h>
 #include <hardware/sensor/eeprom/GyroEepromWriter.h>
 #include <utils/str_const.h>
+#include <utils/type_utils.h>
 
 #include <hardware/sensor/UartSensor.h>
 
@@ -143,7 +144,7 @@ namespace ev3lib::hardware::sensor {
 		 */
 		bool setScale(AccelScale scale)
 		{
-			return setAccelerometerScale(static_cast<size_t>(scale));
+			return setAccelerometerScale(utils::to_underlying(scale));
 		}
 
 		/**
@@ -154,7 +155,7 @@ namespace ev3lib::hardware::sensor {
 		 */
 		bool setScale(GyroScale scale)
 		{
-			return setGyroscopeScale(static_cast<size_t>(scale));
+			return setGyroscopeScale(utils::to_underlying(scale));
 		}
 
 	    /**

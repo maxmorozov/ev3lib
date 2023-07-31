@@ -16,7 +16,7 @@
 
 namespace ev3lib::hardware {
 
-	enum class Buttons : int {
+	enum class Buttons : uint8_t {
 		Up = 0,
 		Enter = 1,
 		Down = 2,
@@ -25,14 +25,14 @@ namespace ev3lib::hardware {
 		Escape = 5
 	};
 
-	enum class Motors: int {
+	enum class Motors: uint8_t {
 		A = 0,
 		B = 1,
 		C = 2,
 		D = 3
 	};
 
-	enum class Sensors: int {
+	enum class Sensors: uint8_t {
 		S1 = 0,
 		S2 = 1,
 		S3 = 2,

@@ -12,7 +12,7 @@ namespace ev3lib::hardware::detail {
     class EV3MotorPort : public port::TachoMotorPort {
     private:
         EV3DeviceManager* m_manager;
-        size_t m_port;
+        uint8_t m_port;
 
         enum class OutputCommand : uint8_t {
             Connect = 1,
@@ -29,7 +29,7 @@ namespace ev3lib::hardware::detail {
         void close();
 
     public:
-        EV3MotorPort(EV3DeviceManager* manager, size_t port);
+        EV3MotorPort(EV3DeviceManager* manager, uint8_t port);
 
         ~EV3MotorPort() override;
 

@@ -13,7 +13,7 @@ AnalogSensor::AnalogSensor(std::unique_ptr<port::AnalogPort> port)
 
 }
 
-int AnalogSensor::getData() const
+short AnalogSensor::getData() const
 {
 	return m_port->getPin1();
 }

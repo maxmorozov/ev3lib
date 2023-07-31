@@ -146,11 +146,11 @@ namespace ev3lib::hardware::sensor {
 
 
     bool ImuLsm6ds3::writeEeprom(uint8_t writeCommand, std::span<const int16_t> data) {
-        std::vector<uint8_t> command(static_cast<size_t>(data.size_bytes() + 1));
+        std::vector<uint8_t> command(data.size_bytes() + 1);
         command[0] = writeCommand;
         std::copy(data.begin(), data.end(), (int16_t*) &command[1]);
 
-        bool success = (size_t) m_port->write(command) == command.size();
+        bool success = m_port->write(command) == command.size();
         if (success) {
             //Wait for writing the data to EEPROM
             std::this_thread::sleep_for(std::chrono::milliseconds(command.size() * 3));

@@ -4,6 +4,7 @@
 
 #pragma once
 
+#include <cstdint>
 #include <utils/utilities.h>
 #include <hardware/port/TachoMotorPort.h>
 
@@ -16,7 +17,7 @@ namespace ev3lib::hardware::detail {
 		/**
 		 * Returns internal motor port structure. The clients should not delete it
 		 */
-		virtual port::TachoMotorPort* getMotorPort(size_t port) = 0;
+		virtual port::TachoMotorPort* getMotorPort(uint8_t port) = 0;
 	};
 
 }

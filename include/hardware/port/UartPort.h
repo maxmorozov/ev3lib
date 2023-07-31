@@ -31,7 +31,7 @@ namespace ev3lib::hardware::port {
 	     * @param mode mode to lookup
 	     * @return String version of the mode name
 	     */
-	    virtual std::string getModeName(size_t mode) const = 0;
+	    virtual std::string getModeName(mode_type mode) const = 0;
 
 		/**
 		 * Reset the attached sensor. Following this the sensor must be initialized

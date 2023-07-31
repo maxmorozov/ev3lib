@@ -22,7 +22,7 @@ namespace ev3lib::hardware::detail {
      * return the voltage present on pin 6 of the sensor port
      * @return raw ADC voltage reading
      */
-    int EV3AnalogPort::getPin6() const {
+    short EV3AnalogPort::getPin6() const {
         if (m_manager)
             return m_manager->m_analogDevice.getSensorData()->InPin6[m_port];
         else
@@ -33,7 +33,7 @@ namespace ev3lib::hardware::detail {
      * return the voltage present on pin 1 of the sensor port
      * @return raw ADC voltage reading
      */
-    int EV3AnalogPort::getPin1() const {
+    short EV3AnalogPort::getPin1() const {
         if (m_manager)
             return m_manager->m_analogDevice.getSensorData()->InPin1[m_port];
         else

@@ -14,7 +14,7 @@
 namespace ev3lib::hardware::detail {
 
 	//EV3 hardware type
-	enum class DeviceType: char {
+	enum class DeviceType: uint8_t {
 	    NxtTouch                =   1,  //!< Device is NXT touch sensor
 	    NxtLight                =   2,  //!< Device is NXT light sensor
 	    NxtSound                =   3,  //!< Device is NXT sound sensor
@@ -44,7 +44,7 @@ namespace ev3lib::hardware::detail {
 	    Error                   = 127  //!< Port not empty and type is invalid
 	};
 
-	enum class ConnectionType: char {
+	enum class ConnectionType: uint8_t {
 		  Unknown               = 111,  //!< Connection is fake (test)
 
 		  DaisyChain            = 117,  //!< Connection is daisy chained
@@ -63,7 +63,7 @@ namespace ev3lib::hardware::detail {
 		  Error                 = 127   //!< Port not empty and type is invalid
 	};
 
-	enum class AnalogMode : unsigned char {
+	enum class AnalogMode: uint8_t {
 		None = '-',
 		Float = 'f',
 		Set = '0',
@@ -80,7 +80,7 @@ namespace ev3lib::hardware::detail {
 		Pin5 = 0x02
 	};
 
-	enum class PortType {
+	enum class PortType: uint8_t {
 		Motor = 0,
 		Sensor = 1
 	};
@@ -89,18 +89,20 @@ namespace ev3lib::hardware::detail {
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
     struct SensorsManager: public utils::destructible {
-		virtual DeviceType getSensorType(size_t port) const = 0;
-		virtual ConnectionType getConnectionType(size_t port) const = 0;
+        using port_type = uint8_t;
 
-		virtual void setPortMode(size_t port, PortType type, AnalogMode mode) = 0;
+		virtual DeviceType getSensorType(port_type port) const = 0;
+		virtual ConnectionType getConnectionType(port_type port) const = 0;
 
-		virtual void disconnect(size_t port, PortType type) = 0;
+		virtual void setPortMode(port_type port, PortType type, AnalogMode mode) = 0;
 
-		virtual std::unique_ptr<port::AnalogPort> getAnalogPort(size_t port) = 0;
+		virtual void disconnect(port_type port, PortType type) = 0;
 
-		virtual std::unique_ptr<port::UartPort> getUartPort(size_t port) = 0;
+		virtual std::unique_ptr<port::AnalogPort> getAnalogPort(port_type port) = 0;
 
-        virtual std::unique_ptr<port::I2CPort> getI2CPort(size_t port) = 0;
+		virtual std::unique_ptr<port::UartPort> getUartPort(port_type port) = 0;
+
+        virtual std::unique_ptr<port::I2CPort> getI2CPort(port_type port) = 0;
 
 		/**
 		 * Current flowing from the battery

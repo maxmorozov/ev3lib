@@ -14,11 +14,13 @@ namespace ev3lib::hardware::detail {
 	    static const int INIT_RETRY = 100;
 	    static const int OPEN_RETRY = 5;
 
+    public:
+        using port_type = SensorsManager::port_type;
 	private:
 		EV3DeviceManager* m_manager;
-		size_t m_port;
+        port_type m_port;
 
-    	size_t m_currentMode = 0;
+        mode_type m_currentMode = 0;
     	std::vector<lms2012::TYPES> m_modeInfo;
 
         const EV3InputDevice<device_type::uart_sensor>& getDevice() const {
@@ -63,14 +65,14 @@ namespace ev3lib::hardware::detail {
 		 * @param mode target mode
 		 * @return true if ok false if error
 		 */
-		bool initializeSensor(size_t mode);
+		bool initializeSensor(mode_type mode);
 
 		/**
 		 * Attempt to initialise the sensor ready for use.
 		 * @param mode initial operating mode
 		 * @return -1 no uart, 0 failed to initialise, 1 sensor initialised
 		 */
-		int initSensor(size_t mode);
+		int initSensor(mode_type mode);
 
 		/**
 		 * Read the mode information from the port. return true 
@@ -82,7 +84,7 @@ namespace ev3lib::hardware::detail {
 		 * Set the current operating mode
 		 * @param mode
 		 */
-		void setOperatingMode(size_t mode);
+		void setOperatingMode(mode_type mode);
 
 		/**
 		 * Read the mode information for the specified operating mode.
@@ -90,7 +92,7 @@ namespace ev3lib::hardware::detail {
 		 * @param uc control structure to read the data into
 		 * @return
 		 */
-		bool getModeInfo(size_t mode, lms2012::UARTCTL* uc);
+		bool getModeInfo(mode_type mode, lms2012::UARTCTL* uc);
 
 		/**
 		 * Clear the flag that indicates the mode info has been cached. This
@@ -100,7 +102,7 @@ namespace ev3lib::hardware::detail {
 		 * @param uc control structure to read the data into
 		 * @return
 		 */
-		void clearModeCache(size_t mode, lms2012::UARTCTL* uc);
+		void clearModeCache(mode_type mode, lms2012::UARTCTL* uc);
 
 		/**
 		 * Clear the port changed flag for the current port.
@@ -118,7 +120,7 @@ namespace ev3lib::hardware::detail {
 		 */
 		void reset();
 
-		const uint8_t* getData() const;
+		const volatile uint8_t* getData() const;
 
 		void connect();
 
@@ -127,7 +129,7 @@ namespace ev3lib::hardware::detail {
         void close();
 
 	public:
-		EV3UartPort(EV3DeviceManager* manager, size_t port);
+		EV3UartPort(EV3DeviceManager* manager, port_type port);
 		~EV3UartPort() override;
 
 		void detach() override;
@@ -142,21 +144,21 @@ namespace ev3lib::hardware::detail {
 	     * Get the current operating mode of the sensor
 	     * @return the current mode
 	     */
-		size_t getMode() const override;
+        mode_type getMode() const override;
 
 	    /**
 	     * Set the current operating mode for the sensor attached to the port.
 	     * @param mode the new mode
 	     * @return true if the mode has been accepted
 	     */
-		bool setMode(size_t mode) override;
+		bool setMode(mode_type mode) override;
 
 	    /**
 	     * Returns number of supported modes
 	     *
 	     * @return number of available modes
 	     */
-		size_t getModeCount() const override;
+        size_t getModeCount() const override;
 
 	    /**
 	     * read a number of bytes from the device
@@ -178,7 +180,7 @@ namespace ev3lib::hardware::detail {
 	     * @param mode mode to lookup
 	     * @return String version of the mode name
 	     */
-		std::string getModeName(size_t mode) const override;
+		std::string getModeName(mode_type mode) const override;
 	};
 
 } /* namespace ev3lib::hardware::detail */
