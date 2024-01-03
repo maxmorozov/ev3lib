@@ -33,8 +33,8 @@ Battery Brick::getBattery() {
 	return Battery(m_brick.getBattery());
 }
 
-sensor::ImuLsm6ds3 Brick::getImu(Sensors id) {
-	return sensor::ImuLsm6ds3(m_brick.getSensorsManager()->getUartPort(utils::to_underlying(id)));
+sensor::ImuLsm6ds3 Brick::getImu(Sensors id, bool rawMode) {
+	return sensor::ImuLsm6ds3(m_brick.getSensorsManager()->getUartPort(utils::to_underlying(id)), rawMode);
 
 }
 

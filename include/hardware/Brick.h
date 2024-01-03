@@ -56,7 +56,7 @@ public:
 
     sensor::NXTLightSensor getNxtLight(Sensors id);
 
-    sensor::ImuLsm6ds3 getImu(Sensors id);
+    sensor::ImuLsm6ds3 getImu(Sensors id, bool rawMode = false);
 
     sensor::CurrentSensorINA226 getCurrentSensor(Sensors id);
 
