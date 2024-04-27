@@ -91,8 +91,4 @@ include_directories(include)
 
 add_library(ev3lib STATIC ${SOURCE_FILES})
 
-set_target_properties(ev3lib PROPERTIES
-        CXX_STANDARD 20
-        CXX_STANDARD_REQUIRED YES
-        CXX_EXTENSIONS NO
-        )
+target_compile_features(ev3lib PUBLIC cxx_std_20)
