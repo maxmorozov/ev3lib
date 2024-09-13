@@ -2,6 +2,7 @@
  * ev3_brick.cpp
  */
 
+#include <memory>
 #include <hardware/detail/ev3_brick.h>
 #include "EV3DeviceManager.h"
 #include "EV3Battery.h"
@@ -34,8 +35,7 @@ namespace ev3lib::hardware::detail {
 	};
 
 EV3Brick::EV3Brick()
-	: m_pimpl(new EV3BrickImpl())
-{
+	: m_pimpl(std::make_unique<EV3BrickImpl>()) {
 }
 
 EV3Brick::~EV3Brick() = default;
@@ -49,11 +49,9 @@ const SensorsManager* EV3Brick::getSensorsManager() const {
 
 MotorManager* EV3Brick::getMotorManager() {
 	return m_pimpl->getMotorManager();
-
 }
 const MotorManager* EV3Brick::getMotorManager() const {
 	return m_pimpl->getMotorManager();
-
 }
 
 UIManager* EV3Brick::getUIManager() {
@@ -69,7 +67,6 @@ Power* EV3Brick::getBattery() {
 const Power* EV3Brick::getBattery() const {
 	return m_pimpl->getBattery();
 }
-
 
 }
 

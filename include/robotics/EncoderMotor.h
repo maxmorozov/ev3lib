@@ -11,7 +11,7 @@ namespace ev3lib::robotics {
      *
      * @author BB
      */
-    struct EncoderMotor : public DCMotor, public Encoder {
+    struct EncoderMotor: DCMotor, Encoder {
         // no extra methods
     };
 

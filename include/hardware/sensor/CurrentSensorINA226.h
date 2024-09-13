@@ -2,7 +2,6 @@
 
 #include <cstdint>
 #include <vector>
-#include <utils/str_const.h>
 #include <hardware/sensor/I2CSensor.h>
 #include <hardware/sensor/SensorModes.h>
 

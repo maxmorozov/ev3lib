@@ -5,7 +5,7 @@
 
 namespace ev3lib::hardware::sensor::eeprom {
 
-	struct AccelEepromWriter : public utils::destructible {
+	struct AccelEepromWriter: utils::destructible {
 		/**
 		 * Update accelerometer EEPROM
 		 *

@@ -2,6 +2,7 @@
  * HiTechnicGyro.cpp
  */
 
+#include <utility>
 #include <hardware/sensor/HiTechnicGyro.h>
 #include "../detail/AnalogSensorHelpers.h"
 

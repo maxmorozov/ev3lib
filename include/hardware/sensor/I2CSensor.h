@@ -89,7 +89,7 @@ namespace ev3lib::hardware::sensor {
         }
 
         /**
-         * Return the the I2C address of the sensor.
+         * Return the I2C address of the sensor.
          * The sensor uses the address for writing/reading.
          * @return the I2C address.
          */
@@ -108,7 +108,7 @@ namespace ev3lib::hardware::sensor {
         /**
          *  Executes an I2C write transaction.
          *
-         * @param register I2C register, e.g 0x42
+         * @param reg I2C register, e.g 0x42
          * @param writeBuf Buffer containing data to send
          */
         void sendData(uint8_t reg, std::span<const uint8_t> writeBuf);
@@ -116,7 +116,7 @@ namespace ev3lib::hardware::sensor {
         /**
          *  Executes an I2C write transaction.
          *
-         * @param register I2C register, e.g 0x42
+         * @param reg I2C register, e.g 0x42
          * @param value single byte to send
          */
         void sendData(uint8_t reg, uint8_t value);

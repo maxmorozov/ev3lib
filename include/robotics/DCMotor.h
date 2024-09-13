@@ -7,7 +7,7 @@ namespace ev3lib::robotics {
     /**
      * Interface for a regular DC motor.
      */
-    struct DCMotor : public BaseMotor {
+    struct DCMotor: BaseMotor {
         /**
          * Set the power level 0%-100% to be applied to the motor
          *

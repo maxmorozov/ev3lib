@@ -2,6 +2,7 @@
  * AnalogSensor.cpp
  */
 
+#include <utility>
 #include <stdexcept>
 #include <hardware/sensor/AnalogSensor.h>
 
@@ -24,7 +25,6 @@ short AnalogSensor::getData() const
  * NOTE: This method is intended for use with NXT sensor drivers that use a
  * sensor type to specify the operating mode.
  * @param newType The type to switch to.
- * @param switchDelay Time in mS to delay after the switch.
  */
 void AnalogSensor::switchType(port::SensorType newType)
 {

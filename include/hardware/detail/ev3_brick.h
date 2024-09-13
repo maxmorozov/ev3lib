@@ -19,6 +19,8 @@ namespace ev3lib::hardware::detail {
 		std::unique_ptr<EV3BrickImpl> m_pimpl;
 	public:
 		EV3Brick();
+    	//If we declare the destructor the default move constructor is not generated
+    	EV3Brick(EV3Brick&&) = default;
 		~EV3Brick() override;
 
 		SensorsManager* getSensorsManager();

@@ -1,5 +1,6 @@
 #include <limits>
 #include <vector>
+#include <utility>
 #include <boost/endian.hpp>
 #include <boost/exception/all.hpp>
 #include <exceptions/EV3HardwareExceptions.h>
@@ -104,6 +105,7 @@ namespace ev3lib::hardware::sensor {
 
     std::vector<std::string> CurrentSensorINA226::getAvailableModes() const {
         std::vector<std::string> result;
+        result.reserve(m_modes.size());
         for (auto &mode: m_modes) {
             result.emplace_back(mode->getName());
         }

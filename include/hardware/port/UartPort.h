@@ -1,27 +1,20 @@
 #pragma once
 
-#include <cstddef>
-#include <memory>
 #include <span>
-#include <utils/utilities.h>
 #include <hardware/port/MultiModePort.h>
 
 namespace ev3lib::hardware::port {
 
-	struct UartPort: public MultiModePort {
+	struct UartPort: MultiModePort {
 	    /**
 	     * read a number of bytes from the device
-	     * @param buffer byte array to accept the data
-	     * @param offset offset (in bytes) at which to store the data
-	     * @param len number of bytes to read
+	     * @param buffer byte buffer to accept the data
 	     */
 	    virtual void read(std::span<uint8_t> buffer) = 0;
 
 	    /**
 	     * Write bytes to the sensor
 	     * @param buffer bytes to be written
-	     * @param offset offset to the start of the write
-	     * @param len length of the write
 	     * @return number of bytes written
 	     */
 	    virtual ssize_t write(std::span<const uint8_t> buffer) = 0;

@@ -36,8 +36,7 @@ namespace ev3lib::hardware::detail {
     short EV3AnalogPort::getPin1() const {
         if (m_manager)
             return m_manager->m_analogDevice.getSensorData()->InPin1[m_port];
-        else
-            return 0;
+        return 0;
     }
 
     /**
@@ -86,9 +85,8 @@ namespace ev3lib::hardware::detail {
         if (m_manager != nullptr) {
             m_manager->setPortMode(m_port, PortType::Sensor, mode);
             return true;
-        } else {
-            return false;
         }
+        return false;
     }
 
     void EV3AnalogPort::detach() {

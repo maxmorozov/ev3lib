@@ -4,7 +4,7 @@
 
 namespace ev3lib::hardware::sensor::scale {
 
-	struct GyroScaleSelector : public utils::destructible {
+	struct GyroScaleSelector: utils::destructible {
 		/**
 		 * Changes the gyroscope full-scale range
 		 *

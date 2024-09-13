@@ -3,6 +3,7 @@
  */
 
 #include <thread>
+#include <utility>
 #include <utils/algorithm.h>
 #include <utils/type_utils.h>
 #include <exceptions/EV3HardwareExceptions.h>
@@ -64,7 +65,7 @@ namespace ev3lib::hardware::sensor {
     /**
      *  Executes an I2C write transaction.
      *
-     * @param register I2C register, e.g 0x42
+     * @param reg I2C register, e.g 0x42
      * @param writeBuf Buffer containing data to send
      */
     void I2CSensor::sendData(uint8_t reg, std::span<const uint8_t> writeBuf) {
@@ -109,7 +110,7 @@ namespace ev3lib::hardware::sensor {
     /**
      *  Executes an I2C write transaction.
      *
-     * @param register I2C register, e.g 0x42
+     * @param reg I2C register, e.g 0x42
      * @param value single byte to send
      */
     void I2CSensor::sendData(uint8_t reg, uint8_t value) {

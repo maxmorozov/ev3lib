@@ -8,7 +8,7 @@ namespace ev3lib::robotics {
      *
      * @author Lawrie Griffiths
      */
-    struct Encoder: public utils::destructible {
+    struct Encoder: utils::destructible {
         /**
          * Returns the tachometer count.
          *

@@ -1,6 +1,5 @@
 #pragma once
 
-#include <utils/utilities.h>
 #include <vector>
 #include <string>
 
@@ -13,7 +12,7 @@ namespace ev3lib::hardware::sensor {
 	 * @author andy
 	 *
 	 */
-	struct SensorModes : public SensorMode {
+	struct SensorModes: SensorMode {
 	    /**
 	     * Return a list of string descriptions for the sensors available modes.
 	     * @return list of string descriptions

@@ -1,14 +1,12 @@
 #pragma once
 
-#include <utils/utilities.h>
-#include <vector>
 #include <string>
 
 #include <robotics/SampleProvider.h>
 
 namespace ev3lib::hardware::sensor {
 
-	struct SensorMode : public robotics::SampleProvider
+	struct SensorMode: robotics::SampleProvider
 	{
 		/**
 		 * return a string description of this sensor mode

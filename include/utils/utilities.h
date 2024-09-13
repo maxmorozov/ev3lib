@@ -4,16 +4,14 @@
 
 namespace ev3lib::utils {
 
-	struct destructible
-	{
+	struct destructible	{
 		virtual ~destructible() = default;
 	};
 
 	/**
 	 * This class makes descendants not copyable but moveable
 	 */
-	class noncopyable
-	{
+	class noncopyable {
 	protected:
 		noncopyable() = default;
 		~noncopyable() = default;
@@ -28,7 +26,7 @@ namespace ev3lib::utils {
 	};
 
 
-	template<typename T,size_t size>
+	template<typename T, size_t size>
 	constexpr size_t count_of(T (&)[size]) noexcept { return size; }
 
 }

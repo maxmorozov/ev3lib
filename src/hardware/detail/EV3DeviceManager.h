@@ -5,7 +5,6 @@
 #pragma once
 
 #include <memory>
-#include <boost/noncopyable.hpp>
 #include <hardware/detail/device_traits.h>
 #include <hardware/detail/ev3_device.h>
 #include <hardware/detail/SensorsManager.h>
@@ -21,7 +20,7 @@ namespace ev3lib::hardware::detail {
         ConnectionType connectionType = ConnectionType::None;
     };
 
-    class EV3DeviceManager : public SensorsManager, public MotorManager, public UIManager, public BatteryManager, boost::noncopyable {
+    class EV3DeviceManager : public SensorsManager, public MotorManager, public UIManager, public BatteryManager, utils::noncopyable {
         friend class EV3MotorPort;
 
         friend class EV3AnalogPort;

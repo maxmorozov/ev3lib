@@ -20,7 +20,7 @@ namespace ev3lib::hardware::detail {
 
     /**
      * Return the equivalent NXT RAW sensor reading to the given voltage
-     * @param raw RAW ADC voltage
+     * @param val RAW ADC voltage
      * @return The reading that would be returned on the NXT
      */
     float AnalogSensorHelpers::NXTRawValue(short val) {

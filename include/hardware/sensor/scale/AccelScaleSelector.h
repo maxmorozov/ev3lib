@@ -4,7 +4,7 @@
 
 namespace ev3lib::hardware::sensor::scale {
 
-	struct AccelScaleSelector : public utils::destructible {
+	struct AccelScaleSelector: utils::destructible {
 		/**
 		 * Changes the accelerometer full-scale range
 		 *

@@ -1,4 +1,5 @@
 
+#include <utility>
 #include <boost/exception/all.hpp>
 #include <exceptions/EV3HardwareExceptions.h>
 
@@ -22,6 +23,7 @@ namespace ev3lib::hardware::sensor {
      */
     std::vector<std::string> MultiModeSensor::getAvailableModes() const {
         std::vector<std::string> result;
+        result.reserve(m_modes.size());
         for (const ModeInfo& mode: m_modes) {
             result.push_back(mode.name);
         }

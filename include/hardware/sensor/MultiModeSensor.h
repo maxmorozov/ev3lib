@@ -1,20 +1,18 @@
 #pragma once
 
 #include <vector>
-#include <memory>
-#include <hardware/detail/SensorsManager.h>
 #include <hardware/sensor/SensorModes.h>
 
 namespace ev3lib::hardware::sensor {
 
-    class MultiModeSensor : public SensorModes {
+    class MultiModeSensor: public SensorModes {
     protected:
         //Mode description
         struct ModeInfo {
             std::string name;
             size_t sampleSize;
         };
-    protected:
+
         std::vector<ModeInfo> m_modes;
         size_t m_currentMode = 0;
 

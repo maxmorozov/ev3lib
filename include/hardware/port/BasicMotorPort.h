@@ -4,12 +4,12 @@
 
 namespace ev3lib::hardware::port {
 
-    enum class PWMMode : int {
+    enum class PWMMode: int {
         Float = 0, //Motor is not driven during off phase of PWM
         Brake = 1  //Motor is driven during off phase of PWM
     };
 
-    enum class MotorCommand : int {
+    enum class MotorCommand: int {
         Forward = 1,  // Motor is running forward
         Backward = 2, // Motor is running backwards
         Stop = 3,     // Motor is stopped (PWM drive still applied)
@@ -22,7 +22,7 @@ namespace ev3lib::hardware::port {
      *
      * @author Lawrie Griffiths.
      */
-    struct BasicMotorPort : public utils::destructible {
+    struct BasicMotorPort: utils::destructible {
         /** Maximum power setting = 100% */
         static const int MAX_POWER = 100;
 

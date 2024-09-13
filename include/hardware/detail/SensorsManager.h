@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <cstddef>
 #include <memory>
 #include <utils/utilities.h>
 #include <hardware/port/AnalogPort.h>
@@ -88,7 +87,7 @@ namespace ev3lib::hardware::detail {
 	/**
 	 * Provides information about types of connected sensors and allows to get their values
 	 */
-    struct SensorsManager: public utils::destructible {
+    struct SensorsManager: utils::destructible {
         using port_type = uint8_t;
 
 		virtual DeviceType getSensorType(port_type port) const = 0;
@@ -116,7 +115,7 @@ namespace ev3lib::hardware::detail {
 	};
 
 	inline AnalogMode operator | (AnalogMode left, AnalogMode right) {
-		return AnalogMode(int(left) | int(right));
+		return static_cast<AnalogMode>(int(left) | int(right));
 	}
 
 }

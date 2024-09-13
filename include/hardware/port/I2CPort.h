@@ -1,7 +1,5 @@
 #pragma once
 
-#include <cstddef>
-#include <memory>
 #include <span>
 #include <utils/utilities.h>
 #include <hardware/detail/lms2012/ev3_types.h>
@@ -12,7 +10,7 @@ namespace ev3lib::hardware::port {
     /**
      * Abstraction for a port that supports I2C sensors.
      */
-    struct I2CPort : public utils::destructible {
+    struct I2CPort: utils::destructible {
         /** Maximum read/write request length */
         static constexpr int MAX_IO = detail::lms2012::IIC_DATA_LENGTH;
 

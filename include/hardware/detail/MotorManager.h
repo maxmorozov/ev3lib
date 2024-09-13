@@ -13,7 +13,7 @@ namespace ev3lib::hardware::detail {
 	/**
 	 * Manages EV3 motor port connections
 	 */
-    struct MotorManager: public utils::destructible {
+    struct MotorManager: utils::destructible {
 		/**
 		 * Returns internal motor port structure. The clients should not delete it
 		 */

@@ -42,7 +42,7 @@ namespace ev3lib::hardware::sensor {
             std::size_t modeId;
         };
 
-        static const constexpr Mode modes[3] = {
+        static constexpr Mode modes[3] = {
                 {utils::str_const("ALL"), 6, 0},
                 {utils::str_const("Acceleration"), 3, 1},
                 {utils::str_const("Rate"), 3, 2}
@@ -205,7 +205,6 @@ namespace ev3lib::hardware::sensor {
 		 *
 		 * @param scaleNo scale index
 		 * @param data EEPROM data (4x3 matrix of 16-bit integers)
-		 * @param size size of EEPROM data in words
 		 * @return true if the EEPROM data has been successfully written
 		 */
         [[nodiscard]]

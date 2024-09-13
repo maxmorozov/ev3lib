@@ -13,7 +13,7 @@ namespace ev3lib::hardware::detail {
  * @author Brian Bagnall, Lawrie Griffiths Andy Shaw
  *
  */
-struct Power : public utils::destructible {
+struct Power: utils::destructible {
 
 	/**
 	 * The NXT uses 6 batteries of 1500 mV each.

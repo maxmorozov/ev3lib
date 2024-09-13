@@ -14,7 +14,7 @@ namespace ev3lib::hardware::port {
      *
      * @author Lawrie Griffiths
      */
-    struct TachoMotorPort : public BasicMotorPort, public robotics::Encoder {
+    struct TachoMotorPort: BasicMotorPort, robotics::Encoder {
     };
 
 }

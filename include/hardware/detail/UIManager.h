@@ -8,7 +8,7 @@
 
 namespace ev3lib::hardware::detail {
 
-    struct UIManager : public utils::destructible {
+    struct UIManager: utils::destructible {
         /**
          * Returns true if the specified button is down
          */

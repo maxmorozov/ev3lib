@@ -9,7 +9,7 @@ namespace ev3lib::hardware::detail {
 /**
  * Provides information about battery state
  */
-struct BatteryManager: public utils::destructible {
+struct BatteryManager: utils::destructible {
 	/**
 	 * Battery voltage
 	 */

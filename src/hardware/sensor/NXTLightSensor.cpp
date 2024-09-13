@@ -2,7 +2,7 @@
  * NXTLightSensor.cpp
  */
 
-#include <stdexcept>
+#include <utility>
 #include <hardware/sensor/NXTLightSensor.h>
 #include <hardware/port/SensorType.h>
 

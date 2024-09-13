@@ -5,7 +5,7 @@
 
 namespace ev3lib::hardware::sensor::eeprom {
 
-	struct GyroEepromWriter : public utils::destructible {
+	struct GyroEepromWriter: utils::destructible {
 		/**
 		 * Update gyroscope EEPROM
 		 *

@@ -6,7 +6,7 @@
 
 namespace ev3lib::hardware::detail {
 
-    struct DetachSubscriber: public utils::destructible {
+    struct DetachSubscriber: utils::destructible {
         virtual void detach() = 0;
     };
 

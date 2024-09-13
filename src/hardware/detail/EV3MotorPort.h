@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <hardware/detail/ev3_device.h>
 #include "EV3DeviceManager.h"
 
 namespace ev3lib::hardware::detail {
